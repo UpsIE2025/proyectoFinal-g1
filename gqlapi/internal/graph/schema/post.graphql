@@ -1,0 +1,34 @@
+##################################################
+# Models
+##################################################
+
+"Post model definition"
+type Post @goModel(model: "post.Post") {
+  id: ID!
+  createdAt: Time!
+  updatedAt: Time!
+  title: String!
+  content: String!
+  authorId: String!
+  comments: [Comment!]! @goField(forceResolver: true)
+}
+
+##################################################
+# Queries /  Mutations
+##################################################
+
+extend type Query {
+  "Returns the Post with the specified id"
+  post(id: ID!): Post
+  "Returns all the posts"
+  posts: [Post!]!
+}
+
+extend type Mutation {
+  "Creates a new Post"
+  postCreate(input: PostCreateInput!): PostCreatePayload!
+  "Updates the Post with the specified id"
+  postUpdate(id: ID!, input: PostUpdateInput!): PostUpdatePayload!
+  "Deletes the Post with the specified id"
+  postDelete(id: ID!): PostDeletePayload!
+}

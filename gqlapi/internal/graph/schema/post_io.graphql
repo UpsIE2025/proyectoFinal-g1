@@ -1,0 +1,31 @@
+##################################################
+# Query/Mutation Inputs
+##################################################
+
+input PostCreateInput @goModel(model: "post.CreateInput") {
+  title: String!
+  content: String!
+}
+
+input PostUpdateInput @goModel(model: "post.UpdateInput") {
+  title: String!
+  content: String!
+}
+
+##################################################
+# Payloads
+##################################################
+
+type PostCreatePayload {
+  post: Post
+  error: Error
+}
+
+type PostUpdatePayload {
+  post: Post
+  error: Error
+}
+
+type PostDeletePayload {
+  error: Error
+}

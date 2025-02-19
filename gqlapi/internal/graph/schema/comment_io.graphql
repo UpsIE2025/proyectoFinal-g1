@@ -1,0 +1,30 @@
+##################################################
+# Query/Mutation Inputs
+##################################################
+
+input CommentCreateInput @goModel(model: "comment.CreateInput") {
+  postId: ID!
+  content: String!
+}
+
+input CommentUpdateInput @goModel(model: "comment.UpdateInput") {
+  content: String!
+}
+
+##################################################
+# Payloads
+##################################################
+
+type CommentCreatePayload {
+  comment: Comment
+  error: Error
+}
+
+type CommentUpdatePayload {
+  comment: Comment
+  error: Error
+}
+
+type CommentDeletePayload {
+  error: Error
+}

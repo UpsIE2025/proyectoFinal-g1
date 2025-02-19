@@ -1,0 +1,33 @@
+##################################################
+# Models
+##################################################
+
+"Comment model definition"
+type Comment @goModel(model: "comment.Comment") {
+  id: ID!
+  createdAt: Time!
+  updatedAt: Time!
+  content: String!
+  postId: ID!
+  authorId: String!
+}
+
+##################################################
+# Queries /  Mutations
+##################################################
+
+extend type Query {
+  "Returns the comment with the specified id"
+  comment(id: ID!): Comment
+  "Returns all the comments"
+  comments: [Comment!]!
+}
+
+extend type Mutation {
+  "Creates a new comment"
+  commentCreate(input: CommentCreateInput!): CommentCreatePayload!
+  "Updates the comment with the specified id"
+  commentUpdate(id: ID!, input: CommentUpdateInput!): CommentUpdatePayload!
+  "Deletes the comment with the specified id"
+  commentDelete(id: ID!): CommentDeletePayload!
+}
