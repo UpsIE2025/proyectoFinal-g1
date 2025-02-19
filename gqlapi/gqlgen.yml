@@ -120,8 +120,8 @@ autobind:
 models:
   ID:
     model:
-      - github.com/99designs/gqlgen/graphql.ID
       - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.ID
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
   # gqlgen provides a default GraphQL UUID convenience wrapper for github.com/google/uuid 

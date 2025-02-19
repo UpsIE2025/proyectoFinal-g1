@@ -79,12 +79,12 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CommentCreate func(childComplexity int, input comment.CreateInput) int
-		CommentDelete func(childComplexity int, id string) int
-		CommentUpdate func(childComplexity int, id string, input comment.UpdateInput) int
+		CommentDelete func(childComplexity int, id int) int
+		CommentUpdate func(childComplexity int, id int, input comment.UpdateInput) int
 		EmptyMutate   func(childComplexity int) int
 		PostCreate    func(childComplexity int, input post.CreateInput) int
-		PostDelete    func(childComplexity int, id string) int
-		PostUpdate    func(childComplexity int, id string, input post.UpdateInput) int
+		PostDelete    func(childComplexity int, id int) int
+		PostUpdate    func(childComplexity int, id int, input post.UpdateInput) int
 	}
 
 	Post struct {
@@ -112,10 +112,10 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Comment  func(childComplexity int, id string) int
+		Comment  func(childComplexity int, id int) int
 		Comments func(childComplexity int) int
 		Empty    func(childComplexity int) int
-		Post     func(childComplexity int, id string) int
+		Post     func(childComplexity int, id int) int
 		Posts    func(childComplexity int) int
 	}
 }
@@ -123,20 +123,20 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	EmptyMutate(ctx context.Context) (*string, error)
 	CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error)
-	CommentUpdate(ctx context.Context, id string, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error)
-	CommentDelete(ctx context.Context, id string) (*modelgen.CommentDeletePayload, error)
+	CommentUpdate(ctx context.Context, id int, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error)
+	CommentDelete(ctx context.Context, id int) (*modelgen.CommentDeletePayload, error)
 	PostCreate(ctx context.Context, input post.CreateInput) (*modelgen.PostCreatePayload, error)
-	PostUpdate(ctx context.Context, id string, input post.UpdateInput) (*modelgen.PostUpdatePayload, error)
-	PostDelete(ctx context.Context, id string) (*modelgen.PostDeletePayload, error)
+	PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error)
+	PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error)
 }
 type PostResolver interface {
 	Comments(ctx context.Context, obj *post.Post) ([]*comment.Comment, error)
 }
 type QueryResolver interface {
 	Empty(ctx context.Context) (*string, error)
-	Comment(ctx context.Context, id string) (*comment.Comment, error)
+	Comment(ctx context.Context, id int) (*comment.Comment, error)
 	Comments(ctx context.Context) ([]*comment.Comment, error)
-	Post(ctx context.Context, id string) (*post.Post, error)
+	Post(ctx context.Context, id int) (*post.Post, error)
 	Posts(ctx context.Context) ([]*post.Post, error)
 }
 
@@ -265,7 +265,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CommentDelete(childComplexity, args["id"].(string)), true
+		return e.complexity.Mutation.CommentDelete(childComplexity, args["id"].(int)), true
 
 	case "Mutation.commentUpdate":
 		if e.complexity.Mutation.CommentUpdate == nil {
@@ -277,7 +277,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CommentUpdate(childComplexity, args["id"].(string), args["input"].(comment.UpdateInput)), true
+		return e.complexity.Mutation.CommentUpdate(childComplexity, args["id"].(int), args["input"].(comment.UpdateInput)), true
 
 	case "Mutation._emptyMutate":
 		if e.complexity.Mutation.EmptyMutate == nil {
@@ -308,7 +308,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.PostDelete(childComplexity, args["id"].(string)), true
+		return e.complexity.Mutation.PostDelete(childComplexity, args["id"].(int)), true
 
 	case "Mutation.postUpdate":
 		if e.complexity.Mutation.PostUpdate == nil {
@@ -320,7 +320,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.PostUpdate(childComplexity, args["id"].(string), args["input"].(post.UpdateInput)), true
+		return e.complexity.Mutation.PostUpdate(childComplexity, args["id"].(int), args["input"].(post.UpdateInput)), true
 
 	case "Post.authorId":
 		if e.complexity.Post.AuthorID == nil {
@@ -416,7 +416,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Comment(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.Comment(childComplexity, args["id"].(int)), true
 
 	case "Query.comments":
 		if e.complexity.Query.Comments == nil {
@@ -442,7 +442,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Post(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.Post(childComplexity, args["id"].(int)), true
 
 	case "Query.posts":
 		if e.complexity.Query.Posts == nil {
@@ -787,13 +787,13 @@ func (ec *executionContext) field_Mutation_commentDelete_args(ctx context.Contex
 func (ec *executionContext) field_Mutation_commentDelete_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -815,13 +815,13 @@ func (ec *executionContext) field_Mutation_commentUpdate_args(ctx context.Contex
 func (ec *executionContext) field_Mutation_commentUpdate_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -874,13 +874,13 @@ func (ec *executionContext) field_Mutation_postDelete_args(ctx context.Context, 
 func (ec *executionContext) field_Mutation_postDelete_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -902,13 +902,13 @@ func (ec *executionContext) field_Mutation_postUpdate_args(ctx context.Context, 
 func (ec *executionContext) field_Mutation_postUpdate_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -961,13 +961,13 @@ func (ec *executionContext) field_Query_comment_args(ctx context.Context, rawArg
 func (ec *executionContext) field_Query_comment_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -984,13 +984,13 @@ func (ec *executionContext) field_Query_post_args(ctx context.Context, rawArgs m
 func (ec *executionContext) field_Query_post_argsID(
 	ctx context.Context,
 	rawArgs map[string]any,
-) (string, error) {
+) (int, error) {
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 	if tmp, ok := rawArgs["id"]; ok {
-		return ec.unmarshalNID2string(ctx, tmp)
+		return ec.unmarshalNID2int(ctx, tmp)
 	}
 
-	var zeroVal string
+	var zeroVal int
 	return zeroVal, nil
 }
 
@@ -1296,9 +1296,9 @@ func (ec *executionContext) _Comment_postId(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalNID2string(ctx, field.Selections, res)
+	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Comment_postId(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1763,7 +1763,7 @@ func (ec *executionContext) _Mutation_commentUpdate(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CommentUpdate(rctx, fc.Args["id"].(string), fc.Args["input"].(comment.UpdateInput))
+		return ec.resolvers.Mutation().CommentUpdate(rctx, fc.Args["id"].(int), fc.Args["input"].(comment.UpdateInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1824,7 +1824,7 @@ func (ec *executionContext) _Mutation_commentDelete(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CommentDelete(rctx, fc.Args["id"].(string))
+		return ec.resolvers.Mutation().CommentDelete(rctx, fc.Args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1944,7 +1944,7 @@ func (ec *executionContext) _Mutation_postUpdate(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().PostUpdate(rctx, fc.Args["id"].(string), fc.Args["input"].(post.UpdateInput))
+		return ec.resolvers.Mutation().PostUpdate(rctx, fc.Args["id"].(int), fc.Args["input"].(post.UpdateInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2005,7 +2005,7 @@ func (ec *executionContext) _Mutation_postDelete(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().PostDelete(rctx, fc.Args["id"].(string))
+		return ec.resolvers.Mutation().PostDelete(rctx, fc.Args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2676,7 +2676,7 @@ func (ec *executionContext) _Query_comment(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Comment(rctx, fc.Args["id"].(string))
+		return ec.resolvers.Query().Comment(rctx, fc.Args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2800,7 +2800,7 @@ func (ec *executionContext) _Query_post(ctx context.Context, field graphql.Colle
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Post(rctx, fc.Args["id"].(string))
+		return ec.resolvers.Query().Post(rctx, fc.Args["id"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6262,21 +6262,6 @@ func (ec *executionContext) unmarshalNID2int(ctx context.Context, v any) (int, e
 
 func (ec *executionContext) marshalNID2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
 	res := graphql.MarshalInt(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNID2string(ctx context.Context, v any) (string, error) {
-	res, err := graphql.UnmarshalID(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
-	res := graphql.MarshalID(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

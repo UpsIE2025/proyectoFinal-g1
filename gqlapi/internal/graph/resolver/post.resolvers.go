@@ -19,12 +19,12 @@ func (r *mutationResolver) PostCreate(ctx context.Context, input post.CreateInpu
 }
 
 // PostUpdate is the resolver for the postUpdate field.
-func (r *mutationResolver) PostUpdate(ctx context.Context, id string, input post.UpdateInput) (*modelgen.PostUpdatePayload, error) {
+func (r *mutationResolver) PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error) {
 	panic(fmt.Errorf("not implemented: PostUpdate - postUpdate"))
 }
 
 // PostDelete is the resolver for the postDelete field.
-func (r *mutationResolver) PostDelete(ctx context.Context, id string) (*modelgen.PostDeletePayload, error) {
+func (r *mutationResolver) PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error) {
 	panic(fmt.Errorf("not implemented: PostDelete - postDelete"))
 }
 
@@ -34,7 +34,7 @@ func (r *postResolver) Comments(ctx context.Context, obj *post.Post) ([]*comment
 }
 
 // Post is the resolver for the post field.
-func (r *queryResolver) Post(ctx context.Context, id string) (*post.Post, error) {
+func (r *queryResolver) Post(ctx context.Context, id int) (*post.Post, error) {
 	panic(fmt.Errorf("not implemented: Post - post"))
 }
 

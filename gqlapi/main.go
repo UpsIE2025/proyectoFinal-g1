@@ -25,7 +25,7 @@ func main() {
 		slog.Error(err.Error())
 		os.Exit(1)
 	}
-	commentClient, err := comment.NewClient()
+	commentClient, err := comment.NewClient("http://localhost:80")
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)

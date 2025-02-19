@@ -6,32 +6,52 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 	"msoft/g1/gqlapi/internal/clients/comment"
 	"msoft/g1/gqlapi/internal/graph/modelgen"
 )
 
 // CommentCreate is the resolver for the commentCreate field.
 func (r *mutationResolver) CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error) {
-	panic(fmt.Errorf("not implemented: CommentCreate - commentCreate"))
+	input.AuthorID = "1" // TODO
+	cm, err := r.commentClient.Create(&input)
+	if err != nil {
+		return &modelgen.CommentCreatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.CommentCreatePayload{Comment: cm}, nil
 }
 
 // CommentUpdate is the resolver for the commentUpdate field.
-func (r *mutationResolver) CommentUpdate(ctx context.Context, id string, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error) {
-	panic(fmt.Errorf("not implemented: CommentUpdate - commentUpdate"))
+func (r *mutationResolver) CommentUpdate(ctx context.Context, id int, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error) {
+	cm, err := r.commentClient.Update(id, &input)
+	if err != nil {
+		return &modelgen.CommentUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.CommentUpdatePayload{Comment: cm}, nil
 }
 
 // CommentDelete is the resolver for the commentDelete field.
-func (r *mutationResolver) CommentDelete(ctx context.Context, id string) (*modelgen.CommentDeletePayload, error) {
-	panic(fmt.Errorf("not implemented: CommentDelete - commentDelete"))
+func (r *mutationResolver) CommentDelete(ctx context.Context, id int) (*modelgen.CommentDeletePayload, error) {
+	err := r.commentClient.Delete(id)
+	if err != nil {
+		return &modelgen.CommentDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.CommentDeletePayload{}, nil
 }
 
 // Comment is the resolver for the comment field.
-func (r *queryResolver) Comment(ctx context.Context, id string) (*comment.Comment, error) {
-	panic(fmt.Errorf("not implemented: Comment - comment"))
+func (r *queryResolver) Comment(ctx context.Context, id int) (*comment.Comment, error) {
+	cm, err := r.commentClient.GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+	return cm, nil
 }
 
 // Comments is the resolver for the comments field.
 func (r *queryResolver) Comments(ctx context.Context) ([]*comment.Comment, error) {
-	panic(fmt.Errorf("not implemented: Comments - comments"))
+	cms, err := r.commentClient.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return cms, nil
 }
