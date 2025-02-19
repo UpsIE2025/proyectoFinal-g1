@@ -1,0 +1,20 @@
+services:
+  postdb:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: post_user
+      POSTGRES_PASSWORD: post_hardpass
+      POSTGRES_DB: posts
+    ports:
+      - "5432:5432"
+  commentdb:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: comment_user
+      MYSQL_PASSWORD: comment_hardpass
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: comments
+    ports:
+      - "3306:3306"
