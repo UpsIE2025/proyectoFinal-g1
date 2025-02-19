@@ -11,7 +11,7 @@ type Comment struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	Content   string    `json:"content,omitempty"`
-	PostID    string    `json:"post_id,omitempty"`
+	PostID    int       `json:"post_id,omitempty"`
 	AuthorID  string    `json:"author_id,omitempty"`
 }
 

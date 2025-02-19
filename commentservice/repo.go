@@ -5,7 +5,6 @@ import (
 	"errors"
 
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 )
 
 // commentRepository defines repository implementation for Comments.
@@ -49,12 +48,16 @@ func (r *commentRepository) GetByID(ctx context.Context, id int) (*Comment, erro
 func (r *commentRepository) Update(ctx context.Context, id int, c *Comment) (*Comment, error) {
 	ret := Comment{}
 	c.ID = id
-	result := r.db.WithContext(ctx).Model(&ret).Clauses(clause.Returning{}).Where("id = ?", id).Updates(c)
+	result := r.db.WithContext(ctx).Model(&ret).Where("id = ?", id).Updates(c)
+	if result.Error != nil {
+		return nil, result.Error
+	}
 	if result.RowsAffected == 0 {
 		return nil, nil
 	}
-	if result.Error != nil {
-		return nil, result.Error
+	err := r.db.First(&ret, id).Error
+	if err != nil {
+		return nil, err
 	}
 	return &ret, nil
 }

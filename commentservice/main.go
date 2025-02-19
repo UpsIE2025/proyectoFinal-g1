@@ -1,10 +1,10 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log/slog"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -15,8 +15,9 @@ func main() {
 	}
 
 	commentRepo := newCommentRepository(db)
+	commentController := newCommentController(commentRepo)
 
-	ctx := context.Background()
-
-	fmt.Println(commentRepo.GetAll(ctx))
+	r := gin.Default()
+	commentController.AttachRouter(r)
+	r.Run(":80")
 }
