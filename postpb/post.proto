@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package postpb;
+
+option go_package = "msoft/g1/postpb";
+
+import "google/protobuf/empty.proto";
+
+message CreatePostRequest {
+  string title = 1;
+  string content = 2;
+  string author_id = 3;
+}
+
+message GetPostRequest {
+  int64 id = 1;
+}
+
+message UpdatePostRequest {
+  int64 id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message DeletePostRequest {
+  int64 id = 1;
+}
+
+message Post {
+  int64 id = 1;
+  string created_at = 2;
+  string updated_at = 3;
+  string title = 4;
+  string content = 5;
+  string author_id = 6;
+}
+
+message PostResponse {
+  Post post = 1;
+}
+
+message PostsResponse {
+  repeated Post posts = 1;
+}
+
+service PostGRPC {
+  rpc CreatePost(CreatePostRequest) returns (PostResponse) {}
+  rpc GetAllPosts(google.protobuf.Empty) returns (PostsResponse) {}
+  rpc GetPost(GetPostRequest) returns (PostResponse) {}
+  rpc UpdatePost(UpdatePostRequest) returns (PostResponse) {}
+  rpc DeletePost(DeletePostRequest) returns (google.protobuf.Empty) {}
+}
