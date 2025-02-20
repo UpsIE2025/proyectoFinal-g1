@@ -45,6 +45,15 @@ func (r *commentRepository) GetByID(ctx context.Context, id int) (*Comment, erro
 	return &ret, nil
 }
 
+func (r *commentRepository) GetByPostID(ctx context.Context, postID int) ([]*Comment, error) {
+	var comments []*Comment
+	err := r.db.WithContext(ctx).Where("post_id = ?", postID).Find(&comments).Error
+	if err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+
 func (r *commentRepository) Update(ctx context.Context, id int, c *Comment) (*Comment, error) {
 	ret := Comment{}
 	c.ID = id

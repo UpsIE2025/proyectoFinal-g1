@@ -20,6 +20,7 @@ type Repository interface {
 	Create(ctx context.Context, c *Comment) (*Comment, error)
 	GetAll(ctx context.Context) ([]*Comment, error)
 	GetByID(ctx context.Context, id int) (*Comment, error)
+	GetByPostID(ctx context.Context, postID int) ([]*Comment, error)
 	Update(ctx context.Context, id int, c *Comment) (*Comment, error)
 	Delete(ctx context.Context, id int) error
 }

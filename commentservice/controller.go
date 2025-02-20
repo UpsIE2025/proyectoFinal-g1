@@ -44,7 +44,14 @@ func (c *commentController) createComment(ctx *gin.Context) {
 }
 
 func (c *commentController) getAllComments(ctx *gin.Context) {
-	cms, err := c.repo.GetAll(ctx)
+	var cms []*Comment
+	postID := ctx.Query("post_id")
+	postIDInt, err := strconv.Atoi(postID)
+	if postID != "" && err == nil {
+		cms, err = c.repo.GetByPostID(ctx, postIDInt)
+	} else {
+		cms, err = c.repo.GetAll(ctx)
+	}
 	if err != nil {
 		slog.Error(err.Error())
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": ErrDatabase.Error()})
