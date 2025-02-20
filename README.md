@@ -31,3 +31,64 @@ Crea un nuevo comentario.
   "postID": "int",
   "authorID": "int"
 }
+
+**Response:**
+```json
+{
+  "id": "int",
+  "content": "string",
+  "postID": "int",
+  "authorID": "int"
+}
+
+### 2. `GET /`
+Obtiene todos los comentarios.
+
+**Response:**
+```json
+[
+  {
+    "id": "int",
+    "content": "string",
+    "postID": "int",
+    "authorID": "int"
+  }
+]
+
+### 3. `GET /:id`
+Obtiene un comentario específico por ID.
+
+**Response:**
+```json
+{
+  "id": "int",
+  "content": "string",
+  "postID": "int",
+  "authorID": "int"
+}
+
+### 4. `PATCH /:id`
+Crea un nuevo comentario.
+
+**Request Body:**
+```json
+{
+  "content": "string"
+}
+
+**Response:**
+```json
+{
+  "id": "int",
+  "content": "string",
+  "postID": "int",
+  "authorID": "int"
+}
+
+### 5. `DELETE /:id`
+Elimina un comentario por ID.
+
+**Response:**
+- `200 OK` si se elimina correctamente.
+- `404 Not Found` si no se encuentra el comentario.
+
