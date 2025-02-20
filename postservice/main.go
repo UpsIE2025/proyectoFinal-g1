@@ -7,10 +7,13 @@ import (
 	"net"
 	"os"
 
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
 
 func main() {
+	godotenv.Load()
+
 	db, err := dbInit()
 	if err != nil {
 		slog.Error(err.Error())
@@ -22,8 +25,7 @@ func main() {
 	s := grpc.NewServer()
 	postpb.RegisterPostGRPCServer(s, &rpcServer)
 
-	port := "8091"
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", getServicePort()))
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
@@ -32,4 +34,12 @@ func main() {
 	if err := s.Serve(lis); err != nil {
 		slog.Error(err.Error())
 	}
+}
+
+func getServicePort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	return port
 }

@@ -5,6 +5,7 @@ go 1.23.4
 replace msoft/g1/postpb => ../postpb
 
 require (
+	github.com/joho/godotenv v1.5.1
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
 	gorm.io/driver/postgres v1.5.11
