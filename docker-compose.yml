@@ -18,3 +18,50 @@ services:
       MYSQL_DATABASE: comments
     ports:
       - "3306:3306"
+  postservice:
+    pull_policy: build
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: postservice.Dockerfile
+    environment:
+      PORT: 8080
+      POSTGRES_DB_HOST: postdb
+      POSTGRES_DB_PORT: 5432
+      POSTGRES_DB_USER: post_user
+      POSTGRES_DB_PASS: post_hardpass
+      POSTGRES_DB_NAME: posts
+    depends_on:
+      - postdb
+  commentservice:
+    pull_policy: build
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: commentservice.Dockerfile
+    environment:
+      PORT: 8080
+      MYSQL_DB_HOST: commentdb
+      MYSQL_DB_PORT: 3306
+      MYSQL_DB_USER: comment_user
+      MYSQL_DB_PASS: comment_hardpass
+      MYSQL_DB_NAME: comments
+    depends_on:
+      - commentdb
+  gqlapi:
+    pull_policy: build
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: gqlapi.Dockerfile
+    environment:
+      API_PORT: 8080
+      POST_SERVICE_HOST: postservice
+      POST_SERVICE_PORT: 8080
+      COMMENT_SERVICE_HOST: commentservice
+      COMMENT_SERVICE_PORT: 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - postservice
+      - commentservice
