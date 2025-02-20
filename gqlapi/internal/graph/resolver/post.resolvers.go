@@ -6,7 +6,6 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 	"msoft/g1/gqlapi/internal/clients/comment"
 	"msoft/g1/gqlapi/internal/clients/post"
 	"msoft/g1/gqlapi/internal/graph/generated"
@@ -15,32 +14,57 @@ import (
 
 // PostCreate is the resolver for the postCreate field.
 func (r *mutationResolver) PostCreate(ctx context.Context, input post.CreateInput) (*modelgen.PostCreatePayload, error) {
-	panic(fmt.Errorf("not implemented: PostCreate - postCreate"))
+	input.AuthorID = "1" // TODO
+	p, err := r.postClient.Create(&input)
+	if err != nil {
+		return &modelgen.PostCreatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.PostCreatePayload{Post: p}, nil
 }
 
 // PostUpdate is the resolver for the postUpdate field.
 func (r *mutationResolver) PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error) {
-	panic(fmt.Errorf("not implemented: PostUpdate - postUpdate"))
+	p, err := r.postClient.Update(id, &input)
+	if err != nil {
+		return &modelgen.PostUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.PostUpdatePayload{Post: p}, nil
 }
 
 // PostDelete is the resolver for the postDelete field.
 func (r *mutationResolver) PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error) {
-	panic(fmt.Errorf("not implemented: PostDelete - postDelete"))
+	err := r.postClient.Delete(id)
+	if err != nil {
+		return &modelgen.PostDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	return &modelgen.PostDeletePayload{}, nil
 }
 
 // Comments is the resolver for the comments field.
 func (r *postResolver) Comments(ctx context.Context, obj *post.Post) ([]*comment.Comment, error) {
-	panic(fmt.Errorf("not implemented: Comments - comments"))
+	cms, err := r.commentClient.GetByPostID(obj.ID)
+	if err != nil {
+		return nil, err
+	}
+	return cms, nil
 }
 
 // Post is the resolver for the post field.
 func (r *queryResolver) Post(ctx context.Context, id int) (*post.Post, error) {
-	panic(fmt.Errorf("not implemented: Post - post"))
+	p, err := r.postClient.GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 // Posts is the resolver for the posts field.
 func (r *queryResolver) Posts(ctx context.Context) ([]*post.Post, error) {
-	panic(fmt.Errorf("not implemented: Posts - posts"))
+	ps, err := r.postClient.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return ps, nil
 }
 
 // Post returns generated.PostResolver implementation.

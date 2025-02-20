@@ -20,12 +20,14 @@ import (
 
 func main() {
 
-	postClient, err := post.NewClient()
+	postClient, postClientClose, err := post.NewClient("localhost:8091")
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
 	}
-	commentClient, err := comment.NewClient("http://localhost:80")
+	defer postClientClose()
+
+	commentClient, err := comment.NewClient("localhost:80")
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
