@@ -31,7 +31,7 @@ Crea un nuevo comentario.
   "postID": "int",
   "authorID": "int"
 }
-
+```
 **Response:**
 ```json
 {
@@ -40,7 +40,7 @@ Crea un nuevo comentario.
   "postID": "int",
   "authorID": "int"
 }
-
+```
 ### 2. `GET /`
 Obtiene todos los comentarios.
 
@@ -54,7 +54,7 @@ Obtiene todos los comentarios.
     "authorID": "int"
   }
 ]
-
+```
 ### 3. `GET /:id`
 Obtiene un comentario específico por ID.
 
@@ -66,7 +66,7 @@ Obtiene un comentario específico por ID.
   "postID": "int",
   "authorID": "int"
 }
-
+```
 ### 4. `PATCH /:id`
 Crea un nuevo comentario.
 
@@ -75,7 +75,7 @@ Crea un nuevo comentario.
 {
   "content": "string"
 }
-
+```
 **Response:**
 ```json
 {
@@ -84,7 +84,7 @@ Crea un nuevo comentario.
   "postID": "int",
   "authorID": "int"
 }
-
+```
 ### 5. `DELETE /:id`
 Elimina un comentario por ID.
 
