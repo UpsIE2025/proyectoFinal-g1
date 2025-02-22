@@ -6,8 +6,14 @@ services:
       POSTGRES_USER: post_user
       POSTGRES_PASSWORD: post_hardpass
       POSTGRES_DB: posts
+    command: >
+      postgres -c wal_level=logical
+               -c max_replication_slots=4
+               -c max_wal_senders=4
     ports:
       - "5432:5432"
+    networks:
+      - project-network
   commentdb:
     image: mysql:8.0
     restart: unless-stopped
@@ -18,6 +24,8 @@ services:
       MYSQL_DATABASE: comments
     ports:
       - "3306:3306"
+    networks:
+      - project-network
   postservice:
     pull_policy: build
     restart: unless-stopped
@@ -31,6 +39,8 @@ services:
       POSTGRES_DB_USER: post_user
       POSTGRES_DB_PASS: post_hardpass
       POSTGRES_DB_NAME: posts
+    networks:
+      - project-network
     depends_on:
       - postdb
   commentservice:
@@ -46,6 +56,8 @@ services:
       MYSQL_DB_USER: comment_user
       MYSQL_DB_PASS: comment_hardpass
       MYSQL_DB_NAME: comments
+    networks:
+      - project-network
     depends_on:
       - commentdb
   gqlapi:
@@ -62,6 +74,33 @@ services:
       COMMENT_SERVICE_PORT: 8080
     ports:
       - 8080:8080
+    networks:
+      - project-network
     depends_on:
       - postservice
       - commentservice
+  kafka:
+    image: apache/kafka-native
+    restart: unless-stopped
+    ports:
+      - "9092:9092"
+    environment:
+      # Configure listeners for both docker and host communication
+      KAFKA_LISTENERS: CONTROLLER://localhost:9091,HOST://0.0.0.0:9092,DOCKER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: HOST://localhost:9092,DOCKER://kafka:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      # Settings required for KRaft mode
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9091
+      # Listener to use for broker-to-broker communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+      # Required for a single node cluster
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - project-network
+
+networks:
+  project-network:
+    driver: bridge
