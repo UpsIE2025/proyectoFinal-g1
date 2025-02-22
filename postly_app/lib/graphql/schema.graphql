@@ -1,0 +1,143 @@
+"""
+The @defer directive may be specified on a fragment spread to imply
+de-prioritization, that causes the fragment to be omitted in the initial
+response, and delivered as a subsequent response afterward. A query with @defer
+directive will cause the request to potentially return multiple responses, where
+non-deferred data is delivered in the initial response and data deferred
+delivered in a subsequent response. @include and @skip take precedence over @defer.
+"""
+directive @defer(if: Boolean = true, label: String) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""GoField directive for inline config."""
+directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+"""GoModel directive for inline config."""
+directive @goModel(model: String, models: [String!]) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+"""
+The `@oneOf` _built-in directive_ is used within the type system definition
+language to indicate an Input Object is a OneOf Input Object.
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""
+The @specifiedBy built-in directive is used within the type system definition
+language to provide a scalar specification URL for specifying the behavior of
+custom scalar types.
+"""
+directive @specifiedBy(url: String!) on SCALAR
+
+"""Comment model definition"""
+type Comment {
+  id: ID!
+  createdAt: Time!
+  updatedAt: Time!
+  content: String!
+  postId: ID!
+  authorId: String!
+}
+
+input CommentCreateInput {
+  postId: ID!
+  content: String!
+}
+
+type CommentCreatePayload {
+  comment: Comment
+  error: Error
+}
+
+type CommentDeletePayload {
+  error: Error
+}
+
+input CommentUpdateInput {
+  content: String!
+}
+
+type CommentUpdatePayload {
+  comment: Comment
+  error: Error
+}
+
+type Error {
+  message: String!
+}
+
+"""Mutation operations"""
+type Mutation {
+  _emptyMutate: String
+
+  """Creates a new comment"""
+  commentCreate(input: CommentCreateInput!): CommentCreatePayload!
+
+  """Updates the comment with the specified id"""
+  commentUpdate(id: ID!, input: CommentUpdateInput!): CommentUpdatePayload!
+
+  """Deletes the comment with the specified id"""
+  commentDelete(id: ID!): CommentDeletePayload!
+
+  """Creates a new Post"""
+  postCreate(input: PostCreateInput!): PostCreatePayload!
+
+  """Updates the Post with the specified id"""
+  postUpdate(id: ID!, input: PostUpdateInput!): PostUpdatePayload!
+
+  """Deletes the Post with the specified id"""
+  postDelete(id: ID!): PostDeletePayload!
+}
+
+"""Post model definition"""
+type Post {
+  id: ID!
+  createdAt: Time!
+  updatedAt: Time!
+  title: String!
+  content: String!
+  authorId: String!
+  comments: [Comment!]!
+}
+
+input PostCreateInput {
+  title: String!
+  content: String!
+}
+
+type PostCreatePayload {
+  post: Post
+  error: Error
+}
+
+type PostDeletePayload {
+  error: Error
+}
+
+input PostUpdateInput {
+  title: String!
+  content: String!
+}
+
+type PostUpdatePayload {
+  post: Post
+  error: Error
+}
+
+"""Query operations"""
+type Query {
+  _empty: String
+
+  """Returns the comment with the specified id"""
+  comment(id: ID!): Comment
+
+  """Returns all the comments"""
+  comments: [Comment!]!
+
+  """Returns the Post with the specified id"""
+  post(id: ID!): Post
+
+  """Returns all the posts"""
+  posts: [Post!]!
+}
+
+scalar Time
+
