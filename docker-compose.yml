@@ -119,6 +119,39 @@ services:
       STATUS_STORAGE_TOPIC: debezium_connect_statuses
     networks:
       - project-network
+  replicadb:
+    image: mariadb:11.7.2
+    restart: unless-stopped
+    environment:
+      MARIADB_USER: replica_user
+      MARIADB_PASSWORD: replica_hardpass
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: replica_posts
+    ports:
+      - "3307:3306"
+    networks:
+      - project-network
+  cdcservice:
+    pull_policy: build
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: cdcservice.Dockerfile
+    environment:
+      DEBEZIUM_HOST: debezium
+      DEBEZIUM_PORT: 8083
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9093
+      MARIA_DB_USER: replica_user
+      MARIA_DB_PASS: replica_hardpass
+      MARIA_DB_HOST: replicadb
+      MARIA_DB_PORT: 3306
+      MARIA_DB_NAME: replica_posts
+    networks:
+      - project-network
+    depends_on:
+      - debezium
+      - replicadb
 
 networks:
   project-network:

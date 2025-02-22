@@ -1,0 +1,17 @@
+{
+  "name": "postdb-postgres-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "postdb",
+    "database.port": "5432",
+    "database.user": "post_user",
+    "database.password": "post_hardpass",
+    "database.dbname": "posts",
+    "database.server.name": "postgres-server",
+    "plugin.name": "pgoutput",
+    "slot.name": "debezium_slot",
+    "publication.name": "debezium_pub",
+    "table.include.list": "public.posts",
+    "topic.prefix": "postdb"
+  }
+}
