@@ -9,17 +9,19 @@ class PostsNotifier extends AsyncNotifier<List<Post>> {
     // final c = ref.read(graphqlClientProvider);
     // final resp = await  c.request(GGetAllPostsReq()).first;
 
-    return [
-      Post(
-        id: 1,
-        title: "First post",
-        content: "First comment",
+    return List.generate(
+      10,
+      (i) => Post(
+        id: i + 1,
+        title: "Titulo ${i + 1}",
+        content: "Contenido ${i + 1}",
+        updatedAt: DateTime.now(),
+        commentsCount: i * 10 + 1,
+        authorName: "Jose Alvez",
       ),
-      Post(
-        id: 2,
-        title: "Second post",
-        content: "Second comment",
-      ),
-    ];
+    );
   }
 }
+
+final postsNotifierProvider =
+    AsyncNotifierProvider<PostsNotifier, List<Post>>(PostsNotifier.new);

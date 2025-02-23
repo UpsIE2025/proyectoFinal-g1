@@ -8,5 +8,8 @@ class Post with _$Post {
     required int id,
     required String title,
     required String content,
+    required DateTime updatedAt,
+    @Default(0) int commentsCount,
+    @Default("") String authorName,
   }) = _Post;
 }
