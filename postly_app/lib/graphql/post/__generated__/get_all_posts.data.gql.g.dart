@@ -82,13 +82,16 @@ class _$GGetAllPostsData_postsSerializer
       serializers.serialize(object.G__typename,
           specifiedType: const FullType(String)),
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'title',
       serializers.serialize(object.title,
           specifiedType: const FullType(String)),
       'content',
       serializers.serialize(object.content,
           specifiedType: const FullType(String)),
+      'updatedAt',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(_i2.GTime)),
     ];
 
     return result;
@@ -112,7 +115,7 @@ class _$GGetAllPostsData_postsSerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'title':
           result.title = serializers.deserialize(value,
@@ -121,6 +124,10 @@ class _$GGetAllPostsData_postsSerializer
         case 'content':
           result.content = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'updatedAt':
+          result.updatedAt.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GTime))! as _i2.GTime);
           break;
       }
     }
@@ -251,11 +258,13 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
   @override
   final String G__typename;
   @override
-  final String id;
+  final int id;
   @override
   final String title;
   @override
   final String content;
+  @override
+  final _i2.GTime updatedAt;
 
   factory _$GGetAllPostsData_posts(
           [void Function(GGetAllPostsData_postsBuilder)? updates]) =>
@@ -265,7 +274,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
       {required this.G__typename,
       required this.id,
       required this.title,
-      required this.content})
+      required this.content,
+      required this.updatedAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GGetAllPostsData_posts', 'G__typename');
@@ -274,6 +284,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
         title, r'GGetAllPostsData_posts', 'title');
     BuiltValueNullFieldError.checkNotNull(
         content, r'GGetAllPostsData_posts', 'content');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'GGetAllPostsData_posts', 'updatedAt');
   }
 
   @override
@@ -292,7 +304,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
         G__typename == other.G__typename &&
         id == other.id &&
         title == other.title &&
-        content == other.content;
+        content == other.content &&
+        updatedAt == other.updatedAt;
   }
 
   @override
@@ -302,6 +315,7 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -312,7 +326,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('title', title)
-          ..add('content', content))
+          ..add('content', content)
+          ..add('updatedAt', updatedAt))
         .toString();
   }
 }
@@ -325,9 +340,9 @@ class GGetAllPostsData_postsBuilder
   String? get G__typename => _$this._G__typename;
   set G__typename(String? G__typename) => _$this._G__typename = G__typename;
 
-  String? _id;
-  String? get id => _$this._id;
-  set id(String? id) => _$this._id = id;
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
 
   String? _title;
   String? get title => _$this._title;
@@ -336,6 +351,11 @@ class GGetAllPostsData_postsBuilder
   String? _content;
   String? get content => _$this._content;
   set content(String? content) => _$this._content = content;
+
+  _i2.GTimeBuilder? _updatedAt;
+  _i2.GTimeBuilder get updatedAt =>
+      _$this._updatedAt ??= new _i2.GTimeBuilder();
+  set updatedAt(_i2.GTimeBuilder? updatedAt) => _$this._updatedAt = updatedAt;
 
   GGetAllPostsData_postsBuilder() {
     GGetAllPostsData_posts._initializeBuilder(this);
@@ -348,6 +368,7 @@ class GGetAllPostsData_postsBuilder
       _id = $v.id;
       _title = $v.title;
       _content = $v.content;
+      _updatedAt = $v.updatedAt.toBuilder();
       _$v = null;
     }
     return this;
@@ -368,17 +389,31 @@ class GGetAllPostsData_postsBuilder
   GGetAllPostsData_posts build() => _build();
 
   _$GGetAllPostsData_posts _build() {
-    final _$result = _$v ??
-        new _$GGetAllPostsData_posts._(
-          G__typename: BuiltValueNullFieldError.checkNotNull(
-              G__typename, r'GGetAllPostsData_posts', 'G__typename'),
-          id: BuiltValueNullFieldError.checkNotNull(
-              id, r'GGetAllPostsData_posts', 'id'),
-          title: BuiltValueNullFieldError.checkNotNull(
-              title, r'GGetAllPostsData_posts', 'title'),
-          content: BuiltValueNullFieldError.checkNotNull(
-              content, r'GGetAllPostsData_posts', 'content'),
-        );
+    _$GGetAllPostsData_posts _$result;
+    try {
+      _$result = _$v ??
+          new _$GGetAllPostsData_posts._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename, r'GGetAllPostsData_posts', 'G__typename'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'GGetAllPostsData_posts', 'id'),
+            title: BuiltValueNullFieldError.checkNotNull(
+                title, r'GGetAllPostsData_posts', 'title'),
+            content: BuiltValueNullFieldError.checkNotNull(
+                content, r'GGetAllPostsData_posts', 'content'),
+            updatedAt: updatedAt.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'updatedAt';
+        updatedAt.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GGetAllPostsData_posts', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

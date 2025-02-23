@@ -5,6 +5,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:postly_app/graphql/__generated__/schema.schema.gql.dart' as _i2;
 import 'package:postly_app/graphql/__generated__/serializers.gql.dart' as _i1;
 
 part 'get_all_posts.data.gql.g.dart';
@@ -50,9 +51,10 @@ abstract class GGetAllPostsData_posts
 
   @BuiltValueField(wireName: '__typename')
   String get G__typename;
-  String get id;
+  int get id;
   String get title;
   String get content;
+  _i2.GTime get updatedAt;
   static Serializer<GGetAllPostsData_posts> get serializer =>
       _$gGetAllPostsDataPostsSerializer;
 

@@ -5,6 +5,9 @@ targets:
         enabled: true
         options:
           schema: postly_app|lib/graphql/schema.graphql
+          type_overrides:
+            ID:
+              name: int
       ferry_generator|serializer_builder:
         enabled: true
         options:

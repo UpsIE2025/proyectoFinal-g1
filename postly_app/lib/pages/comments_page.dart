@@ -12,17 +12,17 @@ class CommentsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final commentsState = ref.watch(commentsNotifierProvider(postId));
     return Scaffold(
-      appBar: AppBar(title: Text("Comentarios")),
+      appBar: AppBar(title: const Text("Comentarios")),
       body: Column(
         children: [
           const SizedBox(height: 10),
           Expanded(
             child: commentsState.when(
-              loading: () => CircularProgressIndicator(),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Text(e.toString()),
               data: (comments) => ListView.separated(
-                padding: EdgeInsets.all(10),
-                physics: BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(10),
+                physics: const BouncingScrollPhysics(),
                 itemCount: comments.length,
                 separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemBuilder: (context, index) => ProviderScope(
@@ -73,8 +73,8 @@ class __CommentInputState extends State<_CommentInput> {
               controller: ctrl,
               onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                border: OutlineInputBorder(borderSide: BorderSide.none),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                border: const OutlineInputBorder(borderSide: BorderSide.none),
                 fillColor: Colors.grey.shade100,
                 filled: true,
                 hintText: "Escriba un comentario ...",

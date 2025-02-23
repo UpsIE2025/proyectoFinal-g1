@@ -4,5 +4,6 @@ query GetAllPosts() {
     id
     title
     content
+    updatedAt
   }
 }

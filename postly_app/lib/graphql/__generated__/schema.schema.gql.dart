@@ -18,7 +18,7 @@ abstract class GCommentCreateInput
           [void Function(GCommentCreateInputBuilder b) updates]) =
       _$GCommentCreateInput;
 
-  String get postId;
+  int get postId;
   String get content;
   static Serializer<GCommentCreateInput> get serializer =>
       _$gCommentCreateInputSerializer;

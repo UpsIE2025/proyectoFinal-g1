@@ -31,8 +31,7 @@ class _$GCommentCreateInputSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'postId',
-      serializers.serialize(object.postId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.postId, specifiedType: const FullType(int)),
       'content',
       serializers.serialize(object.content,
           specifiedType: const FullType(String)),
@@ -55,7 +54,7 @@ class _$GCommentCreateInputSerializer
       switch (key) {
         case 'postId':
           result.postId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'content':
           result.content = serializers.deserialize(value,
@@ -214,7 +213,7 @@ class _$GPostUpdateInputSerializer
 
 class _$GCommentCreateInput extends GCommentCreateInput {
   @override
-  final String postId;
+  final int postId;
   @override
   final String content;
 
@@ -269,9 +268,9 @@ class GCommentCreateInputBuilder
     implements Builder<GCommentCreateInput, GCommentCreateInputBuilder> {
   _$GCommentCreateInput? _$v;
 
-  String? _postId;
-  String? get postId => _$this._postId;
-  set postId(String? postId) => _$this._postId = postId;
+  int? _postId;
+  int? get postId => _$this._postId;
+  set postId(int? postId) => _$this._postId = postId;
 
   String? _content;
   String? get content => _$this._content;

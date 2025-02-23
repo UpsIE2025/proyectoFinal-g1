@@ -46,6 +46,7 @@ dependencies:
   gql_link: ^1.0.0+1
   gql_transform_link: ^1.0.0
   intl: ^0.20.2
+  auth0_flutter: ^1.8.0
   
 dev_dependencies:
   flutter_test:

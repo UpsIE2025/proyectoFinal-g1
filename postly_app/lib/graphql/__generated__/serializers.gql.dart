@@ -14,6 +14,16 @@ import 'package:postly_app/graphql/__generated__/schema.schema.gql.dart'
         GPostCreateInput,
         GPostUpdateInput,
         GTime;
+import 'package:postly_app/graphql/post/__generated__/create_post.data.gql.dart'
+    show
+        GCreatePostData,
+        GCreatePostData_postCreate,
+        GCreatePostData_postCreate_error,
+        GCreatePostData_postCreate_post;
+import 'package:postly_app/graphql/post/__generated__/create_post.req.gql.dart'
+    show GCreatePostReq;
+import 'package:postly_app/graphql/post/__generated__/create_post.var.gql.dart'
+    show GCreatePostVars;
 import 'package:postly_app/graphql/post/__generated__/get_all_posts.data.gql.dart'
     show GGetAllPostsData, GGetAllPostsData_posts;
 import 'package:postly_app/graphql/post/__generated__/get_all_posts.req.gql.dart'
@@ -29,6 +39,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
 @SerializersFor([
   GCommentCreateInput,
   GCommentUpdateInput,
+  GCreatePostData,
+  GCreatePostData_postCreate,
+  GCreatePostData_postCreate_error,
+  GCreatePostData_postCreate_post,
+  GCreatePostReq,
+  GCreatePostVars,
   GGetAllPostsData,
   GGetAllPostsData_posts,
   GGetAllPostsReq,
