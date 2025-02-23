@@ -14,7 +14,10 @@ class AppAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firstLetter = name[0].toUpperCase();
+    String firstLetter = "A";
+    if (name.isNotEmpty) {
+      firstLetter = name[0].toUpperCase();
+    }
     return CircleAvatar(
       backgroundColor: _colors[firstLetter.codeUnitAt(0) % 4],
       foregroundColor: Colors.white,

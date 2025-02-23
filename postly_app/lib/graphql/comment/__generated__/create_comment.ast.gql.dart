@@ -4,14 +4,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:gql/ast.dart' as _i1;
 
-const CreatePost = _i1.OperationDefinitionNode(
+const CreateComment = _i1.OperationDefinitionNode(
   type: _i1.OperationType.mutation,
-  name: _i1.NameNode(value: 'CreatePost'),
+  name: _i1.NameNode(value: 'CreateComment'),
   variableDefinitions: [
     _i1.VariableDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'input')),
       type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'PostCreateInput'),
+        name: _i1.NameNode(value: 'CommentCreateInput'),
         isNonNull: true,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
@@ -21,7 +21,7 @@ const CreatePost = _i1.OperationDefinitionNode(
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
     _i1.FieldNode(
-      name: _i1.NameNode(value: 'postCreate'),
+      name: _i1.NameNode(value: 'commentCreate'),
       alias: null,
       arguments: [
         _i1.ArgumentNode(
@@ -32,7 +32,7 @@ const CreatePost = _i1.OperationDefinitionNode(
       directives: [],
       selectionSet: _i1.SelectionSetNode(selections: [
         _i1.FieldNode(
-          name: _i1.NameNode(value: 'post'),
+          name: _i1.NameNode(value: 'comment'),
           alias: null,
           arguments: [],
           directives: [],
@@ -52,14 +52,14 @@ const CreatePost = _i1.OperationDefinitionNode(
               selectionSet: null,
             ),
             _i1.FieldNode(
-              name: _i1.NameNode(value: 'title'),
+              name: _i1.NameNode(value: 'content'),
               alias: null,
               arguments: [],
               directives: [],
               selectionSet: null,
             ),
             _i1.FieldNode(
-              name: _i1.NameNode(value: 'content'),
+              name: _i1.NameNode(value: 'postId'),
               alias: null,
               arguments: [],
               directives: [],
@@ -93,4 +93,4 @@ const CreatePost = _i1.OperationDefinitionNode(
     )
   ]),
 );
-const document = _i1.DocumentNode(definitions: [CreatePost]);
+const document = _i1.DocumentNode(definitions: [CreateComment]);

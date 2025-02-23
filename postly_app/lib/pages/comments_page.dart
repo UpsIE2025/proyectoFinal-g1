@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:postly_app/notifiers/comments_notifier.dart';
 import 'package:postly_app/widgets/comment_card.dart';
+import 'package:postly_app/widgets/dialogs/async_dialog.dart';
 
 class CommentsPage extends ConsumerWidget {
   const CommentsPage({super.key, required this.postId});
@@ -23,18 +24,25 @@ class CommentsPage extends ConsumerWidget {
               data: (comments) => ListView.separated(
                 padding: const EdgeInsets.all(10),
                 physics: const BouncingScrollPhysics(),
-                itemCount: comments.length,
+                itemCount: comments.isEmpty ? 1 : comments.length,
                 separatorBuilder: (context, index) => const SizedBox(height: 10),
-                itemBuilder: (context, index) => ProviderScope(
-                  overrides: [
-                    CommentCard.commentProvider.overrideWithValue(comments[index]),
-                  ],
-                  child: const CommentCard(),
-                ),
+                itemBuilder: (context, index) => comments.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text("No hay comentarios en esta publicación"),
+                        ),
+                      )
+                    : ProviderScope(
+                        overrides: [
+                          CommentCard.commentProvider.overrideWithValue(comments[index]),
+                        ],
+                        child: const CommentCard(),
+                      ),
               ),
             ),
           ),
-          const _CommentInput(),
+          _CommentInput(postId),
         ],
       ),
     );
@@ -45,14 +53,16 @@ class CommentsPage extends ConsumerWidget {
 // Comment Input
 // ===============================================================
 
-class _CommentInput extends StatefulWidget {
-  const _CommentInput();
+class _CommentInput extends ConsumerStatefulWidget {
+  const _CommentInput(this.postId);
+
+  final int postId;
 
   @override
-  State<_CommentInput> createState() => __CommentInputState();
+  ConsumerState<_CommentInput> createState() => __CommentInputState();
 }
 
-class __CommentInputState extends State<_CommentInput> {
+class __CommentInputState extends ConsumerState<_CommentInput> {
   final ctrl = TextEditingController();
 
   @override
@@ -98,9 +108,13 @@ class __CommentInputState extends State<_CommentInput> {
     );
   }
 
-  void onSend() {
+  void onSend() async {
+    final n = ref.read(commentsNotifierProvider(widget.postId).notifier);
+    final resp = await AsyncDialog.guard(context, () async {
+      await n.createComment(ctrl.text);
+    });
+    if (resp.hasError) return;
     ctrl.text = "";
     setState(() {});
-    print("send comment");
   }
 }

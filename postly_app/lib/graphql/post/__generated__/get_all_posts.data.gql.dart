@@ -55,6 +55,7 @@ abstract class GGetAllPostsData_posts
   String get title;
   String get content;
   _i2.GTime get updatedAt;
+  String get authorId;
   static Serializer<GGetAllPostsData_posts> get serializer =>
       _$gGetAllPostsDataPostsSerializer;
 

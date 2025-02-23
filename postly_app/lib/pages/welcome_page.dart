@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
+import 'package:postly_app/widgets/dialogs/async_dialog.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -13,13 +14,13 @@ class WelcomePage extends StatelessWidget {
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.blue,
       ),
-      child: Scaffold(
+      child: const Scaffold(
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Icon(
                   Icons.pages,
@@ -27,15 +28,15 @@ class WelcomePage extends StatelessWidget {
                   size: 140,
                 ),
               ),
-              const Text(
+              Text(
                 "Postly App",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(
+              SizedBox(height: 20),
+              SizedBox(
                 width: 300,
                 child: _LoginButton(),
               ),
@@ -55,27 +56,26 @@ class _LoginButton extends ConsumerWidget {
     final authNotifier = ref.watch(authNotifierProvider.notifier);
     return OutlinedButton(
       onPressed: () async {
-        try {
+        final resp = await AsyncDialog.guard(context, () async {
           await authNotifier.login();
-          if (!context.mounted) return;
-          context.go("/posts");
-        } catch (e) {
-          print("error $e");
-        }
+        });
+        if (resp.hasError) return;
+        if (!context.mounted) return;
+        context.go("/posts");
       },
       style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.all(12),
-        shape: RoundedRectangleBorder(
+        padding: const EdgeInsets.all(12),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
         ),
       ),
-      child: Stack(
+      child: const Stack(
         children: [
           Align(
             alignment: Alignment.center,
-            child: const Text("Ingresar", style: TextStyle(fontSize: 20)),
+            child: Text("Ingresar", style: TextStyle(fontSize: 20)),
           ),
           Align(
             alignment: Alignment.centerRight,

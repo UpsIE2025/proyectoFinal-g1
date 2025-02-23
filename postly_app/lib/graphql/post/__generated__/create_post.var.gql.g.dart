@@ -19,15 +19,12 @@ class _$GCreatePostVarsSerializer
   @override
   Iterable<Object?> serialize(Serializers serializers, GCreatePostVars object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
-    Object? value;
-    value = object.input;
-    if (value != null) {
-      result
-        ..add('input')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(_i1.GPostCreateInput)));
-    }
+    final result = <Object?>[
+      'input',
+      serializers.serialize(object.input,
+          specifiedType: const FullType(_i1.GPostCreateInput)),
+    ];
+
     return result;
   }
 
@@ -57,12 +54,14 @@ class _$GCreatePostVarsSerializer
 
 class _$GCreatePostVars extends GCreatePostVars {
   @override
-  final _i1.GPostCreateInput? input;
+  final _i1.GPostCreateInput input;
 
   factory _$GCreatePostVars([void Function(GCreatePostVarsBuilder)? updates]) =>
       (new GCreatePostVarsBuilder()..update(updates))._build();
 
-  _$GCreatePostVars._({this.input}) : super._();
+  _$GCreatePostVars._({required this.input}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(input, r'GCreatePostVars', 'input');
+  }
 
   @override
   GCreatePostVars rebuild(void Function(GCreatePostVarsBuilder) updates) =>
@@ -108,7 +107,7 @@ class GCreatePostVarsBuilder
   GCreatePostVarsBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _input = $v.input?.toBuilder();
+      _input = $v.input.toBuilder();
       _$v = null;
     }
     return this;
@@ -133,13 +132,13 @@ class GCreatePostVarsBuilder
     try {
       _$result = _$v ??
           new _$GCreatePostVars._(
-            input: _input?.build(),
+            input: input.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'input';
-        _input?.build();
+        input.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GCreatePostVars', _$failedField, e.toString());

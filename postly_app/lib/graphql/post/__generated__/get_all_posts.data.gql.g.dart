@@ -92,6 +92,9 @@ class _$GGetAllPostsData_postsSerializer
       'updatedAt',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(_i2.GTime)),
+      'authorId',
+      serializers.serialize(object.authorId,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -128,6 +131,10 @@ class _$GGetAllPostsData_postsSerializer
         case 'updatedAt':
           result.updatedAt.replace(serializers.deserialize(value,
               specifiedType: const FullType(_i2.GTime))! as _i2.GTime);
+          break;
+        case 'authorId':
+          result.authorId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -265,6 +272,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
   final String content;
   @override
   final _i2.GTime updatedAt;
+  @override
+  final String authorId;
 
   factory _$GGetAllPostsData_posts(
           [void Function(GGetAllPostsData_postsBuilder)? updates]) =>
@@ -275,7 +284,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
       required this.id,
       required this.title,
       required this.content,
-      required this.updatedAt})
+      required this.updatedAt,
+      required this.authorId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GGetAllPostsData_posts', 'G__typename');
@@ -286,6 +296,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
         content, r'GGetAllPostsData_posts', 'content');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'GGetAllPostsData_posts', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        authorId, r'GGetAllPostsData_posts', 'authorId');
   }
 
   @override
@@ -305,7 +317,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
         id == other.id &&
         title == other.title &&
         content == other.content &&
-        updatedAt == other.updatedAt;
+        updatedAt == other.updatedAt &&
+        authorId == other.authorId;
   }
 
   @override
@@ -316,6 +329,7 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, authorId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -327,7 +341,8 @@ class _$GGetAllPostsData_posts extends GGetAllPostsData_posts {
           ..add('id', id)
           ..add('title', title)
           ..add('content', content)
-          ..add('updatedAt', updatedAt))
+          ..add('updatedAt', updatedAt)
+          ..add('authorId', authorId))
         .toString();
   }
 }
@@ -357,6 +372,10 @@ class GGetAllPostsData_postsBuilder
       _$this._updatedAt ??= new _i2.GTimeBuilder();
   set updatedAt(_i2.GTimeBuilder? updatedAt) => _$this._updatedAt = updatedAt;
 
+  String? _authorId;
+  String? get authorId => _$this._authorId;
+  set authorId(String? authorId) => _$this._authorId = authorId;
+
   GGetAllPostsData_postsBuilder() {
     GGetAllPostsData_posts._initializeBuilder(this);
   }
@@ -369,6 +388,7 @@ class GGetAllPostsData_postsBuilder
       _title = $v.title;
       _content = $v.content;
       _updatedAt = $v.updatedAt.toBuilder();
+      _authorId = $v.authorId;
       _$v = null;
     }
     return this;
@@ -402,6 +422,8 @@ class GGetAllPostsData_postsBuilder
             content: BuiltValueNullFieldError.checkNotNull(
                 content, r'GGetAllPostsData_posts', 'content'),
             updatedAt: updatedAt.build(),
+            authorId: BuiltValueNullFieldError.checkNotNull(
+                authorId, r'GGetAllPostsData_posts', 'authorId'),
           );
     } catch (_) {
       late String _$failedField;

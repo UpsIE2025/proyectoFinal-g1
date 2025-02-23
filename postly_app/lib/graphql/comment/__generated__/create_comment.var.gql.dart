@@ -7,27 +7,28 @@ import 'package:built_value/serializer.dart';
 import 'package:postly_app/graphql/__generated__/schema.schema.gql.dart' as _i1;
 import 'package:postly_app/graphql/__generated__/serializers.gql.dart' as _i2;
 
-part 'create_post.var.gql.g.dart';
+part 'create_comment.var.gql.g.dart';
 
-abstract class GCreatePostVars
-    implements Built<GCreatePostVars, GCreatePostVarsBuilder> {
-  GCreatePostVars._();
+abstract class GCreateCommentVars
+    implements Built<GCreateCommentVars, GCreateCommentVarsBuilder> {
+  GCreateCommentVars._();
 
-  factory GCreatePostVars([void Function(GCreatePostVarsBuilder b) updates]) =
-      _$GCreatePostVars;
+  factory GCreateCommentVars(
+          [void Function(GCreateCommentVarsBuilder b) updates]) =
+      _$GCreateCommentVars;
 
-  _i1.GPostCreateInput get input;
-  static Serializer<GCreatePostVars> get serializer =>
-      _$gCreatePostVarsSerializer;
+  _i1.GCommentCreateInput get input;
+  static Serializer<GCreateCommentVars> get serializer =>
+      _$gCreateCommentVarsSerializer;
 
   Map<String, dynamic> toJson() => (_i2.serializers.serializeWith(
-        GCreatePostVars.serializer,
+        GCreateCommentVars.serializer,
         this,
       ) as Map<String, dynamic>);
 
-  static GCreatePostVars? fromJson(Map<String, dynamic> json) =>
+  static GCreateCommentVars? fromJson(Map<String, dynamic> json) =>
       _i2.serializers.deserializeWith(
-        GCreatePostVars.serializer,
+        GCreateCommentVars.serializer,
         json,
       );
 }

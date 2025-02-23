@@ -37,7 +37,7 @@ class CommentCard extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          c.authorName,
+                          c.authorNameWithAuth,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4),
@@ -52,7 +52,7 @@ class CommentCard extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    DateFormat("MMM/dd HH:mm").format(c.createdAt),
+                    DateFormat("MMM/dd HH:mm").format(c.updatedAt),
                     style: const TextStyle(fontSize: 10),
                   ),
                 ),

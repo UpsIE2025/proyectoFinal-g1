@@ -23,10 +23,11 @@ class PostCard extends ConsumerWidget {
           child: Column(
             children: [
               _PostHeader(
-                p.authorName,
+                p.authorNameWithAuth,
                 p.title,
                 p.updatedAt,
-                onEdit: p.id % 2 == 0 ? () => context.go("/posts/edit/${p.id}") : null,
+                onEdit:
+                    p.creatorIsAuthUser ? () => context.go("/posts/edit/${p.id}") : null,
               ),
               const SizedBox(height: 10),
               SizedBox(

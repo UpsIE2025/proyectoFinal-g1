@@ -1,5 +1,5 @@
-mutation CreatePost($input: PostCreateInput!) {
-  postCreate(input: $input) {
+mutation UpdatePost($id: ID!, $input: PostUpdateInput!) {
+  postUpdate(id: $id, input: $input) {
     post {
       id
       updatedAt

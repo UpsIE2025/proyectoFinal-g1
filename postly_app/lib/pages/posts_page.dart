@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
 import 'package:postly_app/notifiers/posts_notifier.dart';
+import 'package:postly_app/widgets/dialogs/async_dialog.dart';
 import 'package:postly_app/widgets/post_card.dart';
 
 class PostsPage extends ConsumerWidget {
@@ -41,8 +42,8 @@ class PostsPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -59,11 +60,20 @@ class PostsPage extends ConsumerWidget {
               data: (posts) => ListView.builder(
                 padding: const EdgeInsets.all(10),
                 physics: const BouncingScrollPhysics(),
-                itemCount: posts.length,
-                itemBuilder: (context, index) => ProviderScope(
-                  overrides: [PostCard.postProvider.overrideWithValue(posts[index])],
-                  child: const PostCard(),
-                ),
+                itemCount: posts.isEmpty ? 1 : posts.length,
+                itemBuilder: (context, index) => posts.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text("No hay publicaciones"),
+                        ),
+                      )
+                    : ProviderScope(
+                        overrides: [
+                          PostCard.postProvider.overrideWithValue(posts[index])
+                        ],
+                        child: const PostCard(),
+                      ),
               ),
             ),
           ),
@@ -99,7 +109,10 @@ class _MenuButton extends ConsumerWidget {
       menuChildren: [
         MenuItemButton(
           onPressed: () async {
-            await authNotifier.logout();
+            final resp = await AsyncDialog.guard(context, () async {
+              await authNotifier.logout();
+            });
+            if (resp.hasError) return;
             if (!context.mounted) return;
             context.go("/");
           },

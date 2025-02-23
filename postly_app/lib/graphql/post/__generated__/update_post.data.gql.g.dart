@@ -1,49 +1,49 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_post.data.gql.dart';
+part of 'update_post.data.gql.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<GCreatePostData> _$gCreatePostDataSerializer =
-    new _$GCreatePostDataSerializer();
-Serializer<GCreatePostData_postCreate> _$gCreatePostDataPostCreateSerializer =
-    new _$GCreatePostData_postCreateSerializer();
-Serializer<GCreatePostData_postCreate_post>
-    _$gCreatePostDataPostCreatePostSerializer =
-    new _$GCreatePostData_postCreate_postSerializer();
-Serializer<GCreatePostData_postCreate_error>
-    _$gCreatePostDataPostCreateErrorSerializer =
-    new _$GCreatePostData_postCreate_errorSerializer();
+Serializer<GUpdatePostData> _$gUpdatePostDataSerializer =
+    new _$GUpdatePostDataSerializer();
+Serializer<GUpdatePostData_postUpdate> _$gUpdatePostDataPostUpdateSerializer =
+    new _$GUpdatePostData_postUpdateSerializer();
+Serializer<GUpdatePostData_postUpdate_post>
+    _$gUpdatePostDataPostUpdatePostSerializer =
+    new _$GUpdatePostData_postUpdate_postSerializer();
+Serializer<GUpdatePostData_postUpdate_error>
+    _$gUpdatePostDataPostUpdateErrorSerializer =
+    new _$GUpdatePostData_postUpdate_errorSerializer();
 
-class _$GCreatePostDataSerializer
-    implements StructuredSerializer<GCreatePostData> {
+class _$GUpdatePostDataSerializer
+    implements StructuredSerializer<GUpdatePostData> {
   @override
-  final Iterable<Type> types = const [GCreatePostData, _$GCreatePostData];
+  final Iterable<Type> types = const [GUpdatePostData, _$GUpdatePostData];
   @override
-  final String wireName = 'GCreatePostData';
+  final String wireName = 'GUpdatePostData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GCreatePostData object,
+  Iterable<Object?> serialize(Serializers serializers, GUpdatePostData object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       '__typename',
       serializers.serialize(object.G__typename,
           specifiedType: const FullType(String)),
-      'postCreate',
-      serializers.serialize(object.postCreate,
-          specifiedType: const FullType(GCreatePostData_postCreate)),
+      'postUpdate',
+      serializers.serialize(object.postUpdate,
+          specifiedType: const FullType(GUpdatePostData_postUpdate)),
     ];
 
     return result;
   }
 
   @override
-  GCreatePostData deserialize(
+  GUpdatePostData deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GCreatePostDataBuilder();
+    final result = new GUpdatePostDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -55,10 +55,10 @@ class _$GCreatePostDataSerializer
           result.G__typename = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'postCreate':
-          result.postCreate.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(GCreatePostData_postCreate))!
-              as GCreatePostData_postCreate);
+        case 'postUpdate':
+          result.postUpdate.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(GUpdatePostData_postUpdate))!
+              as GUpdatePostData_postUpdate);
           break;
       }
     }
@@ -67,19 +67,19 @@ class _$GCreatePostDataSerializer
   }
 }
 
-class _$GCreatePostData_postCreateSerializer
-    implements StructuredSerializer<GCreatePostData_postCreate> {
+class _$GUpdatePostData_postUpdateSerializer
+    implements StructuredSerializer<GUpdatePostData_postUpdate> {
   @override
   final Iterable<Type> types = const [
-    GCreatePostData_postCreate,
-    _$GCreatePostData_postCreate
+    GUpdatePostData_postUpdate,
+    _$GUpdatePostData_postUpdate
   ];
   @override
-  final String wireName = 'GCreatePostData_postCreate';
+  final String wireName = 'GUpdatePostData_postUpdate';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GCreatePostData_postCreate object,
+      Serializers serializers, GUpdatePostData_postUpdate object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       '__typename',
@@ -92,23 +92,23 @@ class _$GCreatePostData_postCreateSerializer
       result
         ..add('post')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(GCreatePostData_postCreate_post)));
+            specifiedType: const FullType(GUpdatePostData_postUpdate_post)));
     }
     value = object.error;
     if (value != null) {
       result
         ..add('error')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(GCreatePostData_postCreate_error)));
+            specifiedType: const FullType(GUpdatePostData_postUpdate_error)));
     }
     return result;
   }
 
   @override
-  GCreatePostData_postCreate deserialize(
+  GUpdatePostData_postUpdate deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GCreatePostData_postCreateBuilder();
+    final result = new GUpdatePostData_postUpdateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -123,14 +123,14 @@ class _$GCreatePostData_postCreateSerializer
         case 'post':
           result.post.replace(serializers.deserialize(value,
                   specifiedType:
-                      const FullType(GCreatePostData_postCreate_post))!
-              as GCreatePostData_postCreate_post);
+                      const FullType(GUpdatePostData_postUpdate_post))!
+              as GUpdatePostData_postUpdate_post);
           break;
         case 'error':
           result.error.replace(serializers.deserialize(value,
                   specifiedType:
-                      const FullType(GCreatePostData_postCreate_error))!
-              as GCreatePostData_postCreate_error);
+                      const FullType(GUpdatePostData_postUpdate_error))!
+              as GUpdatePostData_postUpdate_error);
           break;
       }
     }
@@ -139,19 +139,19 @@ class _$GCreatePostData_postCreateSerializer
   }
 }
 
-class _$GCreatePostData_postCreate_postSerializer
-    implements StructuredSerializer<GCreatePostData_postCreate_post> {
+class _$GUpdatePostData_postUpdate_postSerializer
+    implements StructuredSerializer<GUpdatePostData_postUpdate_post> {
   @override
   final Iterable<Type> types = const [
-    GCreatePostData_postCreate_post,
-    _$GCreatePostData_postCreate_post
+    GUpdatePostData_postUpdate_post,
+    _$GUpdatePostData_postUpdate_post
   ];
   @override
-  final String wireName = 'GCreatePostData_postCreate_post';
+  final String wireName = 'GUpdatePostData_postUpdate_post';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GCreatePostData_postCreate_post object,
+      Serializers serializers, GUpdatePostData_postUpdate_post object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       '__typename',
@@ -177,10 +177,10 @@ class _$GCreatePostData_postCreate_postSerializer
   }
 
   @override
-  GCreatePostData_postCreate_post deserialize(
+  GUpdatePostData_postUpdate_post deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GCreatePostData_postCreate_postBuilder();
+    final result = new GUpdatePostData_postUpdate_postBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -219,19 +219,19 @@ class _$GCreatePostData_postCreate_postSerializer
   }
 }
 
-class _$GCreatePostData_postCreate_errorSerializer
-    implements StructuredSerializer<GCreatePostData_postCreate_error> {
+class _$GUpdatePostData_postUpdate_errorSerializer
+    implements StructuredSerializer<GUpdatePostData_postUpdate_error> {
   @override
   final Iterable<Type> types = const [
-    GCreatePostData_postCreate_error,
-    _$GCreatePostData_postCreate_error
+    GUpdatePostData_postUpdate_error,
+    _$GUpdatePostData_postUpdate_error
   ];
   @override
-  final String wireName = 'GCreatePostData_postCreate_error';
+  final String wireName = 'GUpdatePostData_postUpdate_error';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GCreatePostData_postCreate_error object,
+      Serializers serializers, GUpdatePostData_postUpdate_error object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       '__typename',
@@ -246,10 +246,10 @@ class _$GCreatePostData_postCreate_errorSerializer
   }
 
   @override
-  GCreatePostData_postCreate_error deserialize(
+  GUpdatePostData_postUpdate_error deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GCreatePostData_postCreate_errorBuilder();
+    final result = new GUpdatePostData_postUpdate_errorBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -272,116 +272,116 @@ class _$GCreatePostData_postCreate_errorSerializer
   }
 }
 
-class _$GCreatePostData extends GCreatePostData {
+class _$GUpdatePostData extends GUpdatePostData {
   @override
   final String G__typename;
   @override
-  final GCreatePostData_postCreate postCreate;
+  final GUpdatePostData_postUpdate postUpdate;
 
-  factory _$GCreatePostData([void Function(GCreatePostDataBuilder)? updates]) =>
-      (new GCreatePostDataBuilder()..update(updates))._build();
+  factory _$GUpdatePostData([void Function(GUpdatePostDataBuilder)? updates]) =>
+      (new GUpdatePostDataBuilder()..update(updates))._build();
 
-  _$GCreatePostData._({required this.G__typename, required this.postCreate})
+  _$GUpdatePostData._({required this.G__typename, required this.postUpdate})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        G__typename, r'GCreatePostData', 'G__typename');
+        G__typename, r'GUpdatePostData', 'G__typename');
     BuiltValueNullFieldError.checkNotNull(
-        postCreate, r'GCreatePostData', 'postCreate');
+        postUpdate, r'GUpdatePostData', 'postUpdate');
   }
 
   @override
-  GCreatePostData rebuild(void Function(GCreatePostDataBuilder) updates) =>
+  GUpdatePostData rebuild(void Function(GUpdatePostDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GCreatePostDataBuilder toBuilder() =>
-      new GCreatePostDataBuilder()..replace(this);
+  GUpdatePostDataBuilder toBuilder() =>
+      new GUpdatePostDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GCreatePostData &&
+    return other is GUpdatePostData &&
         G__typename == other.G__typename &&
-        postCreate == other.postCreate;
+        postUpdate == other.postUpdate;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, G__typename.hashCode);
-    _$hash = $jc(_$hash, postCreate.hashCode);
+    _$hash = $jc(_$hash, postUpdate.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GCreatePostData')
+    return (newBuiltValueToStringHelper(r'GUpdatePostData')
           ..add('G__typename', G__typename)
-          ..add('postCreate', postCreate))
+          ..add('postUpdate', postUpdate))
         .toString();
   }
 }
 
-class GCreatePostDataBuilder
-    implements Builder<GCreatePostData, GCreatePostDataBuilder> {
-  _$GCreatePostData? _$v;
+class GUpdatePostDataBuilder
+    implements Builder<GUpdatePostData, GUpdatePostDataBuilder> {
+  _$GUpdatePostData? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
   set G__typename(String? G__typename) => _$this._G__typename = G__typename;
 
-  GCreatePostData_postCreateBuilder? _postCreate;
-  GCreatePostData_postCreateBuilder get postCreate =>
-      _$this._postCreate ??= new GCreatePostData_postCreateBuilder();
-  set postCreate(GCreatePostData_postCreateBuilder? postCreate) =>
-      _$this._postCreate = postCreate;
+  GUpdatePostData_postUpdateBuilder? _postUpdate;
+  GUpdatePostData_postUpdateBuilder get postUpdate =>
+      _$this._postUpdate ??= new GUpdatePostData_postUpdateBuilder();
+  set postUpdate(GUpdatePostData_postUpdateBuilder? postUpdate) =>
+      _$this._postUpdate = postUpdate;
 
-  GCreatePostDataBuilder() {
-    GCreatePostData._initializeBuilder(this);
+  GUpdatePostDataBuilder() {
+    GUpdatePostData._initializeBuilder(this);
   }
 
-  GCreatePostDataBuilder get _$this {
+  GUpdatePostDataBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
-      _postCreate = $v.postCreate.toBuilder();
+      _postUpdate = $v.postUpdate.toBuilder();
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(GCreatePostData other) {
+  void replace(GUpdatePostData other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GCreatePostData;
+    _$v = other as _$GUpdatePostData;
   }
 
   @override
-  void update(void Function(GCreatePostDataBuilder)? updates) {
+  void update(void Function(GUpdatePostDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GCreatePostData build() => _build();
+  GUpdatePostData build() => _build();
 
-  _$GCreatePostData _build() {
-    _$GCreatePostData _$result;
+  _$GUpdatePostData _build() {
+    _$GUpdatePostData _$result;
     try {
       _$result = _$v ??
-          new _$GCreatePostData._(
+          new _$GUpdatePostData._(
             G__typename: BuiltValueNullFieldError.checkNotNull(
-                G__typename, r'GCreatePostData', 'G__typename'),
-            postCreate: postCreate.build(),
+                G__typename, r'GUpdatePostData', 'G__typename'),
+            postUpdate: postUpdate.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'postCreate';
-        postCreate.build();
+        _$failedField = 'postUpdate';
+        postUpdate.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'GCreatePostData', _$failedField, e.toString());
+            r'GUpdatePostData', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -390,38 +390,38 @@ class GCreatePostDataBuilder
   }
 }
 
-class _$GCreatePostData_postCreate extends GCreatePostData_postCreate {
+class _$GUpdatePostData_postUpdate extends GUpdatePostData_postUpdate {
   @override
   final String G__typename;
   @override
-  final GCreatePostData_postCreate_post? post;
+  final GUpdatePostData_postUpdate_post? post;
   @override
-  final GCreatePostData_postCreate_error? error;
+  final GUpdatePostData_postUpdate_error? error;
 
-  factory _$GCreatePostData_postCreate(
-          [void Function(GCreatePostData_postCreateBuilder)? updates]) =>
-      (new GCreatePostData_postCreateBuilder()..update(updates))._build();
+  factory _$GUpdatePostData_postUpdate(
+          [void Function(GUpdatePostData_postUpdateBuilder)? updates]) =>
+      (new GUpdatePostData_postUpdateBuilder()..update(updates))._build();
 
-  _$GCreatePostData_postCreate._(
+  _$GUpdatePostData_postUpdate._(
       {required this.G__typename, this.post, this.error})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        G__typename, r'GCreatePostData_postCreate', 'G__typename');
+        G__typename, r'GUpdatePostData_postUpdate', 'G__typename');
   }
 
   @override
-  GCreatePostData_postCreate rebuild(
-          void Function(GCreatePostData_postCreateBuilder) updates) =>
+  GUpdatePostData_postUpdate rebuild(
+          void Function(GUpdatePostData_postUpdateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GCreatePostData_postCreateBuilder toBuilder() =>
-      new GCreatePostData_postCreateBuilder()..replace(this);
+  GUpdatePostData_postUpdateBuilder toBuilder() =>
+      new GUpdatePostData_postUpdateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GCreatePostData_postCreate &&
+    return other is GUpdatePostData_postUpdate &&
         G__typename == other.G__typename &&
         post == other.post &&
         error == other.error;
@@ -439,7 +439,7 @@ class _$GCreatePostData_postCreate extends GCreatePostData_postCreate {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GCreatePostData_postCreate')
+    return (newBuiltValueToStringHelper(r'GUpdatePostData_postUpdate')
           ..add('G__typename', G__typename)
           ..add('post', post)
           ..add('error', error))
@@ -447,31 +447,31 @@ class _$GCreatePostData_postCreate extends GCreatePostData_postCreate {
   }
 }
 
-class GCreatePostData_postCreateBuilder
+class GUpdatePostData_postUpdateBuilder
     implements
-        Builder<GCreatePostData_postCreate, GCreatePostData_postCreateBuilder> {
-  _$GCreatePostData_postCreate? _$v;
+        Builder<GUpdatePostData_postUpdate, GUpdatePostData_postUpdateBuilder> {
+  _$GUpdatePostData_postUpdate? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
   set G__typename(String? G__typename) => _$this._G__typename = G__typename;
 
-  GCreatePostData_postCreate_postBuilder? _post;
-  GCreatePostData_postCreate_postBuilder get post =>
-      _$this._post ??= new GCreatePostData_postCreate_postBuilder();
-  set post(GCreatePostData_postCreate_postBuilder? post) => _$this._post = post;
+  GUpdatePostData_postUpdate_postBuilder? _post;
+  GUpdatePostData_postUpdate_postBuilder get post =>
+      _$this._post ??= new GUpdatePostData_postUpdate_postBuilder();
+  set post(GUpdatePostData_postUpdate_postBuilder? post) => _$this._post = post;
 
-  GCreatePostData_postCreate_errorBuilder? _error;
-  GCreatePostData_postCreate_errorBuilder get error =>
-      _$this._error ??= new GCreatePostData_postCreate_errorBuilder();
-  set error(GCreatePostData_postCreate_errorBuilder? error) =>
+  GUpdatePostData_postUpdate_errorBuilder? _error;
+  GUpdatePostData_postUpdate_errorBuilder get error =>
+      _$this._error ??= new GUpdatePostData_postUpdate_errorBuilder();
+  set error(GUpdatePostData_postUpdate_errorBuilder? error) =>
       _$this._error = error;
 
-  GCreatePostData_postCreateBuilder() {
-    GCreatePostData_postCreate._initializeBuilder(this);
+  GUpdatePostData_postUpdateBuilder() {
+    GUpdatePostData_postUpdate._initializeBuilder(this);
   }
 
-  GCreatePostData_postCreateBuilder get _$this {
+  GUpdatePostData_postUpdateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
@@ -483,26 +483,26 @@ class GCreatePostData_postCreateBuilder
   }
 
   @override
-  void replace(GCreatePostData_postCreate other) {
+  void replace(GUpdatePostData_postUpdate other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GCreatePostData_postCreate;
+    _$v = other as _$GUpdatePostData_postUpdate;
   }
 
   @override
-  void update(void Function(GCreatePostData_postCreateBuilder)? updates) {
+  void update(void Function(GUpdatePostData_postUpdateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GCreatePostData_postCreate build() => _build();
+  GUpdatePostData_postUpdate build() => _build();
 
-  _$GCreatePostData_postCreate _build() {
-    _$GCreatePostData_postCreate _$result;
+  _$GUpdatePostData_postUpdate _build() {
+    _$GUpdatePostData_postUpdate _$result;
     try {
       _$result = _$v ??
-          new _$GCreatePostData_postCreate._(
+          new _$GUpdatePostData_postUpdate._(
             G__typename: BuiltValueNullFieldError.checkNotNull(
-                G__typename, r'GCreatePostData_postCreate', 'G__typename'),
+                G__typename, r'GUpdatePostData_postUpdate', 'G__typename'),
             post: _post?.build(),
             error: _error?.build(),
           );
@@ -515,7 +515,7 @@ class GCreatePostData_postCreateBuilder
         _error?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'GCreatePostData_postCreate', _$failedField, e.toString());
+            r'GUpdatePostData_postUpdate', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -524,8 +524,8 @@ class GCreatePostData_postCreateBuilder
   }
 }
 
-class _$GCreatePostData_postCreate_post
-    extends GCreatePostData_postCreate_post {
+class _$GUpdatePostData_postUpdate_post
+    extends GUpdatePostData_postUpdate_post {
   @override
   final String G__typename;
   @override
@@ -539,11 +539,11 @@ class _$GCreatePostData_postCreate_post
   @override
   final String authorId;
 
-  factory _$GCreatePostData_postCreate_post(
-          [void Function(GCreatePostData_postCreate_postBuilder)? updates]) =>
-      (new GCreatePostData_postCreate_postBuilder()..update(updates))._build();
+  factory _$GUpdatePostData_postUpdate_post(
+          [void Function(GUpdatePostData_postUpdate_postBuilder)? updates]) =>
+      (new GUpdatePostData_postUpdate_postBuilder()..update(updates))._build();
 
-  _$GCreatePostData_postCreate_post._(
+  _$GUpdatePostData_postUpdate_post._(
       {required this.G__typename,
       required this.id,
       required this.updatedAt,
@@ -552,32 +552,32 @@ class _$GCreatePostData_postCreate_post
       required this.authorId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        G__typename, r'GCreatePostData_postCreate_post', 'G__typename');
+        G__typename, r'GUpdatePostData_postUpdate_post', 'G__typename');
     BuiltValueNullFieldError.checkNotNull(
-        id, r'GCreatePostData_postCreate_post', 'id');
+        id, r'GUpdatePostData_postUpdate_post', 'id');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'GCreatePostData_postCreate_post', 'updatedAt');
+        updatedAt, r'GUpdatePostData_postUpdate_post', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        title, r'GCreatePostData_postCreate_post', 'title');
+        title, r'GUpdatePostData_postUpdate_post', 'title');
     BuiltValueNullFieldError.checkNotNull(
-        content, r'GCreatePostData_postCreate_post', 'content');
+        content, r'GUpdatePostData_postUpdate_post', 'content');
     BuiltValueNullFieldError.checkNotNull(
-        authorId, r'GCreatePostData_postCreate_post', 'authorId');
+        authorId, r'GUpdatePostData_postUpdate_post', 'authorId');
   }
 
   @override
-  GCreatePostData_postCreate_post rebuild(
-          void Function(GCreatePostData_postCreate_postBuilder) updates) =>
+  GUpdatePostData_postUpdate_post rebuild(
+          void Function(GUpdatePostData_postUpdate_postBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GCreatePostData_postCreate_postBuilder toBuilder() =>
-      new GCreatePostData_postCreate_postBuilder()..replace(this);
+  GUpdatePostData_postUpdate_postBuilder toBuilder() =>
+      new GUpdatePostData_postUpdate_postBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GCreatePostData_postCreate_post &&
+    return other is GUpdatePostData_postUpdate_post &&
         G__typename == other.G__typename &&
         id == other.id &&
         updatedAt == other.updatedAt &&
@@ -601,7 +601,7 @@ class _$GCreatePostData_postCreate_post
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GCreatePostData_postCreate_post')
+    return (newBuiltValueToStringHelper(r'GUpdatePostData_postUpdate_post')
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('updatedAt', updatedAt)
@@ -612,11 +612,11 @@ class _$GCreatePostData_postCreate_post
   }
 }
 
-class GCreatePostData_postCreate_postBuilder
+class GUpdatePostData_postUpdate_postBuilder
     implements
-        Builder<GCreatePostData_postCreate_post,
-            GCreatePostData_postCreate_postBuilder> {
-  _$GCreatePostData_postCreate_post? _$v;
+        Builder<GUpdatePostData_postUpdate_post,
+            GUpdatePostData_postUpdate_postBuilder> {
+  _$GUpdatePostData_postUpdate_post? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
@@ -643,11 +643,11 @@ class GCreatePostData_postCreate_postBuilder
   String? get authorId => _$this._authorId;
   set authorId(String? authorId) => _$this._authorId = authorId;
 
-  GCreatePostData_postCreate_postBuilder() {
-    GCreatePostData_postCreate_post._initializeBuilder(this);
+  GUpdatePostData_postUpdate_postBuilder() {
+    GUpdatePostData_postUpdate_post._initializeBuilder(this);
   }
 
-  GCreatePostData_postCreate_postBuilder get _$this {
+  GUpdatePostData_postUpdate_postBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
@@ -662,35 +662,35 @@ class GCreatePostData_postCreate_postBuilder
   }
 
   @override
-  void replace(GCreatePostData_postCreate_post other) {
+  void replace(GUpdatePostData_postUpdate_post other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GCreatePostData_postCreate_post;
+    _$v = other as _$GUpdatePostData_postUpdate_post;
   }
 
   @override
-  void update(void Function(GCreatePostData_postCreate_postBuilder)? updates) {
+  void update(void Function(GUpdatePostData_postUpdate_postBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GCreatePostData_postCreate_post build() => _build();
+  GUpdatePostData_postUpdate_post build() => _build();
 
-  _$GCreatePostData_postCreate_post _build() {
-    _$GCreatePostData_postCreate_post _$result;
+  _$GUpdatePostData_postUpdate_post _build() {
+    _$GUpdatePostData_postUpdate_post _$result;
     try {
       _$result = _$v ??
-          new _$GCreatePostData_postCreate_post._(
+          new _$GUpdatePostData_postUpdate_post._(
             G__typename: BuiltValueNullFieldError.checkNotNull(
-                G__typename, r'GCreatePostData_postCreate_post', 'G__typename'),
+                G__typename, r'GUpdatePostData_postUpdate_post', 'G__typename'),
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'GCreatePostData_postCreate_post', 'id'),
+                id, r'GUpdatePostData_postUpdate_post', 'id'),
             updatedAt: updatedAt.build(),
             title: BuiltValueNullFieldError.checkNotNull(
-                title, r'GCreatePostData_postCreate_post', 'title'),
+                title, r'GUpdatePostData_postUpdate_post', 'title'),
             content: BuiltValueNullFieldError.checkNotNull(
-                content, r'GCreatePostData_postCreate_post', 'content'),
+                content, r'GUpdatePostData_postUpdate_post', 'content'),
             authorId: BuiltValueNullFieldError.checkNotNull(
-                authorId, r'GCreatePostData_postCreate_post', 'authorId'),
+                authorId, r'GUpdatePostData_postUpdate_post', 'authorId'),
           );
     } catch (_) {
       late String _$failedField;
@@ -699,7 +699,7 @@ class GCreatePostData_postCreate_postBuilder
         updatedAt.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'GCreatePostData_postCreate_post', _$failedField, e.toString());
+            r'GUpdatePostData_postUpdate_post', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -708,39 +708,39 @@ class GCreatePostData_postCreate_postBuilder
   }
 }
 
-class _$GCreatePostData_postCreate_error
-    extends GCreatePostData_postCreate_error {
+class _$GUpdatePostData_postUpdate_error
+    extends GUpdatePostData_postUpdate_error {
   @override
   final String G__typename;
   @override
   final String message;
 
-  factory _$GCreatePostData_postCreate_error(
-          [void Function(GCreatePostData_postCreate_errorBuilder)? updates]) =>
-      (new GCreatePostData_postCreate_errorBuilder()..update(updates))._build();
+  factory _$GUpdatePostData_postUpdate_error(
+          [void Function(GUpdatePostData_postUpdate_errorBuilder)? updates]) =>
+      (new GUpdatePostData_postUpdate_errorBuilder()..update(updates))._build();
 
-  _$GCreatePostData_postCreate_error._(
+  _$GUpdatePostData_postUpdate_error._(
       {required this.G__typename, required this.message})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        G__typename, r'GCreatePostData_postCreate_error', 'G__typename');
+        G__typename, r'GUpdatePostData_postUpdate_error', 'G__typename');
     BuiltValueNullFieldError.checkNotNull(
-        message, r'GCreatePostData_postCreate_error', 'message');
+        message, r'GUpdatePostData_postUpdate_error', 'message');
   }
 
   @override
-  GCreatePostData_postCreate_error rebuild(
-          void Function(GCreatePostData_postCreate_errorBuilder) updates) =>
+  GUpdatePostData_postUpdate_error rebuild(
+          void Function(GUpdatePostData_postUpdate_errorBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GCreatePostData_postCreate_errorBuilder toBuilder() =>
-      new GCreatePostData_postCreate_errorBuilder()..replace(this);
+  GUpdatePostData_postUpdate_errorBuilder toBuilder() =>
+      new GUpdatePostData_postUpdate_errorBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GCreatePostData_postCreate_error &&
+    return other is GUpdatePostData_postUpdate_error &&
         G__typename == other.G__typename &&
         message == other.message;
   }
@@ -756,18 +756,18 @@ class _$GCreatePostData_postCreate_error
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GCreatePostData_postCreate_error')
+    return (newBuiltValueToStringHelper(r'GUpdatePostData_postUpdate_error')
           ..add('G__typename', G__typename)
           ..add('message', message))
         .toString();
   }
 }
 
-class GCreatePostData_postCreate_errorBuilder
+class GUpdatePostData_postUpdate_errorBuilder
     implements
-        Builder<GCreatePostData_postCreate_error,
-            GCreatePostData_postCreate_errorBuilder> {
-  _$GCreatePostData_postCreate_error? _$v;
+        Builder<GUpdatePostData_postUpdate_error,
+            GUpdatePostData_postUpdate_errorBuilder> {
+  _$GUpdatePostData_postUpdate_error? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
@@ -777,11 +777,11 @@ class GCreatePostData_postCreate_errorBuilder
   String? get message => _$this._message;
   set message(String? message) => _$this._message = message;
 
-  GCreatePostData_postCreate_errorBuilder() {
-    GCreatePostData_postCreate_error._initializeBuilder(this);
+  GUpdatePostData_postUpdate_errorBuilder() {
+    GUpdatePostData_postUpdate_error._initializeBuilder(this);
   }
 
-  GCreatePostData_postCreate_errorBuilder get _$this {
+  GUpdatePostData_postUpdate_errorBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
@@ -792,26 +792,26 @@ class GCreatePostData_postCreate_errorBuilder
   }
 
   @override
-  void replace(GCreatePostData_postCreate_error other) {
+  void replace(GUpdatePostData_postUpdate_error other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GCreatePostData_postCreate_error;
+    _$v = other as _$GUpdatePostData_postUpdate_error;
   }
 
   @override
-  void update(void Function(GCreatePostData_postCreate_errorBuilder)? updates) {
+  void update(void Function(GUpdatePostData_postUpdate_errorBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GCreatePostData_postCreate_error build() => _build();
+  GUpdatePostData_postUpdate_error build() => _build();
 
-  _$GCreatePostData_postCreate_error _build() {
+  _$GUpdatePostData_postUpdate_error _build() {
     final _$result = _$v ??
-        new _$GCreatePostData_postCreate_error._(
+        new _$GUpdatePostData_postUpdate_error._(
           G__typename: BuiltValueNullFieldError.checkNotNull(
-              G__typename, r'GCreatePostData_postCreate_error', 'G__typename'),
+              G__typename, r'GUpdatePostData_postUpdate_error', 'G__typename'),
           message: BuiltValueNullFieldError.checkNotNull(
-              message, r'GCreatePostData_postCreate_error', 'message'),
+              message, r'GUpdatePostData_postUpdate_error', 'message'),
         );
     replace(_$result);
     return _$result;

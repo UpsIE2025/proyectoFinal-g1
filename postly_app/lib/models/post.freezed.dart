@@ -20,8 +20,10 @@ mixin _$Post {
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  int get commentsCount => throw _privateConstructorUsedError;
+  String get authorId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
+  bool get creatorIsAuthUser => throw _privateConstructorUsedError;
+  int get commentsCount => throw _privateConstructorUsedError;
 
   /// Create a copy of Post
   /// with the given fields replaced by the non-null parameter values.
@@ -39,8 +41,10 @@ abstract class $PostCopyWith<$Res> {
       String title,
       String content,
       DateTime updatedAt,
-      int commentsCount,
-      String authorName});
+      String authorId,
+      String authorName,
+      bool creatorIsAuthUser,
+      int commentsCount});
 }
 
 /// @nodoc
@@ -62,8 +66,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? title = null,
     Object? content = null,
     Object? updatedAt = null,
-    Object? commentsCount = null,
+    Object? authorId = null,
     Object? authorName = null,
+    Object? creatorIsAuthUser = null,
+    Object? commentsCount = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -82,14 +88,22 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      commentsCount: null == commentsCount
-          ? _value.commentsCount
-          : commentsCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      creatorIsAuthUser: null == creatorIsAuthUser
+          ? _value.creatorIsAuthUser
+          : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentsCount: null == commentsCount
+          ? _value.commentsCount
+          : commentsCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -106,8 +120,10 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       String title,
       String content,
       DateTime updatedAt,
-      int commentsCount,
-      String authorName});
+      String authorId,
+      String authorName,
+      bool creatorIsAuthUser,
+      int commentsCount});
 }
 
 /// @nodoc
@@ -126,8 +142,10 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? title = null,
     Object? content = null,
     Object? updatedAt = null,
-    Object? commentsCount = null,
+    Object? authorId = null,
     Object? authorName = null,
+    Object? creatorIsAuthUser = null,
+    Object? commentsCount = null,
   }) {
     return _then(_$PostImpl(
       id: null == id
@@ -146,28 +164,39 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      commentsCount: null == commentsCount
-          ? _value.commentsCount
-          : commentsCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       authorName: null == authorName
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      creatorIsAuthUser: null == creatorIsAuthUser
+          ? _value.creatorIsAuthUser
+          : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentsCount: null == commentsCount
+          ? _value.commentsCount
+          : commentsCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
 
-class _$PostImpl implements _Post {
+class _$PostImpl extends _Post {
   const _$PostImpl(
       {required this.id,
       required this.title,
       required this.content,
       required this.updatedAt,
-      this.commentsCount = 0,
-      this.authorName = ""});
+      required this.authorId,
+      this.authorName = "",
+      required this.creatorIsAuthUser,
+      this.commentsCount = 0})
+      : super._();
 
   @override
   final int id;
@@ -178,15 +207,19 @@ class _$PostImpl implements _Post {
   @override
   final DateTime updatedAt;
   @override
-  @JsonKey()
-  final int commentsCount;
+  final String authorId;
   @override
   @JsonKey()
   final String authorName;
+  @override
+  final bool creatorIsAuthUser;
+  @override
+  @JsonKey()
+  final int commentsCount;
 
   @override
   String toString() {
-    return 'Post(id: $id, title: $title, content: $content, updatedAt: $updatedAt, commentsCount: $commentsCount, authorName: $authorName)';
+    return 'Post(id: $id, title: $title, content: $content, updatedAt: $updatedAt, authorId: $authorId, authorName: $authorName, creatorIsAuthUser: $creatorIsAuthUser, commentsCount: $commentsCount)';
   }
 
   @override
@@ -199,15 +232,19 @@ class _$PostImpl implements _Post {
             (identical(other.content, content) || other.content == content) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.commentsCount, commentsCount) ||
-                other.commentsCount == commentsCount) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
             (identical(other.authorName, authorName) ||
-                other.authorName == authorName));
+                other.authorName == authorName) &&
+            (identical(other.creatorIsAuthUser, creatorIsAuthUser) ||
+                other.creatorIsAuthUser == creatorIsAuthUser) &&
+            (identical(other.commentsCount, commentsCount) ||
+                other.commentsCount == commentsCount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, content, updatedAt, commentsCount, authorName);
+  int get hashCode => Object.hash(runtimeType, id, title, content, updatedAt,
+      authorId, authorName, creatorIsAuthUser, commentsCount);
 
   /// Create a copy of Post
   /// with the given fields replaced by the non-null parameter values.
@@ -218,14 +255,17 @@ class _$PostImpl implements _Post {
       __$$PostImplCopyWithImpl<_$PostImpl>(this, _$identity);
 }
 
-abstract class _Post implements Post {
+abstract class _Post extends Post {
   const factory _Post(
       {required final int id,
       required final String title,
       required final String content,
       required final DateTime updatedAt,
-      final int commentsCount,
-      final String authorName}) = _$PostImpl;
+      required final String authorId,
+      final String authorName,
+      required final bool creatorIsAuthUser,
+      final int commentsCount}) = _$PostImpl;
+  const _Post._() : super._();
 
   @override
   int get id;
@@ -236,9 +276,13 @@ abstract class _Post implements Post {
   @override
   DateTime get updatedAt;
   @override
-  int get commentsCount;
+  String get authorId;
   @override
   String get authorName;
+  @override
+  bool get creatorIsAuthUser;
+  @override
+  int get commentsCount;
 
   /// Create a copy of Post
   /// with the given fields replaced by the non-null parameter values.

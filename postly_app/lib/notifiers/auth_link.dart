@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gql_transform_link/gql_transform_link.dart';
 import "package:gql_link/gql_link.dart";
 import "package:gql_exec/gql_exec.dart";
+import 'package:postly_app/notifiers/auth_notifier.dart';
 
 class AuthLink extends Link {
   final Ref ref;
@@ -13,7 +14,8 @@ class AuthLink extends Link {
   }
 
   Future<void> fetchToken() async {
-    _token = "blabla";
+    final n = ref.read(authNotifierProvider.notifier);
+    _token = await n.getAccessToken();
   }
 
   Request transformRequest(Request request) {

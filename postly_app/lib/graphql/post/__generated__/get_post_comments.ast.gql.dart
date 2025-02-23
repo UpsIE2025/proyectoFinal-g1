@@ -4,14 +4,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:gql/ast.dart' as _i1;
 
-const CreatePost = _i1.OperationDefinitionNode(
-  type: _i1.OperationType.mutation,
-  name: _i1.NameNode(value: 'CreatePost'),
+const GetPostComments = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.query,
+  name: _i1.NameNode(value: 'GetPostComments'),
   variableDefinitions: [
     _i1.VariableDefinitionNode(
-      variable: _i1.VariableNode(name: _i1.NameNode(value: 'input')),
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'postId')),
       type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'PostCreateInput'),
+        name: _i1.NameNode(value: 'ID'),
         isNonNull: true,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
@@ -21,18 +21,18 @@ const CreatePost = _i1.OperationDefinitionNode(
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
     _i1.FieldNode(
-      name: _i1.NameNode(value: 'postCreate'),
+      name: _i1.NameNode(value: 'post'),
       alias: null,
       arguments: [
         _i1.ArgumentNode(
-          name: _i1.NameNode(value: 'input'),
-          value: _i1.VariableNode(name: _i1.NameNode(value: 'input')),
+          name: _i1.NameNode(value: 'id'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'postId')),
         )
       ],
       directives: [],
       selectionSet: _i1.SelectionSetNode(selections: [
         _i1.FieldNode(
-          name: _i1.NameNode(value: 'post'),
+          name: _i1.NameNode(value: 'comments'),
           alias: null,
           arguments: [],
           directives: [],
@@ -52,14 +52,14 @@ const CreatePost = _i1.OperationDefinitionNode(
               selectionSet: null,
             ),
             _i1.FieldNode(
-              name: _i1.NameNode(value: 'title'),
+              name: _i1.NameNode(value: 'content'),
               alias: null,
               arguments: [],
               directives: [],
               selectionSet: null,
             ),
             _i1.FieldNode(
-              name: _i1.NameNode(value: 'content'),
+              name: _i1.NameNode(value: 'postId'),
               alias: null,
               arguments: [],
               directives: [],
@@ -73,24 +73,9 @@ const CreatePost = _i1.OperationDefinitionNode(
               selectionSet: null,
             ),
           ]),
-        ),
-        _i1.FieldNode(
-          name: _i1.NameNode(value: 'error'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: _i1.SelectionSetNode(selections: [
-            _i1.FieldNode(
-              name: _i1.NameNode(value: 'message'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            )
-          ]),
-        ),
+        )
       ]),
     )
   ]),
 );
-const document = _i1.DocumentNode(definitions: [CreatePost]);
+const document = _i1.DocumentNode(definitions: [GetPostComments]);

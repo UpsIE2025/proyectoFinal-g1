@@ -42,8 +42,12 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
   }
 
   Future<String> getAccessToken() async {
-    final creds = await _auth0.credentialsManager.credentials();
-    return creds.accessToken;
+    try {
+      final creds = await _auth0.credentialsManager.credentials();
+      return creds.accessToken;
+    } catch (_) {
+      return "";
+    }
   }
 
   Future<void> logout() async {

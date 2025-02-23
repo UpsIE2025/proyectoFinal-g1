@@ -87,6 +87,7 @@ abstract class GCreatePostData_postCreate_post
   _i2.GTime get updatedAt;
   String get title;
   String get content;
+  String get authorId;
   static Serializer<GCreatePostData_postCreate_post> get serializer =>
       _$gCreatePostDataPostCreatePostSerializer;
 

@@ -14,6 +14,16 @@ import 'package:postly_app/graphql/__generated__/schema.schema.gql.dart'
         GPostCreateInput,
         GPostUpdateInput,
         GTime;
+import 'package:postly_app/graphql/comment/__generated__/create_comment.data.gql.dart'
+    show
+        GCreateCommentData,
+        GCreateCommentData_commentCreate,
+        GCreateCommentData_commentCreate_comment,
+        GCreateCommentData_commentCreate_error;
+import 'package:postly_app/graphql/comment/__generated__/create_comment.req.gql.dart'
+    show GCreateCommentReq;
+import 'package:postly_app/graphql/comment/__generated__/create_comment.var.gql.dart'
+    show GCreateCommentVars;
 import 'package:postly_app/graphql/post/__generated__/create_post.data.gql.dart'
     show
         GCreatePostData,
@@ -30,6 +40,25 @@ import 'package:postly_app/graphql/post/__generated__/get_all_posts.req.gql.dart
     show GGetAllPostsReq;
 import 'package:postly_app/graphql/post/__generated__/get_all_posts.var.gql.dart'
     show GGetAllPostsVars;
+import 'package:postly_app/graphql/post/__generated__/get_post_comments.data.gql.dart'
+    show
+        GGetPostCommentsData,
+        GGetPostCommentsData_post,
+        GGetPostCommentsData_post_comments;
+import 'package:postly_app/graphql/post/__generated__/get_post_comments.req.gql.dart'
+    show GGetPostCommentsReq;
+import 'package:postly_app/graphql/post/__generated__/get_post_comments.var.gql.dart'
+    show GGetPostCommentsVars;
+import 'package:postly_app/graphql/post/__generated__/update_post.data.gql.dart'
+    show
+        GUpdatePostData,
+        GUpdatePostData_postUpdate,
+        GUpdatePostData_postUpdate_error,
+        GUpdatePostData_postUpdate_post;
+import 'package:postly_app/graphql/post/__generated__/update_post.req.gql.dart'
+    show GUpdatePostReq;
+import 'package:postly_app/graphql/post/__generated__/update_post.var.gql.dart'
+    show GUpdatePostVars;
 
 part 'serializers.gql.g.dart';
 
@@ -39,6 +68,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
 @SerializersFor([
   GCommentCreateInput,
   GCommentUpdateInput,
+  GCreateCommentData,
+  GCreateCommentData_commentCreate,
+  GCreateCommentData_commentCreate_comment,
+  GCreateCommentData_commentCreate_error,
+  GCreateCommentReq,
+  GCreateCommentVars,
   GCreatePostData,
   GCreatePostData_postCreate,
   GCreatePostData_postCreate_error,
@@ -49,8 +84,19 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GGetAllPostsData_posts,
   GGetAllPostsReq,
   GGetAllPostsVars,
+  GGetPostCommentsData,
+  GGetPostCommentsData_post,
+  GGetPostCommentsData_post_comments,
+  GGetPostCommentsReq,
+  GGetPostCommentsVars,
   GPostCreateInput,
   GPostUpdateInput,
   GTime,
+  GUpdatePostData,
+  GUpdatePostData_postUpdate,
+  GUpdatePostData_postUpdate_error,
+  GUpdatePostData_postUpdate_post,
+  GUpdatePostReq,
+  GUpdatePostVars,
 ])
 final Serializers serializers = _serializersBuilder.build();
