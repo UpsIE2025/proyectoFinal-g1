@@ -2,12 +2,12 @@ _format_version: "3.0"
 _transform: true
 
 services:
-- host: httpbin.konghq.com
-  name: kong_serviceproyectoups
-  port: 80
-  protocol: http
-  routes:
-  - name: example_route 
-    paths:
-    - /mock
-    strip_path: true
+  - name: kong_serviceproyectoups
+    host: localhost  
+    port: 8080       
+    protocol: http
+    routes:
+    - name: example_route 
+      paths:
+        - /mock
+      strip_path: true
