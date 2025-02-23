@@ -87,7 +87,6 @@ abstract class GUpdatePostData_postUpdate_post
   _i2.GTime get updatedAt;
   String get title;
   String get content;
-  String get authorId;
   static Serializer<GUpdatePostData_postUpdate_post> get serializer =>
       _$gUpdatePostDataPostUpdatePostSerializer;
 

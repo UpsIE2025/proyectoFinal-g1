@@ -88,6 +88,7 @@ abstract class GCreatePostData_postCreate_post
   String get title;
   String get content;
   String get authorId;
+  GCreatePostData_postCreate_post_authorInfo get authorInfo;
   static Serializer<GCreatePostData_postCreate_post> get serializer =>
       _$gCreatePostDataPostCreatePostSerializer;
 
@@ -99,6 +100,40 @@ abstract class GCreatePostData_postCreate_post
   static GCreatePostData_postCreate_post? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GCreatePostData_postCreate_post.serializer,
+        json,
+      );
+}
+
+abstract class GCreatePostData_postCreate_post_authorInfo
+    implements
+        Built<GCreatePostData_postCreate_post_authorInfo,
+            GCreatePostData_postCreate_post_authorInfoBuilder> {
+  GCreatePostData_postCreate_post_authorInfo._();
+
+  factory GCreatePostData_postCreate_post_authorInfo(
+      [void Function(GCreatePostData_postCreate_post_authorInfoBuilder b)
+          updates]) = _$GCreatePostData_postCreate_post_authorInfo;
+
+  static void _initializeBuilder(
+          GCreatePostData_postCreate_post_authorInfoBuilder b) =>
+      b..G__typename = 'AuthorInfo';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String get name;
+  String get pictureUrl;
+  static Serializer<GCreatePostData_postCreate_post_authorInfo>
+      get serializer => _$gCreatePostDataPostCreatePostAuthorInfoSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GCreatePostData_postCreate_post_authorInfo.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GCreatePostData_postCreate_post_authorInfo? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GCreatePostData_postCreate_post_authorInfo.serializer,
         json,
       );
 }

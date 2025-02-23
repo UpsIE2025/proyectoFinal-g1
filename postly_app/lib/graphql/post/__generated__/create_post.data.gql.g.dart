@@ -13,6 +13,9 @@ Serializer<GCreatePostData_postCreate> _$gCreatePostDataPostCreateSerializer =
 Serializer<GCreatePostData_postCreate_post>
     _$gCreatePostDataPostCreatePostSerializer =
     new _$GCreatePostData_postCreate_postSerializer();
+Serializer<GCreatePostData_postCreate_post_authorInfo>
+    _$gCreatePostDataPostCreatePostAuthorInfoSerializer =
+    new _$GCreatePostData_postCreate_post_authorInfoSerializer();
 Serializer<GCreatePostData_postCreate_error>
     _$gCreatePostDataPostCreateErrorSerializer =
     new _$GCreatePostData_postCreate_errorSerializer();
@@ -171,6 +174,10 @@ class _$GCreatePostData_postCreate_postSerializer
       'authorId',
       serializers.serialize(object.authorId,
           specifiedType: const FullType(String)),
+      'authorInfo',
+      serializers.serialize(object.authorInfo,
+          specifiedType:
+              const FullType(GCreatePostData_postCreate_post_authorInfo)),
     ];
 
     return result;
@@ -210,6 +217,72 @@ class _$GCreatePostData_postCreate_postSerializer
           break;
         case 'authorId':
           result.authorId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'authorInfo':
+          result.authorInfo.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GCreatePostData_postCreate_post_authorInfo))!
+              as GCreatePostData_postCreate_post_authorInfo);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GCreatePostData_postCreate_post_authorInfoSerializer
+    implements
+        StructuredSerializer<GCreatePostData_postCreate_post_authorInfo> {
+  @override
+  final Iterable<Type> types = const [
+    GCreatePostData_postCreate_post_authorInfo,
+    _$GCreatePostData_postCreate_post_authorInfo
+  ];
+  @override
+  final String wireName = 'GCreatePostData_postCreate_post_authorInfo';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GCreatePostData_postCreate_post_authorInfo object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'pictureUrl',
+      serializers.serialize(object.pictureUrl,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GCreatePostData_postCreate_post_authorInfo deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GCreatePostData_postCreate_post_authorInfoBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'pictureUrl':
+          result.pictureUrl = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -538,6 +611,8 @@ class _$GCreatePostData_postCreate_post
   final String content;
   @override
   final String authorId;
+  @override
+  final GCreatePostData_postCreate_post_authorInfo authorInfo;
 
   factory _$GCreatePostData_postCreate_post(
           [void Function(GCreatePostData_postCreate_postBuilder)? updates]) =>
@@ -549,7 +624,8 @@ class _$GCreatePostData_postCreate_post
       required this.updatedAt,
       required this.title,
       required this.content,
-      required this.authorId})
+      required this.authorId,
+      required this.authorInfo})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GCreatePostData_postCreate_post', 'G__typename');
@@ -563,6 +639,8 @@ class _$GCreatePostData_postCreate_post
         content, r'GCreatePostData_postCreate_post', 'content');
     BuiltValueNullFieldError.checkNotNull(
         authorId, r'GCreatePostData_postCreate_post', 'authorId');
+    BuiltValueNullFieldError.checkNotNull(
+        authorInfo, r'GCreatePostData_postCreate_post', 'authorInfo');
   }
 
   @override
@@ -583,7 +661,8 @@ class _$GCreatePostData_postCreate_post
         updatedAt == other.updatedAt &&
         title == other.title &&
         content == other.content &&
-        authorId == other.authorId;
+        authorId == other.authorId &&
+        authorInfo == other.authorInfo;
   }
 
   @override
@@ -595,6 +674,7 @@ class _$GCreatePostData_postCreate_post
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, authorId.hashCode);
+    _$hash = $jc(_$hash, authorInfo.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -607,7 +687,8 @@ class _$GCreatePostData_postCreate_post
           ..add('updatedAt', updatedAt)
           ..add('title', title)
           ..add('content', content)
-          ..add('authorId', authorId))
+          ..add('authorId', authorId)
+          ..add('authorInfo', authorInfo))
         .toString();
   }
 }
@@ -643,6 +724,14 @@ class GCreatePostData_postCreate_postBuilder
   String? get authorId => _$this._authorId;
   set authorId(String? authorId) => _$this._authorId = authorId;
 
+  GCreatePostData_postCreate_post_authorInfoBuilder? _authorInfo;
+  GCreatePostData_postCreate_post_authorInfoBuilder get authorInfo =>
+      _$this._authorInfo ??=
+          new GCreatePostData_postCreate_post_authorInfoBuilder();
+  set authorInfo(
+          GCreatePostData_postCreate_post_authorInfoBuilder? authorInfo) =>
+      _$this._authorInfo = authorInfo;
+
   GCreatePostData_postCreate_postBuilder() {
     GCreatePostData_postCreate_post._initializeBuilder(this);
   }
@@ -656,6 +745,7 @@ class GCreatePostData_postCreate_postBuilder
       _title = $v.title;
       _content = $v.content;
       _authorId = $v.authorId;
+      _authorInfo = $v.authorInfo.toBuilder();
       _$v = null;
     }
     return this;
@@ -691,18 +781,152 @@ class GCreatePostData_postCreate_postBuilder
                 content, r'GCreatePostData_postCreate_post', 'content'),
             authorId: BuiltValueNullFieldError.checkNotNull(
                 authorId, r'GCreatePostData_postCreate_post', 'authorId'),
+            authorInfo: authorInfo.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'updatedAt';
         updatedAt.build();
+
+        _$failedField = 'authorInfo';
+        authorInfo.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GCreatePostData_postCreate_post', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GCreatePostData_postCreate_post_authorInfo
+    extends GCreatePostData_postCreate_post_authorInfo {
+  @override
+  final String G__typename;
+  @override
+  final String name;
+  @override
+  final String pictureUrl;
+
+  factory _$GCreatePostData_postCreate_post_authorInfo(
+          [void Function(GCreatePostData_postCreate_post_authorInfoBuilder)?
+              updates]) =>
+      (new GCreatePostData_postCreate_post_authorInfoBuilder()..update(updates))
+          ._build();
+
+  _$GCreatePostData_postCreate_post_authorInfo._(
+      {required this.G__typename, required this.name, required this.pictureUrl})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GCreatePostData_postCreate_post_authorInfo', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'GCreatePostData_postCreate_post_authorInfo', 'name');
+    BuiltValueNullFieldError.checkNotNull(pictureUrl,
+        r'GCreatePostData_postCreate_post_authorInfo', 'pictureUrl');
+  }
+
+  @override
+  GCreatePostData_postCreate_post_authorInfo rebuild(
+          void Function(GCreatePostData_postCreate_post_authorInfoBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GCreatePostData_postCreate_post_authorInfoBuilder toBuilder() =>
+      new GCreatePostData_postCreate_post_authorInfoBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GCreatePostData_postCreate_post_authorInfo &&
+        G__typename == other.G__typename &&
+        name == other.name &&
+        pictureUrl == other.pictureUrl;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, pictureUrl.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GCreatePostData_postCreate_post_authorInfo')
+          ..add('G__typename', G__typename)
+          ..add('name', name)
+          ..add('pictureUrl', pictureUrl))
+        .toString();
+  }
+}
+
+class GCreatePostData_postCreate_post_authorInfoBuilder
+    implements
+        Builder<GCreatePostData_postCreate_post_authorInfo,
+            GCreatePostData_postCreate_post_authorInfoBuilder> {
+  _$GCreatePostData_postCreate_post_authorInfo? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _pictureUrl;
+  String? get pictureUrl => _$this._pictureUrl;
+  set pictureUrl(String? pictureUrl) => _$this._pictureUrl = pictureUrl;
+
+  GCreatePostData_postCreate_post_authorInfoBuilder() {
+    GCreatePostData_postCreate_post_authorInfo._initializeBuilder(this);
+  }
+
+  GCreatePostData_postCreate_post_authorInfoBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _name = $v.name;
+      _pictureUrl = $v.pictureUrl;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GCreatePostData_postCreate_post_authorInfo other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GCreatePostData_postCreate_post_authorInfo;
+  }
+
+  @override
+  void update(
+      void Function(GCreatePostData_postCreate_post_authorInfoBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GCreatePostData_postCreate_post_authorInfo build() => _build();
+
+  _$GCreatePostData_postCreate_post_authorInfo _build() {
+    final _$result = _$v ??
+        new _$GCreatePostData_postCreate_post_authorInfo._(
+          G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+              r'GCreatePostData_postCreate_post_authorInfo', 'G__typename'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'GCreatePostData_postCreate_post_authorInfo', 'name'),
+          pictureUrl: BuiltValueNullFieldError.checkNotNull(pictureUrl,
+              r'GCreatePostData_postCreate_post_authorInfo', 'pictureUrl'),
+        );
     replace(_$result);
     return _$result;
   }

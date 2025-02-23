@@ -8,12 +8,27 @@ const _colors = [
 ];
 
 class AppAvatar extends StatelessWidget {
-  const AppAvatar({super.key, required this.name});
+  const AppAvatar({
+    super.key,
+    required this.name,
+    required this.pictureUrl,
+  });
 
   final String name;
+  final String pictureUrl;
 
   @override
   Widget build(BuildContext context) {
+    if (pictureUrl.isEmpty) {
+      return buildLetterAvatar(name);
+    }
+    return CircleAvatar(
+      maxRadius: 15,
+      child: ClipOval(child: Image.network(pictureUrl)),
+    );
+  }
+
+  Widget buildLetterAvatar(String name) {
     String firstLetter = "A";
     if (name.isNotEmpty) {
       firstLetter = name[0].toUpperCase();

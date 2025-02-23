@@ -56,6 +56,8 @@ abstract class GGetAllPostsData_posts
   String get content;
   _i2.GTime get updatedAt;
   String get authorId;
+  int get commentCount;
+  GGetAllPostsData_posts_authorInfo get authorInfo;
   static Serializer<GGetAllPostsData_posts> get serializer =>
       _$gGetAllPostsDataPostsSerializer;
 
@@ -67,6 +69,39 @@ abstract class GGetAllPostsData_posts
   static GGetAllPostsData_posts? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GGetAllPostsData_posts.serializer,
+        json,
+      );
+}
+
+abstract class GGetAllPostsData_posts_authorInfo
+    implements
+        Built<GGetAllPostsData_posts_authorInfo,
+            GGetAllPostsData_posts_authorInfoBuilder> {
+  GGetAllPostsData_posts_authorInfo._();
+
+  factory GGetAllPostsData_posts_authorInfo(
+          [void Function(GGetAllPostsData_posts_authorInfoBuilder b) updates]) =
+      _$GGetAllPostsData_posts_authorInfo;
+
+  static void _initializeBuilder(GGetAllPostsData_posts_authorInfoBuilder b) =>
+      b..G__typename = 'AuthorInfo';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String get name;
+  String get pictureUrl;
+  static Serializer<GGetAllPostsData_posts_authorInfo> get serializer =>
+      _$gGetAllPostsDataPostsAuthorInfoSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GGetAllPostsData_posts_authorInfo.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetAllPostsData_posts_authorInfo? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GGetAllPostsData_posts_authorInfo.serializer,
         json,
       );
 }

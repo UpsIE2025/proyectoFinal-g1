@@ -17,7 +17,7 @@ class CommentCard extends ConsumerWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
-          child: AppAvatar(name: c.authorName),
+          child: AppAvatar(name: c.authorName, pictureUrl: c.authorPictureUrl),
         ),
         const SizedBox(width: 4),
         Expanded(

@@ -5,7 +5,6 @@ mutation UpdatePost($id: ID!, $input: PostUpdateInput!) {
       updatedAt
       title
       content
-      authorId
     }
     error {
       message

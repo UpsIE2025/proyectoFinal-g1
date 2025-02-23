@@ -24,9 +24,10 @@ class PostsNotifier extends AsyncNotifier<List<Post>> {
             content: p.content,
             updatedAt: DateTime.parse(p.updatedAt.value).toLocal(),
             authorId: p.authorId,
-            authorName: "Otro",
+            authorName: p.authorInfo.name,
+            authorPictureUrl: p.authorInfo.pictureUrl,
             creatorIsAuthUser: u.id == p.authorId,
-            commentsCount: 12,
+            commentsCount: p.commentCount,
           ),
         )
         .toList();
@@ -59,7 +60,9 @@ class PostsNotifier extends AsyncNotifier<List<Post>> {
           updatedAt:
               DateTime.parse(resp.data!.postCreate.post!.updatedAt.value).toLocal(),
           authorId: resp.data!.postCreate.post!.authorId,
-          authorName: "Jose Al",
+          authorName: resp.data!.postCreate.post!.authorInfo.name,
+          authorPictureUrl: resp.data!.postCreate.post!.authorInfo.pictureUrl,
+          commentsCount: 0,
           creatorIsAuthUser: true,
         ),
       ],
@@ -94,8 +97,6 @@ class PostsNotifier extends AsyncNotifier<List<Post>> {
               content: resp.data!.postUpdate.post!.content,
               updatedAt:
                   DateTime.parse(resp.data!.postUpdate.post!.updatedAt.value).toLocal(),
-              authorId: resp.data!.postUpdate.post!.authorId,
-              authorName: "Jose Al",
             )
           else
             c

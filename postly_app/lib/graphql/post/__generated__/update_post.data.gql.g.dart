@@ -168,9 +168,6 @@ class _$GUpdatePostData_postUpdate_postSerializer
       'content',
       serializers.serialize(object.content,
           specifiedType: const FullType(String)),
-      'authorId',
-      serializers.serialize(object.authorId,
-          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -206,10 +203,6 @@ class _$GUpdatePostData_postUpdate_postSerializer
           break;
         case 'content':
           result.content = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'authorId':
-          result.authorId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -536,8 +529,6 @@ class _$GUpdatePostData_postUpdate_post
   final String title;
   @override
   final String content;
-  @override
-  final String authorId;
 
   factory _$GUpdatePostData_postUpdate_post(
           [void Function(GUpdatePostData_postUpdate_postBuilder)? updates]) =>
@@ -548,8 +539,7 @@ class _$GUpdatePostData_postUpdate_post
       required this.id,
       required this.updatedAt,
       required this.title,
-      required this.content,
-      required this.authorId})
+      required this.content})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GUpdatePostData_postUpdate_post', 'G__typename');
@@ -561,8 +551,6 @@ class _$GUpdatePostData_postUpdate_post
         title, r'GUpdatePostData_postUpdate_post', 'title');
     BuiltValueNullFieldError.checkNotNull(
         content, r'GUpdatePostData_postUpdate_post', 'content');
-    BuiltValueNullFieldError.checkNotNull(
-        authorId, r'GUpdatePostData_postUpdate_post', 'authorId');
   }
 
   @override
@@ -582,8 +570,7 @@ class _$GUpdatePostData_postUpdate_post
         id == other.id &&
         updatedAt == other.updatedAt &&
         title == other.title &&
-        content == other.content &&
-        authorId == other.authorId;
+        content == other.content;
   }
 
   @override
@@ -594,7 +581,6 @@ class _$GUpdatePostData_postUpdate_post
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
-    _$hash = $jc(_$hash, authorId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -606,8 +592,7 @@ class _$GUpdatePostData_postUpdate_post
           ..add('id', id)
           ..add('updatedAt', updatedAt)
           ..add('title', title)
-          ..add('content', content)
-          ..add('authorId', authorId))
+          ..add('content', content))
         .toString();
   }
 }
@@ -639,10 +624,6 @@ class GUpdatePostData_postUpdate_postBuilder
   String? get content => _$this._content;
   set content(String? content) => _$this._content = content;
 
-  String? _authorId;
-  String? get authorId => _$this._authorId;
-  set authorId(String? authorId) => _$this._authorId = authorId;
-
   GUpdatePostData_postUpdate_postBuilder() {
     GUpdatePostData_postUpdate_post._initializeBuilder(this);
   }
@@ -655,7 +636,6 @@ class GUpdatePostData_postUpdate_postBuilder
       _updatedAt = $v.updatedAt.toBuilder();
       _title = $v.title;
       _content = $v.content;
-      _authorId = $v.authorId;
       _$v = null;
     }
     return this;
@@ -689,8 +669,6 @@ class GUpdatePostData_postUpdate_postBuilder
                 title, r'GUpdatePostData_postUpdate_post', 'title'),
             content: BuiltValueNullFieldError.checkNotNull(
                 content, r'GUpdatePostData_postUpdate_post', 'content'),
-            authorId: BuiltValueNullFieldError.checkNotNull(
-                authorId, r'GUpdatePostData_postUpdate_post', 'authorId'),
           );
     } catch (_) {
       late String _$failedField;

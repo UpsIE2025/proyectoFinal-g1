@@ -89,6 +89,7 @@ abstract class GGetPostCommentsData_post_comments
   String get content;
   int get postId;
   String get authorId;
+  GGetPostCommentsData_post_comments_authorInfo get authorInfo;
   static Serializer<GGetPostCommentsData_post_comments> get serializer =>
       _$gGetPostCommentsDataPostCommentsSerializer;
 
@@ -101,6 +102,40 @@ abstract class GGetPostCommentsData_post_comments
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GGetPostCommentsData_post_comments.serializer,
+        json,
+      );
+}
+
+abstract class GGetPostCommentsData_post_comments_authorInfo
+    implements
+        Built<GGetPostCommentsData_post_comments_authorInfo,
+            GGetPostCommentsData_post_comments_authorInfoBuilder> {
+  GGetPostCommentsData_post_comments_authorInfo._();
+
+  factory GGetPostCommentsData_post_comments_authorInfo(
+      [void Function(GGetPostCommentsData_post_comments_authorInfoBuilder b)
+          updates]) = _$GGetPostCommentsData_post_comments_authorInfo;
+
+  static void _initializeBuilder(
+          GGetPostCommentsData_post_comments_authorInfoBuilder b) =>
+      b..G__typename = 'AuthorInfo';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String get name;
+  String get pictureUrl;
+  static Serializer<GGetPostCommentsData_post_comments_authorInfo>
+      get serializer => _$gGetPostCommentsDataPostCommentsAuthorInfoSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GGetPostCommentsData_post_comments_authorInfo.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GGetPostCommentsData_post_comments_authorInfo? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GGetPostCommentsData_post_comments_authorInfo.serializer,
         json,
       );
 }

@@ -22,6 +22,7 @@ mixin _$Post {
   DateTime get updatedAt => throw _privateConstructorUsedError;
   String get authorId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
+  String get authorPictureUrl => throw _privateConstructorUsedError;
   bool get creatorIsAuthUser => throw _privateConstructorUsedError;
   int get commentsCount => throw _privateConstructorUsedError;
 
@@ -43,6 +44,7 @@ abstract class $PostCopyWith<$Res> {
       DateTime updatedAt,
       String authorId,
       String authorName,
+      String authorPictureUrl,
       bool creatorIsAuthUser,
       int commentsCount});
 }
@@ -68,6 +70,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? updatedAt = null,
     Object? authorId = null,
     Object? authorName = null,
+    Object? authorPictureUrl = null,
     Object? creatorIsAuthUser = null,
     Object? commentsCount = null,
   }) {
@@ -96,6 +99,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      authorPictureUrl: null == authorPictureUrl
+          ? _value.authorPictureUrl
+          : authorPictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       creatorIsAuthUser: null == creatorIsAuthUser
           ? _value.creatorIsAuthUser
           : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
@@ -122,6 +129,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime updatedAt,
       String authorId,
       String authorName,
+      String authorPictureUrl,
       bool creatorIsAuthUser,
       int commentsCount});
 }
@@ -144,6 +152,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? authorId = null,
     Object? authorName = null,
+    Object? authorPictureUrl = null,
     Object? creatorIsAuthUser = null,
     Object? commentsCount = null,
   }) {
@@ -172,6 +181,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      authorPictureUrl: null == authorPictureUrl
+          ? _value.authorPictureUrl
+          : authorPictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       creatorIsAuthUser: null == creatorIsAuthUser
           ? _value.creatorIsAuthUser
           : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
@@ -193,9 +206,10 @@ class _$PostImpl extends _Post {
       required this.content,
       required this.updatedAt,
       required this.authorId,
-      this.authorName = "",
+      required this.authorName,
+      required this.authorPictureUrl,
       required this.creatorIsAuthUser,
-      this.commentsCount = 0})
+      required this.commentsCount})
       : super._();
 
   @override
@@ -209,17 +223,17 @@ class _$PostImpl extends _Post {
   @override
   final String authorId;
   @override
-  @JsonKey()
   final String authorName;
+  @override
+  final String authorPictureUrl;
   @override
   final bool creatorIsAuthUser;
   @override
-  @JsonKey()
   final int commentsCount;
 
   @override
   String toString() {
-    return 'Post(id: $id, title: $title, content: $content, updatedAt: $updatedAt, authorId: $authorId, authorName: $authorName, creatorIsAuthUser: $creatorIsAuthUser, commentsCount: $commentsCount)';
+    return 'Post(id: $id, title: $title, content: $content, updatedAt: $updatedAt, authorId: $authorId, authorName: $authorName, authorPictureUrl: $authorPictureUrl, creatorIsAuthUser: $creatorIsAuthUser, commentsCount: $commentsCount)';
   }
 
   @override
@@ -236,6 +250,8 @@ class _$PostImpl extends _Post {
                 other.authorId == authorId) &&
             (identical(other.authorName, authorName) ||
                 other.authorName == authorName) &&
+            (identical(other.authorPictureUrl, authorPictureUrl) ||
+                other.authorPictureUrl == authorPictureUrl) &&
             (identical(other.creatorIsAuthUser, creatorIsAuthUser) ||
                 other.creatorIsAuthUser == creatorIsAuthUser) &&
             (identical(other.commentsCount, commentsCount) ||
@@ -244,7 +260,7 @@ class _$PostImpl extends _Post {
 
   @override
   int get hashCode => Object.hash(runtimeType, id, title, content, updatedAt,
-      authorId, authorName, creatorIsAuthUser, commentsCount);
+      authorId, authorName, authorPictureUrl, creatorIsAuthUser, commentsCount);
 
   /// Create a copy of Post
   /// with the given fields replaced by the non-null parameter values.
@@ -262,9 +278,10 @@ abstract class _Post extends Post {
       required final String content,
       required final DateTime updatedAt,
       required final String authorId,
-      final String authorName,
+      required final String authorName,
+      required final String authorPictureUrl,
       required final bool creatorIsAuthUser,
-      final int commentsCount}) = _$PostImpl;
+      required final int commentsCount}) = _$PostImpl;
   const _Post._() : super._();
 
   @override
@@ -279,6 +296,8 @@ abstract class _Post extends Post {
   String get authorId;
   @override
   String get authorName;
+  @override
+  String get authorPictureUrl;
   @override
   bool get creatorIsAuthUser;
   @override

@@ -6,6 +6,10 @@ mutation CreatePost($input: PostCreateInput!) {
       title
       content
       authorId
+      authorInfo {
+        name
+        pictureUrl
+      }
     }
     error {
       message

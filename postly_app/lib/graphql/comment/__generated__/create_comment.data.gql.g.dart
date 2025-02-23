@@ -14,6 +14,9 @@ Serializer<GCreateCommentData_commentCreate>
 Serializer<GCreateCommentData_commentCreate_comment>
     _$gCreateCommentDataCommentCreateCommentSerializer =
     new _$GCreateCommentData_commentCreate_commentSerializer();
+Serializer<GCreateCommentData_commentCreate_comment_authorInfo>
+    _$gCreateCommentDataCommentCreateCommentAuthorInfoSerializer =
+    new _$GCreateCommentData_commentCreate_comment_authorInfoSerializer();
 Serializer<GCreateCommentData_commentCreate_error>
     _$gCreateCommentDataCommentCreateErrorSerializer =
     new _$GCreateCommentData_commentCreate_errorSerializer();
@@ -175,6 +178,10 @@ class _$GCreateCommentData_commentCreate_commentSerializer
       'authorId',
       serializers.serialize(object.authorId,
           specifiedType: const FullType(String)),
+      'authorInfo',
+      serializers.serialize(object.authorInfo,
+          specifiedType: const FullType(
+              GCreateCommentData_commentCreate_comment_authorInfo)),
     ];
 
     return result;
@@ -214,6 +221,74 @@ class _$GCreateCommentData_commentCreate_commentSerializer
           break;
         case 'authorId':
           result.authorId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'authorInfo':
+          result.authorInfo.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GCreateCommentData_commentCreate_comment_authorInfo))!
+              as GCreateCommentData_commentCreate_comment_authorInfo);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GCreateCommentData_commentCreate_comment_authorInfoSerializer
+    implements
+        StructuredSerializer<
+            GCreateCommentData_commentCreate_comment_authorInfo> {
+  @override
+  final Iterable<Type> types = const [
+    GCreateCommentData_commentCreate_comment_authorInfo,
+    _$GCreateCommentData_commentCreate_comment_authorInfo
+  ];
+  @override
+  final String wireName = 'GCreateCommentData_commentCreate_comment_authorInfo';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GCreateCommentData_commentCreate_comment_authorInfo object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'pictureUrl',
+      serializers.serialize(object.pictureUrl,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GCreateCommentData_commentCreate_comment_authorInfo deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GCreateCommentData_commentCreate_comment_authorInfoBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'pictureUrl':
+          result.pictureUrl = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -548,6 +623,8 @@ class _$GCreateCommentData_commentCreate_comment
   final int postId;
   @override
   final String authorId;
+  @override
+  final GCreateCommentData_commentCreate_comment_authorInfo authorInfo;
 
   factory _$GCreateCommentData_commentCreate_comment(
           [void Function(GCreateCommentData_commentCreate_commentBuilder)?
@@ -561,7 +638,8 @@ class _$GCreateCommentData_commentCreate_comment
       required this.updatedAt,
       required this.content,
       required this.postId,
-      required this.authorId})
+      required this.authorId,
+      required this.authorInfo})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GCreateCommentData_commentCreate_comment', 'G__typename');
@@ -575,6 +653,8 @@ class _$GCreateCommentData_commentCreate_comment
         postId, r'GCreateCommentData_commentCreate_comment', 'postId');
     BuiltValueNullFieldError.checkNotNull(
         authorId, r'GCreateCommentData_commentCreate_comment', 'authorId');
+    BuiltValueNullFieldError.checkNotNull(
+        authorInfo, r'GCreateCommentData_commentCreate_comment', 'authorInfo');
   }
 
   @override
@@ -596,7 +676,8 @@ class _$GCreateCommentData_commentCreate_comment
         updatedAt == other.updatedAt &&
         content == other.content &&
         postId == other.postId &&
-        authorId == other.authorId;
+        authorId == other.authorId &&
+        authorInfo == other.authorInfo;
   }
 
   @override
@@ -608,6 +689,7 @@ class _$GCreateCommentData_commentCreate_comment
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, postId.hashCode);
     _$hash = $jc(_$hash, authorId.hashCode);
+    _$hash = $jc(_$hash, authorInfo.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -621,7 +703,8 @@ class _$GCreateCommentData_commentCreate_comment
           ..add('updatedAt', updatedAt)
           ..add('content', content)
           ..add('postId', postId)
-          ..add('authorId', authorId))
+          ..add('authorId', authorId)
+          ..add('authorInfo', authorInfo))
         .toString();
   }
 }
@@ -657,6 +740,15 @@ class GCreateCommentData_commentCreate_commentBuilder
   String? get authorId => _$this._authorId;
   set authorId(String? authorId) => _$this._authorId = authorId;
 
+  GCreateCommentData_commentCreate_comment_authorInfoBuilder? _authorInfo;
+  GCreateCommentData_commentCreate_comment_authorInfoBuilder get authorInfo =>
+      _$this._authorInfo ??=
+          new GCreateCommentData_commentCreate_comment_authorInfoBuilder();
+  set authorInfo(
+          GCreateCommentData_commentCreate_comment_authorInfoBuilder?
+              authorInfo) =>
+      _$this._authorInfo = authorInfo;
+
   GCreateCommentData_commentCreate_commentBuilder() {
     GCreateCommentData_commentCreate_comment._initializeBuilder(this);
   }
@@ -670,6 +762,7 @@ class GCreateCommentData_commentCreate_commentBuilder
       _content = $v.content;
       _postId = $v.postId;
       _authorId = $v.authorId;
+      _authorInfo = $v.authorInfo.toBuilder();
       _$v = null;
     }
     return this;
@@ -706,12 +799,16 @@ class GCreateCommentData_commentCreate_commentBuilder
                 postId, r'GCreateCommentData_commentCreate_comment', 'postId'),
             authorId: BuiltValueNullFieldError.checkNotNull(authorId,
                 r'GCreateCommentData_commentCreate_comment', 'authorId'),
+            authorInfo: authorInfo.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'updatedAt';
         updatedAt.build();
+
+        _$failedField = 'authorInfo';
+        authorInfo.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GCreateCommentData_commentCreate_comment',
@@ -720,6 +817,145 @@ class GCreateCommentData_commentCreate_commentBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GCreateCommentData_commentCreate_comment_authorInfo
+    extends GCreateCommentData_commentCreate_comment_authorInfo {
+  @override
+  final String G__typename;
+  @override
+  final String name;
+  @override
+  final String pictureUrl;
+
+  factory _$GCreateCommentData_commentCreate_comment_authorInfo(
+          [void Function(
+                  GCreateCommentData_commentCreate_comment_authorInfoBuilder)?
+              updates]) =>
+      (new GCreateCommentData_commentCreate_comment_authorInfoBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GCreateCommentData_commentCreate_comment_authorInfo._(
+      {required this.G__typename, required this.name, required this.pictureUrl})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GCreateCommentData_commentCreate_comment_authorInfo', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'GCreateCommentData_commentCreate_comment_authorInfo', 'name');
+    BuiltValueNullFieldError.checkNotNull(pictureUrl,
+        r'GCreateCommentData_commentCreate_comment_authorInfo', 'pictureUrl');
+  }
+
+  @override
+  GCreateCommentData_commentCreate_comment_authorInfo rebuild(
+          void Function(
+                  GCreateCommentData_commentCreate_comment_authorInfoBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GCreateCommentData_commentCreate_comment_authorInfoBuilder toBuilder() =>
+      new GCreateCommentData_commentCreate_comment_authorInfoBuilder()
+        ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GCreateCommentData_commentCreate_comment_authorInfo &&
+        G__typename == other.G__typename &&
+        name == other.name &&
+        pictureUrl == other.pictureUrl;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, pictureUrl.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GCreateCommentData_commentCreate_comment_authorInfo')
+          ..add('G__typename', G__typename)
+          ..add('name', name)
+          ..add('pictureUrl', pictureUrl))
+        .toString();
+  }
+}
+
+class GCreateCommentData_commentCreate_comment_authorInfoBuilder
+    implements
+        Builder<GCreateCommentData_commentCreate_comment_authorInfo,
+            GCreateCommentData_commentCreate_comment_authorInfoBuilder> {
+  _$GCreateCommentData_commentCreate_comment_authorInfo? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _pictureUrl;
+  String? get pictureUrl => _$this._pictureUrl;
+  set pictureUrl(String? pictureUrl) => _$this._pictureUrl = pictureUrl;
+
+  GCreateCommentData_commentCreate_comment_authorInfoBuilder() {
+    GCreateCommentData_commentCreate_comment_authorInfo._initializeBuilder(
+        this);
+  }
+
+  GCreateCommentData_commentCreate_comment_authorInfoBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _name = $v.name;
+      _pictureUrl = $v.pictureUrl;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GCreateCommentData_commentCreate_comment_authorInfo other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GCreateCommentData_commentCreate_comment_authorInfo;
+  }
+
+  @override
+  void update(
+      void Function(GCreateCommentData_commentCreate_comment_authorInfoBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GCreateCommentData_commentCreate_comment_authorInfo build() => _build();
+
+  _$GCreateCommentData_commentCreate_comment_authorInfo _build() {
+    final _$result = _$v ??
+        new _$GCreateCommentData_commentCreate_comment_authorInfo._(
+          G__typename: BuiltValueNullFieldError.checkNotNull(
+              G__typename,
+              r'GCreateCommentData_commentCreate_comment_authorInfo',
+              'G__typename'),
+          name: BuiltValueNullFieldError.checkNotNull(name,
+              r'GCreateCommentData_commentCreate_comment_authorInfo', 'name'),
+          pictureUrl: BuiltValueNullFieldError.checkNotNull(
+              pictureUrl,
+              r'GCreateCommentData_commentCreate_comment_authorInfo',
+              'pictureUrl'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -11,7 +11,8 @@ class Comment with _$Comment {
     required DateTime updatedAt,
     required int postId,
     required String authorId,
-    @Default("") String authorName,
+    required String authorName,
+    required String authorPictureUrl,
     required bool creatorIsAuthUser,
   }) = _Comment;
 

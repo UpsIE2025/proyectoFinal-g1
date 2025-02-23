@@ -25,6 +25,8 @@ class CommentsNotifier extends AutoDisposeFamilyAsyncNotifier<List<Comment>, int
               updatedAt: DateTime.parse(c.updatedAt.value).toLocal(),
               postId: c.postId,
               authorId: c.authorId,
+              authorName: c.authorInfo.name,
+              authorPictureUrl: c.authorInfo.pictureUrl,
               creatorIsAuthUser: u.id == c.authorId,
             ))
         .toList();
@@ -54,6 +56,8 @@ class CommentsNotifier extends AutoDisposeFamilyAsyncNotifier<List<Comment>, int
                 .toLocal(),
             postId: resp.data!.commentCreate.comment!.postId,
             authorId: resp.data!.commentCreate.comment!.authorId,
+            authorName: resp.data!.commentCreate.comment!.authorInfo.name,
+            authorPictureUrl: resp.data!.commentCreate.comment!.authorInfo.pictureUrl,
             creatorIsAuthUser: true,
           )
         ]);

@@ -11,9 +11,10 @@ class Post with _$Post {
     required String content,
     required DateTime updatedAt,
     required String authorId,
-    @Default("") String authorName,
+    required String authorName,
+    required String authorPictureUrl,
     required bool creatorIsAuthUser,
-    @Default(0) int commentsCount,
+    required int commentsCount,
   }) = _Post;
 
   String get authorNameWithAuth {

@@ -6,6 +6,10 @@ query GetPostComments($postId: ID!) {
       content
       postId
       authorId
+      authorInfo {
+        name
+        pictureUrl
+      }
     }
   }
 }

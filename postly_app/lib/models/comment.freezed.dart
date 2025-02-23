@@ -22,6 +22,7 @@ mixin _$Comment {
   int get postId => throw _privateConstructorUsedError;
   String get authorId => throw _privateConstructorUsedError;
   String get authorName => throw _privateConstructorUsedError;
+  String get authorPictureUrl => throw _privateConstructorUsedError;
   bool get creatorIsAuthUser => throw _privateConstructorUsedError;
 
   /// Create a copy of Comment
@@ -42,6 +43,7 @@ abstract class $CommentCopyWith<$Res> {
       int postId,
       String authorId,
       String authorName,
+      String authorPictureUrl,
       bool creatorIsAuthUser});
 }
 
@@ -66,6 +68,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? postId = null,
     Object? authorId = null,
     Object? authorName = null,
+    Object? authorPictureUrl = null,
     Object? creatorIsAuthUser = null,
   }) {
     return _then(_value.copyWith(
@@ -93,6 +96,10 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      authorPictureUrl: null == authorPictureUrl
+          ? _value.authorPictureUrl
+          : authorPictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       creatorIsAuthUser: null == creatorIsAuthUser
           ? _value.creatorIsAuthUser
           : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
@@ -115,6 +122,7 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
       int postId,
       String authorId,
       String authorName,
+      String authorPictureUrl,
       bool creatorIsAuthUser});
 }
 
@@ -137,6 +145,7 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? postId = null,
     Object? authorId = null,
     Object? authorName = null,
+    Object? authorPictureUrl = null,
     Object? creatorIsAuthUser = null,
   }) {
     return _then(_$CommentImpl(
@@ -164,6 +173,10 @@ class __$$CommentImplCopyWithImpl<$Res>
           ? _value.authorName
           : authorName // ignore: cast_nullable_to_non_nullable
               as String,
+      authorPictureUrl: null == authorPictureUrl
+          ? _value.authorPictureUrl
+          : authorPictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       creatorIsAuthUser: null == creatorIsAuthUser
           ? _value.creatorIsAuthUser
           : creatorIsAuthUser // ignore: cast_nullable_to_non_nullable
@@ -181,7 +194,8 @@ class _$CommentImpl extends _Comment {
       required this.updatedAt,
       required this.postId,
       required this.authorId,
-      this.authorName = "",
+      required this.authorName,
+      required this.authorPictureUrl,
       required this.creatorIsAuthUser})
       : super._();
 
@@ -196,14 +210,15 @@ class _$CommentImpl extends _Comment {
   @override
   final String authorId;
   @override
-  @JsonKey()
   final String authorName;
+  @override
+  final String authorPictureUrl;
   @override
   final bool creatorIsAuthUser;
 
   @override
   String toString() {
-    return 'Comment(id: $id, content: $content, updatedAt: $updatedAt, postId: $postId, authorId: $authorId, authorName: $authorName, creatorIsAuthUser: $creatorIsAuthUser)';
+    return 'Comment(id: $id, content: $content, updatedAt: $updatedAt, postId: $postId, authorId: $authorId, authorName: $authorName, authorPictureUrl: $authorPictureUrl, creatorIsAuthUser: $creatorIsAuthUser)';
   }
 
   @override
@@ -220,13 +235,15 @@ class _$CommentImpl extends _Comment {
                 other.authorId == authorId) &&
             (identical(other.authorName, authorName) ||
                 other.authorName == authorName) &&
+            (identical(other.authorPictureUrl, authorPictureUrl) ||
+                other.authorPictureUrl == authorPictureUrl) &&
             (identical(other.creatorIsAuthUser, creatorIsAuthUser) ||
                 other.creatorIsAuthUser == creatorIsAuthUser));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, content, updatedAt, postId,
-      authorId, authorName, creatorIsAuthUser);
+      authorId, authorName, authorPictureUrl, creatorIsAuthUser);
 
   /// Create a copy of Comment
   /// with the given fields replaced by the non-null parameter values.
@@ -244,7 +261,8 @@ abstract class _Comment extends Comment {
       required final DateTime updatedAt,
       required final int postId,
       required final String authorId,
-      final String authorName,
+      required final String authorName,
+      required final String authorPictureUrl,
       required final bool creatorIsAuthUser}) = _$CommentImpl;
   const _Comment._() : super._();
 
@@ -260,6 +278,8 @@ abstract class _Comment extends Comment {
   String get authorId;
   @override
   String get authorName;
+  @override
+  String get authorPictureUrl;
   @override
   bool get creatorIsAuthUser;
 

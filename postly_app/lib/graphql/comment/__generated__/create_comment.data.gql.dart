@@ -92,6 +92,7 @@ abstract class GCreateCommentData_commentCreate_comment
   String get content;
   int get postId;
   String get authorId;
+  GCreateCommentData_commentCreate_comment_authorInfo get authorInfo;
   static Serializer<GCreateCommentData_commentCreate_comment> get serializer =>
       _$gCreateCommentDataCommentCreateCommentSerializer;
 
@@ -104,6 +105,42 @@ abstract class GCreateCommentData_commentCreate_comment
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GCreateCommentData_commentCreate_comment.serializer,
+        json,
+      );
+}
+
+abstract class GCreateCommentData_commentCreate_comment_authorInfo
+    implements
+        Built<GCreateCommentData_commentCreate_comment_authorInfo,
+            GCreateCommentData_commentCreate_comment_authorInfoBuilder> {
+  GCreateCommentData_commentCreate_comment_authorInfo._();
+
+  factory GCreateCommentData_commentCreate_comment_authorInfo(
+      [void Function(
+              GCreateCommentData_commentCreate_comment_authorInfoBuilder b)
+          updates]) = _$GCreateCommentData_commentCreate_comment_authorInfo;
+
+  static void _initializeBuilder(
+          GCreateCommentData_commentCreate_comment_authorInfoBuilder b) =>
+      b..G__typename = 'AuthorInfo';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String get name;
+  String get pictureUrl;
+  static Serializer<GCreateCommentData_commentCreate_comment_authorInfo>
+      get serializer =>
+          _$gCreateCommentDataCommentCreateCommentAuthorInfoSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GCreateCommentData_commentCreate_comment_authorInfo.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GCreateCommentData_commentCreate_comment_authorInfo? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GCreateCommentData_commentCreate_comment_authorInfo.serializer,
         json,
       );
 }

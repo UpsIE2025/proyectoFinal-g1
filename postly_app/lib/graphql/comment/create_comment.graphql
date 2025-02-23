@@ -6,6 +6,10 @@ mutation CreateComment($input: CommentCreateInput!) {
       content
       postId
       authorId
+      authorInfo {
+        name
+        pictureUrl
+      }
     }
     error {
       message

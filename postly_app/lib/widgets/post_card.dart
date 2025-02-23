@@ -24,6 +24,7 @@ class PostCard extends ConsumerWidget {
             children: [
               _PostHeader(
                 p.authorNameWithAuth,
+                p.authorPictureUrl,
                 p.title,
                 p.updatedAt,
                 onEdit:
@@ -67,9 +68,16 @@ class PostCard extends ConsumerWidget {
 }
 
 class _PostHeader extends StatelessWidget {
-  const _PostHeader(this.authorName, this.title, this.updatedAt, {required this.onEdit});
+  const _PostHeader(
+    this.authorName,
+    this.authorPictureUrl,
+    this.title,
+    this.updatedAt, {
+    required this.onEdit,
+  });
 
   final String authorName;
+  final String authorPictureUrl;
   final String title;
   final DateTime updatedAt;
   final VoidCallback? onEdit;
@@ -78,7 +86,7 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AppAvatar(name: authorName),
+        AppAvatar(name: authorName, pictureUrl: authorPictureUrl),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
