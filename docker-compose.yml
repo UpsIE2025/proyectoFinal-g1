@@ -153,6 +153,37 @@ services:
       - debezium
       - replicadb
 
+  kongapigateway:
+    #image: kong/kong-gateway:3.7.1.4-rhel-fips
+    build:
+      context: .
+      dockerfile: kong.Dockerfile
+    restart: unless-stopped
+    container_name: kong-dbless
+    environment:
+      KONG_DATABASE: off
+      KONG_DECLARATIVE_CONFIG: /kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+      #KONG_LICENSE_DATA: "no-tenemos-licencia-para-el-proyecto"
+    volumes:
+      - ./kong:/kong/declarative
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+      - "8002:8002"
+      - "8445:8445"
+      - "8003:8003"
+      - "8004:8004"
+    networks:
+      - project-network
+
 networks:
   project-network:
     driver: bridge
