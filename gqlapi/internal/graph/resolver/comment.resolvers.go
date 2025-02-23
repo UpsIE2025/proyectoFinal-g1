@@ -8,11 +8,13 @@ import (
 	"context"
 	"msoft/g1/gqlapi/internal/clients/comment"
 	"msoft/g1/gqlapi/internal/graph/modelgen"
+	"msoft/g1/gqlapi/internal/middlewares"
 )
 
 // CommentCreate is the resolver for the commentCreate field.
 func (r *mutationResolver) CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error) {
-	input.AuthorID = "1" // TODO
+	u := middlewares.UserForContext(ctx)
+	input.AuthorID = u.ID
 	cm, err := r.commentClient.Create(&input)
 	if err != nil {
 		return &modelgen.CommentCreatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
@@ -22,6 +24,11 @@ func (r *mutationResolver) CommentCreate(ctx context.Context, input comment.Crea
 
 // CommentUpdate is the resolver for the commentUpdate field.
 func (r *mutationResolver) CommentUpdate(ctx context.Context, id int, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error) {
+	u := middlewares.UserForContext(ctx)
+	err := r.checkCommentAuthor(id, u.ID)
+	if err != nil {
+		return &modelgen.CommentUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
 	cm, err := r.commentClient.Update(id, &input)
 	if err != nil {
 		return &modelgen.CommentUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
@@ -31,7 +38,12 @@ func (r *mutationResolver) CommentUpdate(ctx context.Context, id int, input comm
 
 // CommentDelete is the resolver for the commentDelete field.
 func (r *mutationResolver) CommentDelete(ctx context.Context, id int) (*modelgen.CommentDeletePayload, error) {
-	err := r.commentClient.Delete(id)
+	u := middlewares.UserForContext(ctx)
+	err := r.checkCommentAuthor(id, u.ID)
+	if err != nil {
+		return &modelgen.CommentDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	err = r.commentClient.Delete(id)
 	if err != nil {
 		return &modelgen.CommentDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
 	}

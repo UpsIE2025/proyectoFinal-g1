@@ -10,11 +10,13 @@ import (
 	"msoft/g1/gqlapi/internal/clients/post"
 	"msoft/g1/gqlapi/internal/graph/generated"
 	"msoft/g1/gqlapi/internal/graph/modelgen"
+	"msoft/g1/gqlapi/internal/middlewares"
 )
 
 // PostCreate is the resolver for the postCreate field.
 func (r *mutationResolver) PostCreate(ctx context.Context, input post.CreateInput) (*modelgen.PostCreatePayload, error) {
-	input.AuthorID = "1" // TODO
+	u := middlewares.UserForContext(ctx)
+	input.AuthorID = u.ID
 	p, err := r.postClient.Create(&input)
 	if err != nil {
 		return &modelgen.PostCreatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
@@ -24,6 +26,11 @@ func (r *mutationResolver) PostCreate(ctx context.Context, input post.CreateInpu
 
 // PostUpdate is the resolver for the postUpdate field.
 func (r *mutationResolver) PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error) {
+	u := middlewares.UserForContext(ctx)
+	err := r.checkPostAuthor(id, u.ID)
+	if err != nil {
+		return &modelgen.PostUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
 	p, err := r.postClient.Update(id, &input)
 	if err != nil {
 		return &modelgen.PostUpdatePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
@@ -33,7 +40,12 @@ func (r *mutationResolver) PostUpdate(ctx context.Context, id int, input post.Up
 
 // PostDelete is the resolver for the postDelete field.
 func (r *mutationResolver) PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error) {
-	err := r.postClient.Delete(id)
+	u := middlewares.UserForContext(ctx)
+	err := r.checkPostAuthor(id, u.ID)
+	if err != nil {
+		return &modelgen.PostDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
+	}
+	err = r.postClient.Delete(id)
 	if err != nil {
 		return &modelgen.PostDeletePayload{Error: &modelgen.Error{Message: err.Error()}}, nil
 	}

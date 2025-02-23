@@ -7,7 +7,7 @@ import (
 	"msoft/g1/gqlapi/internal/clients/post"
 	"msoft/g1/gqlapi/internal/graph/generated"
 	"msoft/g1/gqlapi/internal/graph/resolver"
-	"net/http"
+	"msoft/g1/gqlapi/internal/middlewares"
 	"os"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -15,6 +15,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/lru"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -46,15 +47,17 @@ func main() {
 	srv.SetQueryCache(lru.New[*ast.QueryDocument](1000))
 	srv.Use(extension.Introspection{})
 
-	mux := http.NewServeMux()
-	mux.Handle("/playground", playground.Handler("GraphQL playground", "/query"))
-	mux.Handle("/query", srv)
+	r := gin.Default()
+	r.GET("/playground", func(ctx *gin.Context) {
+		playground.Handler("GraphQL playground", "/query")(ctx.Writer, ctx.Request)
+	})
+	r.POST("/query", middlewares.Auth, func(ctx *gin.Context) {
+		srv.ServeHTTP(ctx.Writer, ctx.Request)
+	})
 
 	port := getAPIPort()
 	slog.Info(fmt.Sprintf("Listening at :%s", port))
-	if err := http.ListenAndServe(":"+port, mux); err != nil {
-		slog.Error(err.Error())
-	}
+	r.Run(":" + port)
 }
 
 func getAPIPort() string {
