@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log/slog"
+	"msoft/g1/gqlapi/internal/clients/auth"
 	"msoft/g1/gqlapi/internal/clients/comment"
 	"msoft/g1/gqlapi/internal/clients/post"
 	"msoft/g1/gqlapi/internal/graph/generated"
@@ -23,6 +24,14 @@ import (
 func main() {
 	godotenv.Load()
 
+	// keep this to avoid token regeneration in tests
+	authClient := &auth.Client{}
+	// authClient, err := auth.NewClient()
+	// if err != nil {
+	// 	slog.Error(err.Error())
+	// 	os.Exit(1)
+	// }
+
 	postClient, postClientClose, err := post.NewClient(fmt.Sprintf("%s:%s",
 		os.Getenv("POST_SERVICE_HOST"), os.Getenv("POST_SERVICE_PORT")))
 	if err != nil {
@@ -39,7 +48,7 @@ func main() {
 	}
 
 	srv := handler.New(generated.NewExecutableSchema(generated.Config{
-		Resolvers: resolver.New(postClient, commentClient),
+		Resolvers: resolver.New(postClient, commentClient, authClient),
 	}))
 	srv.AddTransport(transport.Options{})
 	srv.AddTransport(transport.GET{})

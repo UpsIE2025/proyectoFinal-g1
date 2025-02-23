@@ -78,9 +78,14 @@ func validateToken(token string) (*auth.User, error) {
 	if m["email"] != nil {
 		email = fmt.Sprint(m["email"])
 	}
+	pictureURL := ""
+	if m["picture"] != nil {
+		pictureURL = fmt.Sprint(m["picture"])
+	}
 	return &auth.User{
-		ID:    fmt.Sprint(m["sub"]),
-		Name:  fmt.Sprint(m["name"]),
-		Email: email,
+		ID:         fmt.Sprint(m["sub"]),
+		Name:       fmt.Sprint(m["name"]),
+		Email:      email,
+		PictureURL: pictureURL,
 	}, nil
 }

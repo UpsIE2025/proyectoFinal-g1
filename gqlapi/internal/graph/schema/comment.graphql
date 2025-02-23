@@ -10,6 +10,7 @@ type Comment @goModel(model: "comment.Comment") {
   content: String!
   postId: ID!
   authorId: String!
+  authorInfo: AuthorInfo! @goField(forceResolver: true)
 }
 
 ##################################################

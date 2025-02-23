@@ -1,0 +1,9 @@
+##################################################
+# Models
+##################################################
+
+"AuthorInfo model definition"
+type AuthorInfo {
+  name: String!
+  pictureUrl: String!
+}

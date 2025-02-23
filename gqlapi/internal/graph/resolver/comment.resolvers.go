@@ -7,9 +7,19 @@ package resolver
 import (
 	"context"
 	"msoft/g1/gqlapi/internal/clients/comment"
+	"msoft/g1/gqlapi/internal/graph/generated"
 	"msoft/g1/gqlapi/internal/graph/modelgen"
 	"msoft/g1/gqlapi/internal/middlewares"
 )
+
+// AuthorInfo is the resolver for the authorInfo field.
+func (r *commentResolver) AuthorInfo(ctx context.Context, obj *comment.Comment) (*modelgen.AuthorInfo, error) {
+	u, err := r.authClient.GetUser(obj.AuthorID)
+	if err != nil {
+		return nil, err
+	}
+	return &modelgen.AuthorInfo{Name: u.Name, PictureURL: u.PictureURL}, nil
+}
 
 // CommentCreate is the resolver for the commentCreate field.
 func (r *mutationResolver) CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error) {
@@ -67,3 +77,8 @@ func (r *queryResolver) Comments(ctx context.Context) ([]*comment.Comment, error
 	}
 	return cms, nil
 }
+
+// Comment returns generated.CommentResolver implementation.
+func (r *Resolver) Comment() generated.CommentResolver { return &commentResolver{r} }
+
+type commentResolver struct{ *Resolver }

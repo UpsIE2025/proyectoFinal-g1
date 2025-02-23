@@ -52,6 +52,24 @@ func (r *mutationResolver) PostDelete(ctx context.Context, id int) (*modelgen.Po
 	return &modelgen.PostDeletePayload{}, nil
 }
 
+// AuthorInfo is the resolver for the authorInfo field.
+func (r *postResolver) AuthorInfo(ctx context.Context, obj *post.Post) (*modelgen.AuthorInfo, error) {
+	u, err := r.authClient.GetUser(obj.AuthorID)
+	if err != nil {
+		return nil, err
+	}
+	return &modelgen.AuthorInfo{
+		Name:       u.Name,
+		PictureURL: u.PictureURL,
+	}, nil
+}
+
+// CommentCount is the resolver for the commentCount field.
+func (r *postResolver) CommentCount(ctx context.Context, obj *post.Post) (int32, error) {
+	// TODO
+	return 0, nil
+}
+
 // Comments is the resolver for the comments field.
 func (r *postResolver) Comments(ctx context.Context, obj *post.Post) ([]*comment.Comment, error) {
 	cms, err := r.commentClient.GetByPostID(obj.ID)

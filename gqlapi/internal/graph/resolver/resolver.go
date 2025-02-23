@@ -1,6 +1,7 @@
 package resolver
 
 import (
+	"msoft/g1/gqlapi/internal/clients/auth"
 	"msoft/g1/gqlapi/internal/clients/comment"
 	"msoft/g1/gqlapi/internal/clients/post"
 )
@@ -13,12 +14,14 @@ import (
 type Resolver struct {
 	postClient    *post.Client
 	commentClient *comment.Client
+	authClient    *auth.Client
 }
 
 // New creates a new graphql resolver.
-func New(postClient *post.Client, commentClient *comment.Client) *Resolver {
+func New(postClient *post.Client, commentClient *comment.Client, authClient *auth.Client) *Resolver {
 	return &Resolver{
 		postClient:    postClient,
 		commentClient: commentClient,
+		authClient:    authClient,
 	}
 }

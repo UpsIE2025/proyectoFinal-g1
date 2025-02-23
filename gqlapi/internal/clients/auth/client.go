@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"log/slog"
 	"os"
 
 	"github.com/auth0/go-auth0/management"
@@ -29,6 +30,10 @@ func NewClient() (*Client, error) {
 
 // GetUser gets the user with the specified id.
 func (c *Client) GetUser(id string) (*User, error) {
+	if c.api == nil {
+		slog.Info("Bypassing auth0")
+		return &User{ID: id, Name: "Sin nombre", Email: "email@test.com", PictureURL: ""}, nil
+	}
 	resp, err := c.api.User.Read(context.Background(), id)
 	if err != nil {
 		return nil, err
@@ -42,6 +47,9 @@ func (c *Client) GetUser(id string) (*User, error) {
 	}
 	if resp.Email != nil {
 		u.Email = *resp.Email
+	}
+	if resp.Picture != nil {
+		u.PictureURL = *resp.Picture
 	}
 	return &u, nil
 }

@@ -7,6 +7,12 @@ import (
 	"msoft/g1/gqlapi/internal/clients/post"
 )
 
+// AuthorInfo model definition
+type AuthorInfo struct {
+	Name       string `json:"name"`
+	PictureURL string `json:"pictureUrl"`
+}
+
 type CommentCreatePayload struct {
 	Comment *comment.Comment `json:"comment,omitempty"`
 	Error   *Error           `json:"error,omitempty"`
