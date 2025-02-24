@@ -9,18 +9,23 @@ import (
 	"encoding/json"
 	"log/slog"
 	"msoft/g1/gqlapi/internal/graph/modelgen"
+	"msoft/g1/gqlapi/internal/middlewares"
 
 	"github.com/IBM/sarama"
 )
 
 // AddOrRemoveFCMToken is the resolver for the addOrRemoveFCMToken field.
-func (r *mutationResolver) AddOrRemoveFCMToken(ctx context.Context, userID string, addToken *string, removeToken *string) (*modelgen.FCMTokenAddOrRemovePayload, error) {
+func (r *mutationResolver) AddOrRemoveFCMToken(ctx context.Context, addToken *string, removeToken *string) (*modelgen.FCMTokenAddOrRemovePayload, error) {
+	if addToken == nil && removeToken == nil {
+		return &modelgen.FCMTokenAddOrRemovePayload{}, nil
+	}
+	u := middlewares.UserForContext(ctx)
 	var ev struct {
 		UserID      string `json:"user_id"`
 		AddToken    string `json:"add_token"`
 		RemoveToken string `json:"remove_token"`
 	}
-	ev.UserID = userID
+	ev.UserID = u.ID
 	if addToken != nil {
 		ev.AddToken = *addToken
 	}

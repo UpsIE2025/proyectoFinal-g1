@@ -89,7 +89,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddOrRemoveFCMToken func(childComplexity int, userID string, addToken *string, removeToken *string) int
+		AddOrRemoveFCMToken func(childComplexity int, addToken *string, removeToken *string) int
 		CommentCreate       func(childComplexity int, input comment.CreateInput) int
 		CommentDelete       func(childComplexity int, id int) int
 		CommentUpdate       func(childComplexity int, id int, input comment.UpdateInput) int
@@ -142,7 +142,7 @@ type MutationResolver interface {
 	CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error)
 	CommentUpdate(ctx context.Context, id int, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error)
 	CommentDelete(ctx context.Context, id int) (*modelgen.CommentDeletePayload, error)
-	AddOrRemoveFCMToken(ctx context.Context, userID string, addToken *string, removeToken *string) (*modelgen.FCMTokenAddOrRemovePayload, error)
+	AddOrRemoveFCMToken(ctx context.Context, addToken *string, removeToken *string) (*modelgen.FCMTokenAddOrRemovePayload, error)
 	PostCreate(ctx context.Context, input post.CreateInput) (*modelgen.PostCreatePayload, error)
 	PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error)
 	PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error)
@@ -301,7 +301,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddOrRemoveFCMToken(childComplexity, args["userID"].(string), args["addToken"].(*string), args["removeToken"].(*string)), true
+		return e.complexity.Mutation.AddOrRemoveFCMToken(childComplexity, args["addToken"].(*string), args["removeToken"].(*string)), true
 
 	case "Mutation.commentCreate":
 		if e.complexity.Mutation.CommentCreate == nil {
@@ -727,11 +727,7 @@ type FCMTokenAddOrRemovePayload {
 }
 
 extend type Mutation {
-  addOrRemoveFCMToken(
-    userID: String!
-    addToken: String
-    removeToken: String
-  ): FCMTokenAddOrRemovePayload!
+  addOrRemoveFCMToken(addToken: String, removeToken: String): FCMTokenAddOrRemovePayload!
 }
 `, BuiltIn: false},
 	{Name: "../schema/post.graphql", Input: `##################################################
@@ -857,36 +853,18 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
-	arg0, err := ec.field_Mutation_addOrRemoveFCMToken_argsUserID(ctx, rawArgs)
+	arg0, err := ec.field_Mutation_addOrRemoveFCMToken_argsAddToken(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
-	args["userID"] = arg0
-	arg1, err := ec.field_Mutation_addOrRemoveFCMToken_argsAddToken(ctx, rawArgs)
+	args["addToken"] = arg0
+	arg1, err := ec.field_Mutation_addOrRemoveFCMToken_argsRemoveToken(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
-	args["addToken"] = arg1
-	arg2, err := ec.field_Mutation_addOrRemoveFCMToken_argsRemoveToken(ctx, rawArgs)
-	if err != nil {
-		return nil, err
-	}
-	args["removeToken"] = arg2
+	args["removeToken"] = arg1
 	return args, nil
 }
-func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_argsUserID(
-	ctx context.Context,
-	rawArgs map[string]any,
-) (string, error) {
-	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userID"))
-	if tmp, ok := rawArgs["userID"]; ok {
-		return ec.unmarshalNString2string(ctx, tmp)
-	}
-
-	var zeroVal string
-	return zeroVal, nil
-}
-
 func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_argsAddToken(
 	ctx context.Context,
 	rawArgs map[string]any,
@@ -2232,7 +2210,7 @@ func (ec *executionContext) _Mutation_addOrRemoveFCMToken(ctx context.Context, f
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().AddOrRemoveFCMToken(rctx, fc.Args["userID"].(string), fc.Args["addToken"].(*string), fc.Args["removeToken"].(*string))
+		return ec.resolvers.Mutation().AddOrRemoveFCMToken(rctx, fc.Args["addToken"].(*string), fc.Args["removeToken"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
