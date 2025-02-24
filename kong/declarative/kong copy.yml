@@ -12,5 +12,3 @@ services:
     - /mock
     strip_path: true
 
-
-http://localhost:8080/playground

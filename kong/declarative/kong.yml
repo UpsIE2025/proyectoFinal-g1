@@ -2,19 +2,13 @@ _format_version: "3.0"
 _transform: true
 
 services:
-  - name: kong_serviceproyectoups
-    host: localhost
-    port: 8080
-    protocol: http
-    routes:
-      - name: graphql_route
-        paths:
-          - /              
-        strip_path: false   
-        preserve_host: true 
+- host: localhost
+  name: kong_serviceproyectoups
+  port: 8080
+  protocol: http
+  routes:
+  - name: graphql_route
+    paths:
+    - /query  
+    strip_path: false
 
-      - name: graphql_query_route
-        paths:
-          - /query         
-        strip_path: false   
-        preserve_host: true 
