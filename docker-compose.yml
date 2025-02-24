@@ -153,6 +153,34 @@ services:
       - debezium
       - replicadb
 
+  kongapigateway:
+    #image: kong/kong-gateway:3.7.1.4-rhel-fips
+    build:
+      context: .
+      dockerfile: kong.Dockerfile
+    #restart: unless-stopped
+    container_name: kongapigateway
+    environment:
+      - KONG_DATABASE=off
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001,0.0.0.0:8444 ssl 
+      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+    ports:
+      - "8000:8000"    # Puerto para tráfico HTTP
+      - "8443:8443"    # Puerto para tráfico HTTPS
+      - "8001:8001"    # Puerto para Admin API
+      - "8444:8444"    # Puerto para Admin API con SSL
+    volumes:
+      - ./kong/declarative:/kong/declarative # revisar archivo de configuraicon kong.yml
+    networks:
+      - project-network
+    #depends_on:
+    #  - postservice
+    #  - commentservice
+
 networks:
   project-network:
     driver: bridge
