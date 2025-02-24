@@ -3,11 +3,18 @@ _transform: true
 
 services:
   - name: kong_serviceproyectoups
-    host: localhost  
-    port: 8080       
+    host: localhost
+    port: 8080
     protocol: http
     routes:
-    - name: example_route 
-      paths:
-        - /mock
-      strip_path: true
+      - name: graphql_route
+        paths:
+          - /              
+        strip_path: false   
+        preserve_host: true 
+
+      - name: graphql_query_route
+        paths:
+          - /query         
+        strip_path: false   
+        preserve_host: true 
