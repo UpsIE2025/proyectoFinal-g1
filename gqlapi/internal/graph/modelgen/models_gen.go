@@ -31,6 +31,10 @@ type Error struct {
 	Message string `json:"message"`
 }
 
+type FCMTokenAddOrRemovePayload struct {
+	Error *Error `json:"error,omitempty"`
+}
+
 // Mutation operations
 type Mutation struct {
 }

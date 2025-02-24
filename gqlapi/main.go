@@ -16,6 +16,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/lru"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/IBM/sarama"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vektah/gqlparser/v2/ast"
@@ -23,6 +24,17 @@ import (
 
 func main() {
 	godotenv.Load()
+	kafkaAddr := fmt.Sprintf("%s:%s", os.Getenv("KAFKA_HOST"), os.Getenv("KAFKA_PORT"))
+
+	config := sarama.NewConfig()
+	config.Producer.Return.Successes = true
+	config.Producer.RequiredAcks = sarama.WaitForAll
+	config.Producer.Retry.Max = 5
+	kafkaProd, err := sarama.NewSyncProducer([]string{kafkaAddr}, config)
+	if err != nil {
+		panic(err)
+	}
+	defer kafkaProd.Close()
 
 	// keep this to avoid token regeneration in tests
 	authClient := &auth.Client{}
@@ -48,7 +60,7 @@ func main() {
 	}
 
 	srv := handler.New(generated.NewExecutableSchema(generated.Config{
-		Resolvers: resolver.New(postClient, commentClient, authClient),
+		Resolvers: resolver.New(postClient, commentClient, authClient, kafkaProd),
 	}))
 	srv.AddTransport(transport.Options{})
 	srv.AddTransport(transport.GET{})

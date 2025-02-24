@@ -1,0 +1,15 @@
+##################################################
+# Mutations
+##################################################
+
+type FCMTokenAddOrRemovePayload {
+  error: Error
+}
+
+extend type Mutation {
+  addOrRemoveFCMToken(
+    userID: String!
+    addToken: String
+    removeToken: String
+  ): FCMTokenAddOrRemovePayload!
+}

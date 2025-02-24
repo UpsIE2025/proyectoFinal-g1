@@ -84,14 +84,19 @@ type ComplexityRoot struct {
 		Message func(childComplexity int) int
 	}
 
+	FCMTokenAddOrRemovePayload struct {
+		Error func(childComplexity int) int
+	}
+
 	Mutation struct {
-		CommentCreate func(childComplexity int, input comment.CreateInput) int
-		CommentDelete func(childComplexity int, id int) int
-		CommentUpdate func(childComplexity int, id int, input comment.UpdateInput) int
-		EmptyMutate   func(childComplexity int) int
-		PostCreate    func(childComplexity int, input post.CreateInput) int
-		PostDelete    func(childComplexity int, id int) int
-		PostUpdate    func(childComplexity int, id int, input post.UpdateInput) int
+		AddOrRemoveFCMToken func(childComplexity int, userID string, addToken *string, removeToken *string) int
+		CommentCreate       func(childComplexity int, input comment.CreateInput) int
+		CommentDelete       func(childComplexity int, id int) int
+		CommentUpdate       func(childComplexity int, id int, input comment.UpdateInput) int
+		EmptyMutate         func(childComplexity int) int
+		PostCreate          func(childComplexity int, input post.CreateInput) int
+		PostDelete          func(childComplexity int, id int) int
+		PostUpdate          func(childComplexity int, id int, input post.UpdateInput) int
 	}
 
 	Post struct {
@@ -137,6 +142,7 @@ type MutationResolver interface {
 	CommentCreate(ctx context.Context, input comment.CreateInput) (*modelgen.CommentCreatePayload, error)
 	CommentUpdate(ctx context.Context, id int, input comment.UpdateInput) (*modelgen.CommentUpdatePayload, error)
 	CommentDelete(ctx context.Context, id int) (*modelgen.CommentDeletePayload, error)
+	AddOrRemoveFCMToken(ctx context.Context, userID string, addToken *string, removeToken *string) (*modelgen.FCMTokenAddOrRemovePayload, error)
 	PostCreate(ctx context.Context, input post.CreateInput) (*modelgen.PostCreatePayload, error)
 	PostUpdate(ctx context.Context, id int, input post.UpdateInput) (*modelgen.PostUpdatePayload, error)
 	PostDelete(ctx context.Context, id int) (*modelgen.PostDeletePayload, error)
@@ -277,6 +283,25 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Error.Message(childComplexity), true
+
+	case "FCMTokenAddOrRemovePayload.error":
+		if e.complexity.FCMTokenAddOrRemovePayload.Error == nil {
+			break
+		}
+
+		return e.complexity.FCMTokenAddOrRemovePayload.Error(childComplexity), true
+
+	case "Mutation.addOrRemoveFCMToken":
+		if e.complexity.Mutation.AddOrRemoveFCMToken == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addOrRemoveFCMToken_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddOrRemoveFCMToken(childComplexity, args["userID"].(string), args["addToken"].(*string), args["removeToken"].(*string)), true
 
 	case "Mutation.commentCreate":
 		if e.complexity.Mutation.CommentCreate == nil {
@@ -693,6 +718,22 @@ type Error {
   message: String!
 }
 `, BuiltIn: false},
+	{Name: "../schema/fcmtoken.graphql", Input: `##################################################
+# Mutations
+##################################################
+
+type FCMTokenAddOrRemovePayload {
+  error: Error
+}
+
+extend type Mutation {
+  addOrRemoveFCMToken(
+    userID: String!
+    addToken: String
+    removeToken: String
+  ): FCMTokenAddOrRemovePayload!
+}
+`, BuiltIn: false},
 	{Name: "../schema/post.graphql", Input: `##################################################
 # Models
 ##################################################
@@ -812,6 +853,65 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 // endregion ************************** generated!.gotpl **************************
 
 // region    ***************************** args.gotpl *****************************
+
+func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := ec.field_Mutation_addOrRemoveFCMToken_argsUserID(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["userID"] = arg0
+	arg1, err := ec.field_Mutation_addOrRemoveFCMToken_argsAddToken(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["addToken"] = arg1
+	arg2, err := ec.field_Mutation_addOrRemoveFCMToken_argsRemoveToken(ctx, rawArgs)
+	if err != nil {
+		return nil, err
+	}
+	args["removeToken"] = arg2
+	return args, nil
+}
+func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_argsUserID(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (string, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("userID"))
+	if tmp, ok := rawArgs["userID"]; ok {
+		return ec.unmarshalNString2string(ctx, tmp)
+	}
+
+	var zeroVal string
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_argsAddToken(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*string, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("addToken"))
+	if tmp, ok := rawArgs["addToken"]; ok {
+		return ec.unmarshalOString2ᚖstring(ctx, tmp)
+	}
+
+	var zeroVal *string
+	return zeroVal, nil
+}
+
+func (ec *executionContext) field_Mutation_addOrRemoveFCMToken_argsRemoveToken(
+	ctx context.Context,
+	rawArgs map[string]any,
+) (*string, error) {
+	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("removeToken"))
+	if tmp, ok := rawArgs["removeToken"]; ok {
+		return ec.unmarshalOString2ᚖstring(ctx, tmp)
+	}
+
+	var zeroVal *string
+	return zeroVal, nil
+}
 
 func (ec *executionContext) field_Mutation_commentCreate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
@@ -1851,6 +1951,51 @@ func (ec *executionContext) fieldContext_Error_message(_ context.Context, field 
 	return fc, nil
 }
 
+func (ec *executionContext) _FCMTokenAddOrRemovePayload_error(ctx context.Context, field graphql.CollectedField, obj *modelgen.FCMTokenAddOrRemovePayload) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_FCMTokenAddOrRemovePayload_error(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Error, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*modelgen.Error)
+	fc.Result = res
+	return ec.marshalOError2ᚖmsoftᚋg1ᚋgqlapiᚋinternalᚋgraphᚋmodelgenᚐError(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_FCMTokenAddOrRemovePayload_error(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "FCMTokenAddOrRemovePayload",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "message":
+				return ec.fieldContext_Error_message(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Error", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation__emptyMutate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation__emptyMutate(ctx, field)
 	if err != nil {
@@ -2067,6 +2212,65 @@ func (ec *executionContext) fieldContext_Mutation_commentDelete(ctx context.Cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_commentDelete_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_addOrRemoveFCMToken(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addOrRemoveFCMToken(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().AddOrRemoveFCMToken(rctx, fc.Args["userID"].(string), fc.Args["addToken"].(*string), fc.Args["removeToken"].(*string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*modelgen.FCMTokenAddOrRemovePayload)
+	fc.Result = res
+	return ec.marshalNFCMTokenAddOrRemovePayload2ᚖmsoftᚋg1ᚋgqlapiᚋinternalᚋgraphᚋmodelgenᚐFCMTokenAddOrRemovePayload(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_addOrRemoveFCMToken(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "error":
+				return ec.fieldContext_FCMTokenAddOrRemovePayload_error(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type FCMTokenAddOrRemovePayload", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addOrRemoveFCMToken_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -5748,6 +5952,42 @@ func (ec *executionContext) _Error(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
+var fCMTokenAddOrRemovePayloadImplementors = []string{"FCMTokenAddOrRemovePayload"}
+
+func (ec *executionContext) _FCMTokenAddOrRemovePayload(ctx context.Context, sel ast.SelectionSet, obj *modelgen.FCMTokenAddOrRemovePayload) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, fCMTokenAddOrRemovePayloadImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("FCMTokenAddOrRemovePayload")
+		case "error":
+			out.Values[i] = ec._FCMTokenAddOrRemovePayload_error(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var mutationImplementors = []string{"Mutation"}
 
 func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -5788,6 +6028,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "commentDelete":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_commentDelete(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "addOrRemoveFCMToken":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addOrRemoveFCMToken(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -6739,6 +6986,20 @@ func (ec *executionContext) marshalNCommentUpdatePayload2ᚖmsoftᚋg1ᚋgqlapi�
 		return graphql.Null
 	}
 	return ec._CommentUpdatePayload(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNFCMTokenAddOrRemovePayload2msoftᚋg1ᚋgqlapiᚋinternalᚋgraphᚋmodelgenᚐFCMTokenAddOrRemovePayload(ctx context.Context, sel ast.SelectionSet, v modelgen.FCMTokenAddOrRemovePayload) graphql.Marshaler {
+	return ec._FCMTokenAddOrRemovePayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNFCMTokenAddOrRemovePayload2ᚖmsoftᚋg1ᚋgqlapiᚋinternalᚋgraphᚋmodelgenᚐFCMTokenAddOrRemovePayload(ctx context.Context, sel ast.SelectionSet, v *modelgen.FCMTokenAddOrRemovePayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._FCMTokenAddOrRemovePayload(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNID2int(ctx context.Context, v any) (int, error) {
