@@ -1,0 +1,7 @@
+mutation FCMTokenAddOrRemove($addToken: String, $removeToken: String) {
+  addOrRemoveFCMToken(addToken: $addToken, removeToken: $removeToken) {
+    error {
+      message
+    }
+  }
+}

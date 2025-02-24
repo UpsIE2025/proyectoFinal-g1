@@ -71,6 +71,10 @@ type Error {
   message: String!
 }
 
+type FCMTokenAddOrRemovePayload {
+  error: Error
+}
+
 """Mutation operations"""
 type Mutation {
   _emptyMutate: String
@@ -83,6 +87,7 @@ type Mutation {
 
   """Deletes the comment with the specified id"""
   commentDelete(id: ID!): CommentDeletePayload!
+  addOrRemoveFCMToken(addToken: String, removeToken: String): FCMTokenAddOrRemovePayload!
 
   """Creates a new Post"""
   postCreate(input: PostCreateInput!): PostCreatePayload!

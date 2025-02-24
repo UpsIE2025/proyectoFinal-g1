@@ -333,6 +333,22 @@ const Error = _i1.ObjectTypeDefinitionNode(
     )
   ],
 );
+const FCMTokenAddOrRemovePayload = _i1.ObjectTypeDefinitionNode(
+  name: _i1.NameNode(value: 'FCMTokenAddOrRemovePayload'),
+  directives: [],
+  interfaces: [],
+  fields: [
+    _i1.FieldDefinitionNode(
+      name: _i1.NameNode(value: 'error'),
+      directives: [],
+      args: [],
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'Error'),
+        isNonNull: false,
+      ),
+    )
+  ],
+);
 const Mutation = _i1.ObjectTypeDefinitionNode(
   name: _i1.NameNode(value: 'Mutation'),
   directives: [],
@@ -410,6 +426,34 @@ const Mutation = _i1.ObjectTypeDefinitionNode(
       ],
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'CommentDeletePayload'),
+        isNonNull: true,
+      ),
+    ),
+    _i1.FieldDefinitionNode(
+      name: _i1.NameNode(value: 'addOrRemoveFCMToken'),
+      directives: [],
+      args: [
+        _i1.InputValueDefinitionNode(
+          name: _i1.NameNode(value: 'addToken'),
+          directives: [],
+          type: _i1.NamedTypeNode(
+            name: _i1.NameNode(value: 'String'),
+            isNonNull: false,
+          ),
+          defaultValue: null,
+        ),
+        _i1.InputValueDefinitionNode(
+          name: _i1.NameNode(value: 'removeToken'),
+          directives: [],
+          type: _i1.NamedTypeNode(
+            name: _i1.NameNode(value: 'String'),
+            isNonNull: false,
+          ),
+          defaultValue: null,
+        ),
+      ],
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'FCMTokenAddOrRemovePayload'),
         isNonNull: true,
       ),
     ),
@@ -782,6 +826,7 @@ const document = _i1.DocumentNode(definitions: [
   CommentUpdateInput,
   CommentUpdatePayload,
   Error,
+  FCMTokenAddOrRemovePayload,
   Mutation,
   Post,
   PostCreateInput,

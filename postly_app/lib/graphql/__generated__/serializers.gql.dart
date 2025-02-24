@@ -25,6 +25,15 @@ import 'package:postly_app/graphql/comment/__generated__/create_comment.req.gql.
     show GCreateCommentReq;
 import 'package:postly_app/graphql/comment/__generated__/create_comment.var.gql.dart'
     show GCreateCommentVars;
+import 'package:postly_app/graphql/fcmtoken/__generated__/add_remove_fcmtoken.data.gql.dart'
+    show
+        GFCMTokenAddOrRemoveData,
+        GFCMTokenAddOrRemoveData_addOrRemoveFCMToken,
+        GFCMTokenAddOrRemoveData_addOrRemoveFCMToken_error;
+import 'package:postly_app/graphql/fcmtoken/__generated__/add_remove_fcmtoken.req.gql.dart'
+    show GFCMTokenAddOrRemoveReq;
+import 'package:postly_app/graphql/fcmtoken/__generated__/add_remove_fcmtoken.var.gql.dart'
+    show GFCMTokenAddOrRemoveVars;
 import 'package:postly_app/graphql/post/__generated__/create_post.data.gql.dart'
     show
         GCreatePostData,
@@ -88,6 +97,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GCreatePostData_postCreate_post_authorInfo,
   GCreatePostReq,
   GCreatePostVars,
+  GFCMTokenAddOrRemoveData,
+  GFCMTokenAddOrRemoveData_addOrRemoveFCMToken,
+  GFCMTokenAddOrRemoveData_addOrRemoveFCMToken_error,
+  GFCMTokenAddOrRemoveReq,
+  GFCMTokenAddOrRemoveVars,
   GGetAllPostsData,
   GGetAllPostsData_posts,
   GGetAllPostsData_posts_authorInfo,
