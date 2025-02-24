@@ -56,6 +56,7 @@ func main() {
 			case <-sigchan:
 				slog.Info("Gracefully shutdown!")
 				doneCh <- struct{}{}
+				return
 			}
 		}
 	}()
