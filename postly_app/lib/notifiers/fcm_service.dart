@@ -92,7 +92,7 @@ class FCMService {
 
     /// Android Settings
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('mipmap/ic_launcher');
+        AndroidInitializationSettings('mipmap/ic_noti');
 
     /// IOS Settings
     final DarwinInitializationSettings initializationSettingsDarwin =
