@@ -54,6 +54,15 @@ func (r *commentRepository) GetByPostID(ctx context.Context, postID int) ([]*Com
 	return comments, nil
 }
 
+func (r *commentRepository) CountByPostID(ctx context.Context, postID int) (int, error) {
+	var count int
+	err := r.db.WithContext(ctx).Raw("SELECT COUNT(id) FROM comments WHERE post_id = ?", postID).Scan(&count).Error
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
 func (r *commentRepository) Update(ctx context.Context, id int, c *Comment) (*Comment, error) {
 	ret := Comment{}
 	c.ID = id

@@ -25,6 +25,8 @@ func (c *commentController) AttachRouter(r *gin.Engine) {
 	r.GET("/:id", c.getComment)
 	r.PATCH("/:id", c.updateComment)
 	r.DELETE("/:id", c.deleteComment)
+
+	r.GET("/count", c.countByPostID)
 }
 
 func (c *commentController) createComment(ctx *gin.Context) {
@@ -91,6 +93,23 @@ func (c *commentController) getComment(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, cm)
+}
+
+func (c *commentController) countByPostID(ctx *gin.Context) {
+	postID := ctx.Query("post_id")
+	postIDInt, err := strconv.Atoi(postID)
+	if err != nil {
+		slog.Error(err.Error())
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "ID de post inválido"})
+		return
+	}
+	count, err := c.repo.CountByPostID(ctx, postIDInt)
+	if err != nil {
+		slog.Error(err.Error())
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": ErrDatabase.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"count": count})
 }
 
 func (c *commentController) updateComment(ctx *gin.Context) {
