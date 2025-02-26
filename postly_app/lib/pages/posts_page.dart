@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
+import 'package:postly_app/notifiers/fcm_service.dart';
 import 'package:postly_app/notifiers/posts_notifier.dart';
 import 'package:postly_app/widgets/dialogs/async_dialog.dart';
 import 'package:postly_app/widgets/post_card.dart';
@@ -13,6 +14,12 @@ class PostsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(fcmNotiStreamProvider, (previous, next) {
+      final data = next.valueOrNull;
+      if (data == null) return;
+      if (!context.mounted) return;
+      context.go("/posts/comments/${data.postId}");
+    });
     final user = ref.watch(authUserProvider);
     final postsState = ref.watch(postsNotifierProvider);
     return Scaffold(
