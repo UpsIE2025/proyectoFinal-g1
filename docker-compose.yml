@@ -77,10 +77,10 @@ services:
       COMMENT_SERVICE_PORT: 8080
       KAFKA_HOST: kafka
       KAFKA_PORT: 9093
-      AUTH0_DOMAIN: TODO
-      AUTH0_AUDIENCE: TODO
-      AUTH0_CLIENT_ID: TODO
-      AUHT0_CLIENT_SECRET: TODO
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      AUHT0_CLIENT_SECRET: ${AUHT0_CLIENT_SECRET}
     networks:
       - project-network
     depends_on:
@@ -159,6 +159,7 @@ services:
       - project-network
     depends_on:
       - debezium
+      - kafka
       - replicadb
   notidb:
     image: postgres:15
@@ -171,6 +172,29 @@ services:
       - "5433:5432"
     networks:
       - project-network
+  notiservice:
+    pull_policy: build
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: notiservice.Dockerfile
+    environment:
+      FIREBASE_CONFIG: ./serviceAccountKey.json
+      POST_SERVICE_HOST: postservice
+      POST_SERVICE_PORT: 8080
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9093
+      POSTGRES_DB_HOST: notidb
+      POSTGRES_DB_PORT: 5432
+      POSTGRES_DB_USER: noti_user
+      POSTGRES_DB_PASS: noti_hardpass
+      POSTGRES_DB_NAME: noti
+    networks:
+      - project-network
+    depends_on:
+      - notidb
+      - kafka
+      - postservice
   kongapigw:
     image: kong/kong-gateway:3.9.0.1
     restart: unless-stopped
