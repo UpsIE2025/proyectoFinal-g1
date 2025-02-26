@@ -1,13 +1,13 @@
 # Proyecto Final Grupo 1
 
 ## Integrantes
-Fuentes Espinoza Pablo Gustavo
-Rengel Rivera Mateo Santiago
-Guerra Campuzano César Hugo
-Guamán Guamán Saúl Germán
-Cabascango García Amanda Elizabeth
-Calo Catota Carlos Edison
-Vela Moya Christian Eduardo
+- Fuentes Espinoza Pablo Gustavo
+- Rengel Rivera Mateo Santiago
+- Guerra Campuzano César Hugo
+- Guamán Guamán Saúl Germán
+- Cabascango García Amanda Elizabeth
+- Calo Catota Carlos Edison
+- Vela Moya Christian Eduardo
 
 ## Arquitectura del proyecto
 
