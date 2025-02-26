@@ -51,6 +51,8 @@ services:
       dockerfile: commentservice.Dockerfile
     environment:
       PORT: 8080
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9093
       MYSQL_DB_HOST: commentdb
       MYSQL_DB_PORT: 3306
       MYSQL_DB_USER: comment_user
@@ -60,6 +62,7 @@ services:
       - project-network
     depends_on:
       - commentdb
+      - kafka
   gqlapi:
     pull_policy: build
     restart: unless-stopped
@@ -72,17 +75,18 @@ services:
       POST_SERVICE_PORT: 8080
       COMMENT_SERVICE_HOST: commentservice
       COMMENT_SERVICE_PORT: 8080
+      KAFKA_HOST: kafka
+      KAFKA_PORT: 9093
       AUTH0_DOMAIN: TODO
       AUTH0_AUDIENCE: TODO
       AUTH0_CLIENT_ID: TODO
       AUHT0_CLIENT_SECRET: TODO
-    ports:
-      - 8080:8080
     networks:
       - project-network
     depends_on:
       - postservice
       - commentservice
+      - kafka
   kafka:
     image: apache/kafka-native
     restart: unless-stopped
@@ -167,27 +171,24 @@ services:
       - "5433:5432"
     networks:
       - project-network
-  kongapigateway:
-    #image: kong/kong-gateway:3.7.1.4-rhel-fips
-    build:
-      context: .
-      dockerfile: kong.Dockerfile
+  kongapigw:
+    image: kong/kong-gateway:3.9.0.1
     restart: unless-stopped
     environment:
       - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
-      - KONG_ADMIN_LISTEN=0.0.0.0:8001,0.0.0.0:8444 ssl
-      - KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_ADMIN_GUI_URL=http://localhost:8002
     ports:
       - "8000:8000" # Puerto para tráfico HTTP
-      - "8443:8443" # Puerto para tráfico HTTPS
       - "8001:8001" # Puerto para Admin API
-      - "8444:8444" # Puerto para Admin API con SSL
+      - "8002:8002" # Puerto para Admin GUI
     volumes:
-      - ./kong/declarative:/kong/declarative # revisar archivo de configuraicon kong.yml
+      - ./kongapigw/kong.yml:/kong/declarative/kong.yml
     networks:
       - project-network
     depends_on:

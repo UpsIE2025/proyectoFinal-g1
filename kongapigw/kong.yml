@@ -1,0 +1,21 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+- name: gqlapi_service
+  protocol: http
+  host: gqlapi
+  port: 8080
+  routes:
+    - paths:
+        - /query
+      methods: 
+        - POST
+      strip_path: false
+    - paths:
+        - /playground
+      methods: 
+        - GET
+      strip_path: false
+
+
