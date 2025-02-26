@@ -1,19 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"log/slog"
 	"net/http"
 	"strconv"
 
+	"github.com/IBM/sarama"
 	"github.com/gin-gonic/gin"
 )
 
 type commentController struct {
-	repo Repository
+	repo      Repository
+	kafkaProd sarama.SyncProducer
 }
 
-func newCommentController(repo Repository) *commentController {
-	return &commentController{repo: repo}
+func newCommentController(repo Repository, kafkaProd sarama.SyncProducer) *commentController {
+	return &commentController{repo: repo, kafkaProd: kafkaProd}
 }
 
 func (c *commentController) AttachRouter(r *gin.Engine) {
@@ -40,6 +43,17 @@ func (c *commentController) createComment(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": ErrDatabase.Error()})
 		return
 	}
+	go func(newComment Comment) {
+		slog.Info("Sending newComment event")
+		data, _ := json.Marshal(newComment)
+		_, _, err := c.kafkaProd.SendMessage(&sarama.ProducerMessage{
+			Topic: "newComment",
+			Value: sarama.ByteEncoder(data),
+		})
+		if err != nil {
+			slog.Error(err.Error())
+		}
+	}(*cm)
 	ctx.JSON(http.StatusOK, cm)
 }
 
