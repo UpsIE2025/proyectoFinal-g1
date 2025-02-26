@@ -7,13 +7,21 @@ import 'package:postly_app/graphql/post/__generated__/create_post.req.gql.dart';
 import 'package:postly_app/graphql/post/__generated__/get_all_posts.req.gql.dart';
 import 'package:postly_app/graphql/post/__generated__/update_post.req.gql.dart';
 import 'package:postly_app/models/post.dart';
+import 'package:postly_app/models/user.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
 import 'package:postly_app/notifiers/graphql_client.dart';
+import 'package:postly_app/notifiers/utils.dart';
 
 class PostsNotifier extends AsyncNotifier<List<Post>> {
+  User? _curUser;
+
   @override
   FutureOr<List<Post>> build() async {
-    final u = ref.watch(authUserProvider);
+    _curUser = ref.watch(authUserProvider);
+    return _fetchAll();
+  }
+
+  Future<List<Post>> _fetchAll() async {
     final c = ref.read(graphqlClientProvider);
     final resp = await c.request(GGetAllPostsReq()).first;
     return resp.data!.posts
@@ -26,11 +34,19 @@ class PostsNotifier extends AsyncNotifier<List<Post>> {
             authorId: p.authorId,
             authorName: p.authorInfo.name,
             authorPictureUrl: p.authorInfo.pictureUrl,
-            creatorIsAuthUser: u.id == p.authorId,
+            creatorIsAuthUser: _curUser!.id == p.authorId,
             commentsCount: p.commentCount,
           ),
         )
         .toList();
+  }
+
+  Future<void> refetch() async {
+    await ignoreFutureError(future);
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() {
+      return _fetchAll();
+    });
   }
 
   Future<void> createPost(String title, String content) async {

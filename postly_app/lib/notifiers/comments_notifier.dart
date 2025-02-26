@@ -5,13 +5,21 @@ import 'package:postly_app/graphql/__generated__/schema.schema.gql.dart';
 import 'package:postly_app/graphql/comment/__generated__/create_comment.req.gql.dart';
 import 'package:postly_app/graphql/post/__generated__/get_post_comments.req.gql.dart';
 import 'package:postly_app/models/comment.dart';
+import 'package:postly_app/models/user.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
 import 'package:postly_app/notifiers/graphql_client.dart';
+import 'package:postly_app/notifiers/utils.dart';
 
 class CommentsNotifier extends AutoDisposeFamilyAsyncNotifier<List<Comment>, int> {
+  User? _curUser;
+
   @override
   FutureOr<List<Comment>> build(int arg) async {
-    final u = ref.watch(authUserProvider);
+    _curUser = ref.watch(authUserProvider);
+    return _fetchAll(arg);
+  }
+
+  Future<List<Comment>> _fetchAll(int arg) async {
     final c = ref.read(graphqlClientProvider);
     final resp = await c
         .request(GGetPostCommentsReq(
@@ -27,9 +35,17 @@ class CommentsNotifier extends AutoDisposeFamilyAsyncNotifier<List<Comment>, int
               authorId: c.authorId,
               authorName: c.authorInfo.name,
               authorPictureUrl: c.authorInfo.pictureUrl,
-              creatorIsAuthUser: u.id == c.authorId,
+              creatorIsAuthUser: _curUser!.id == c.authorId,
             ))
         .toList();
+  }
+
+  Future<void> refetch() async {
+    await ignoreFutureError(future);
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() {
+      return _fetchAll(arg);
+    });
   }
 
   Future<void> createComment(String content) async {

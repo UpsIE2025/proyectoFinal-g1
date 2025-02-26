@@ -21,24 +21,33 @@ class CommentsPage extends ConsumerWidget {
             child: commentsState.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Text(e.toString()),
-              data: (comments) => ListView.separated(
-                padding: const EdgeInsets.all(10),
-                physics: const BouncingScrollPhysics(),
-                itemCount: comments.isEmpty ? 1 : comments.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 10),
-                itemBuilder: (context, index) => comments.isEmpty
-                    ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Text("No hay comentarios en esta publicación"),
+              data: (comments) => RefreshIndicator(
+                onRefresh: () async {
+                  final n = ref.read(commentsNotifierProvider(postId).notifier);
+                  await n.refetch();
+                },
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(10),
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  itemCount: comments.isEmpty ? 1 : comments.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  itemBuilder: (context, index) => comments.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text("No hay comentarios en esta publicación"),
+                          ),
+                        )
+                      : ProviderScope(
+                          overrides: [
+                            CommentCard.commentProvider
+                                .overrideWithValue(comments[index]),
+                          ],
+                          child: const CommentCard(),
                         ),
-                      )
-                    : ProviderScope(
-                        overrides: [
-                          CommentCard.commentProvider.overrideWithValue(comments[index]),
-                        ],
-                        child: const CommentCard(),
-                      ),
+                ),
               ),
             ),
           ),

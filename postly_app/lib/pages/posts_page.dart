@@ -57,23 +57,31 @@ class PostsPage extends ConsumerWidget {
             child: postsState.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Text(e.toString()),
-              data: (posts) => ListView.builder(
-                padding: const EdgeInsets.all(10),
-                physics: const BouncingScrollPhysics(),
-                itemCount: posts.isEmpty ? 1 : posts.length,
-                itemBuilder: (context, index) => posts.isEmpty
-                    ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Text("No hay publicaciones"),
+              data: (posts) => RefreshIndicator(
+                onRefresh: () async {
+                  final n = ref.read(postsNotifierProvider.notifier);
+                  await n.refetch();
+                },
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  itemCount: posts.isEmpty ? 1 : posts.length,
+                  itemBuilder: (context, index) => posts.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text("No hay publicaciones"),
+                          ),
+                        )
+                      : ProviderScope(
+                          overrides: [
+                            PostCard.postProvider.overrideWithValue(posts[index])
+                          ],
+                          child: const PostCard(),
                         ),
-                      )
-                    : ProviderScope(
-                        overrides: [
-                          PostCard.postProvider.overrideWithValue(posts[index])
-                        ],
-                        child: const PostCard(),
-                      ),
+                ),
               ),
             ),
           ),
