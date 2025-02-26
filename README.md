@@ -9,6 +9,10 @@
 - Calo Catota Carlos Edison
 - Vela Moya Christian Eduardo
 
+## Descripción del proyecto
+
+El sistema presentado en este proyecto trata de emular un Blog, en donde diferentes personas pueden autenticarse en una aplicación móvil, realizar publicaciones y comentarlas. Cuando una publicación recibe un comentario, una notificación push es inmediatamente enviada al autor de la publicación.
+
 ## Arquitectura del proyecto
 
 <div style="width: 100%; display: flex; justify-content: center; align-items: center">
@@ -20,11 +24,52 @@
 El proyecto está dividido en varios servicios y componentes, como se describe a continuación:
 
 - **commentservice**: Servicio para gestionar comentarios.
-- **gqlapi**: API GraphQL.
-- **postpb**: Definición de servicios para publicaciones.
+- **postpb**: Definición servicio GRPC postservice en protocol buffers.
 - **postservice**: Servicio para manejar publicaciones.
-- **Makefile**: Archivo para automatización de tareas de construcción y ejecución.
-- **docker-compose.yml**: Configuración para ejecutar la aplicación en contenedores.
+- **notiservice**: Servicio encargado de enviar notificaciones push a la app usando Firebase Cloud Messaging.
+- **debezium**: Servicio que ejecuta Debezium, el cual escucha los cambios de "postdb".
+- **cdcservice**: Servicio encargado de replicar los cambios notificados por Debezium a través de Kafka a una base de datos MariaDB (replicadb).
+- **kafka**: Levanta una instancia de Apache Kafka para la comunicación entre microservicios.
+- **gqlapi**: API Principal del sistema en GraphQL, internamente se conecta con los servicios postservice y commentservice. Está protegida usando Auth0.
+- **kongapigw**: API Gateway que redirecciona los requests al API GraphQL interno.
+- **postly_app**: App móvil hecha en Flutter que se comunica con el sistema a través de Kong API Gateway.
+- **Makefile**: Archivo con comandos útiles para la generación de archivos de protocol buffers y GraphQL.
+- **docker-compose.yml**: Configuración para levantar todo el sistema.
+
+## Levantamiento del proyecto
+
+Antes de levantar el proyecto usando Docker, se debe ajustar las variables de entorno en el servicio `gqlapi`:
+```yaml
+...
+gqlapi:
+  ...
+  environments:
+    ...
+    AUTH0_DOMAIN: <your-auth0-domain>
+    AUTH0_AUDIENCE: <your-auth0-api-identifier>
+    AUTH0_CLIENT_ID: <your-auth0-client-id>
+    AUHT0_CLIENT_SECRET: <your-auth0-client-secret>
+    ...
+...
+```
+
+El servicio `notiservice` por otro lado necesita que se coloque en su carpeta el archivo `serviceAccountKey.json` que se puede descargar de la consola de Firebase y así permitir la conexión con el SDK de Firebase Cloud Messaging de lado del servidor.
+
+La aplicación móvil Postly también necesita ser configurada para su con Firebase Cloud Messaging, para lo cual se debe ejecutar:
+```bash
+flutterfire configure
+```
+
+Una vez listas estas configuraciones podemos levantar todo el backend usando:
+```bash
+docker compose up -d
+```
+
+Luego, para la ejecución de la app podemos ir a la carpeta ./postly_app y ejecutar:
+```bash
+flutter build apk
+flutter install -d <device-id>
+```
 
 ## Endpoints
 
