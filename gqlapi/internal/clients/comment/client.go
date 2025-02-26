@@ -64,6 +64,18 @@ func (c *Client) GetByPostID(postID int) ([]*Comment, error) {
 	return *cms, nil
 }
 
+// CountByPostID counts the comments in the specified post.
+func (c *Client) CountByPostID(postID int) (int, error) {
+	req, _ := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/count?post_id=%d", c.baseURL, postID), nil)
+	resp, err := performAPICall[struct {
+		Count int `json:"count"`
+	}](c.hc, req)
+	if err != nil {
+		return 0, err
+	}
+	return resp.Count, nil
+}
+
 // Update updates the comment with the specified id.
 func (c *Client) Update(id int, input *UpdateInput) (*Comment, error) {
 	bodyBytes, _ := json.Marshal(input)

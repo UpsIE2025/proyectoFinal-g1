@@ -66,8 +66,8 @@ func (r *postResolver) AuthorInfo(ctx context.Context, obj *post.Post) (*modelge
 
 // CommentCount is the resolver for the commentCount field.
 func (r *postResolver) CommentCount(ctx context.Context, obj *post.Post) (int32, error) {
-	// TODO
-	return 0, nil
+	count, err := r.commentClient.CountByPostID(obj.ID)
+	return int32(count), err
 }
 
 // Comments is the resolver for the comments field.
