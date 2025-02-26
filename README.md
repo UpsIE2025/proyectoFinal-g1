@@ -1,10 +1,19 @@
 # Proyecto Final Grupo 1
 
 ## Integrantes
+Fuentes Espinoza Pablo Gustavo
+Rengel Rivera Mateo Santiago
+Guerra Campuzano César Hugo
+Guamán Guamán Saúl Germán
+Cabascango García Amanda Elizabeth
+Calo Catota Carlos Edison
+Vela Moya Christian Eduardo
 
-## Descripción
+## Arquitectura del proyecto
 
-Este proyecto utiliza Go y el framework **Gin** para crear una API que maneja comentarios relacionados con publicaciones.
+<div style="width: 100%; display: flex; justify-content: center; align-items: center">
+<img src="./docs/images/arch.png" alt="architecture" />
+</div>
 
 ## Estructura del Proyecto
 
