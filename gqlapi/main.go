@@ -36,13 +36,11 @@ func main() {
 	}
 	defer kafkaProd.Close()
 
-	// keep this to avoid token regeneration in tests
-	authClient := &auth.Client{}
-	// authClient, err := auth.NewClient()
-	// if err != nil {
-	// 	slog.Error(err.Error())
-	// 	os.Exit(1)
-	// }
+	authClient, err := auth.NewClient()
+	if err != nil {
+		slog.Error(err.Error())
+		os.Exit(1)
+	}
 
 	postClient, postClientClose, err := post.NewClient(fmt.Sprintf("%s:%s",
 		os.Getenv("POST_SERVICE_HOST"), os.Getenv("POST_SERVICE_PORT")))
