@@ -12,19 +12,26 @@ class AppAvatar extends StatelessWidget {
     super.key,
     required this.name,
     required this.pictureUrl,
+    this.bordered = false,
+    this.maxRadius = 15,
   });
 
   final String name;
   final String pictureUrl;
+  final bool bordered;
+  final double maxRadius;
 
   @override
   Widget build(BuildContext context) {
     if (pictureUrl.isEmpty) {
-      return buildLetterAvatar(name);
+      return _addBorder(context, buildLetterAvatar(name));
     }
-    return CircleAvatar(
-      maxRadius: 15,
-      child: ClipOval(child: Image.network(pictureUrl)),
+    return _addBorder(
+      context,
+      CircleAvatar(
+        maxRadius: maxRadius,
+        child: ClipOval(child: Image.network(pictureUrl)),
+      ),
     );
   }
 
@@ -36,8 +43,22 @@ class AppAvatar extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: _colors[firstLetter.codeUnitAt(0) % 4],
       foregroundColor: Colors.white,
-      maxRadius: 15,
-      child: Text(firstLetter),
+      maxRadius: maxRadius,
+      child: Text(firstLetter, style: TextStyle(fontSize: maxRadius * 16 / 15)),
+    );
+  }
+
+  Widget _addBorder(BuildContext context, Widget child) {
+    if (!bordered) return child;
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColorDark,
+        shape: BoxShape.circle,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: child,
+      ),
     );
   }
 }

@@ -35,7 +35,7 @@ class CommentsPage extends ConsumerWidget {
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemBuilder: (context, index) => comments.isEmpty
                       ? const Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 30),
                           child: Center(
                             child: Text("No hay comentarios en esta publicación"),
                           ),

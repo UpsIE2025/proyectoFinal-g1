@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:postly_app/notifiers/auth_notifier.dart';
 import 'package:postly_app/notifiers/fcm_service.dart';
 import 'package:postly_app/notifiers/posts_notifier.dart';
+import 'package:postly_app/widgets/app_avatar.dart';
 import 'package:postly_app/widgets/dialogs/async_dialog.dart';
 import 'package:postly_app/widgets/post_card.dart';
 
@@ -20,13 +21,13 @@ class PostsPage extends ConsumerWidget {
       if (!context.mounted) return;
       context.go("/posts/comments/${data.postId}");
     });
-    final user = ref.watch(authUserProvider);
     final postsState = ref.watch(postsNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.pages),
         title: const Text("Postly"),
         actions: [const _MenuButton()],
+        elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.go("/posts/create"),
@@ -34,20 +35,7 @@ class PostsPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Bienvenido, ${user.name}",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ),
-          ),
+          const _Header(),
           const SizedBox(height: 20),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -77,7 +65,7 @@ class PostsPage extends ConsumerWidget {
                   itemCount: posts.isEmpty ? 1 : posts.length,
                   itemBuilder: (context, index) => posts.isEmpty
                       ? const Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 30),
                           child: Center(
                             child: Text("No hay publicaciones"),
                           ),
@@ -90,6 +78,67 @@ class PostsPage extends ConsumerWidget {
                         ),
                 ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Header extends ConsumerWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authUserProvider);
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+      width: double.infinity,
+      height: 150,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(35),
+          bottomRight: Radius.circular(35),
+        ),
+      ),
+      child: Row(
+        children: [
+          AppAvatar(
+            maxRadius: 55,
+            bordered: true,
+            name: user.name,
+            pictureUrl: user.pictureUrl,
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Bienvenido,",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  user.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  user.email,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -123,6 +172,7 @@ class _MenuButton extends ConsumerWidget {
       ),
       menuChildren: [
         MenuItemButton(
+          leadingIcon: const Icon(Icons.logout),
           onPressed: () async {
             final resp = await AsyncDialog.guard(context, () async {
               await authNotifier.logout();

@@ -19,6 +19,7 @@ mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String get pictureUrl => throw _privateConstructorUsedError;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String id, String name, String email});
+  $Res call({String id, String name, String email, String pictureUrl});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? pictureUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -66,6 +68,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      pictureUrl: null == pictureUrl
+          ? _value.pictureUrl
+          : pictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -77,7 +83,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String email});
+  $Res call({String id, String name, String email, String pictureUrl});
 }
 
 /// @nodoc
@@ -95,6 +101,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? pictureUrl = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -109,6 +116,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      pictureUrl: null == pictureUrl
+          ? _value.pictureUrl
+          : pictureUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -116,7 +127,11 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UserImpl implements _User {
-  const _$UserImpl({required this.id, required this.name, required this.email});
+  const _$UserImpl(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.pictureUrl});
 
   @override
   final String id;
@@ -124,10 +139,12 @@ class _$UserImpl implements _User {
   final String name;
   @override
   final String email;
+  @override
+  final String pictureUrl;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email)';
+    return 'User(id: $id, name: $name, email: $email, pictureUrl: $pictureUrl)';
   }
 
   @override
@@ -137,11 +154,13 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.pictureUrl, pictureUrl) ||
+                other.pictureUrl == pictureUrl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email);
+  int get hashCode => Object.hash(runtimeType, id, name, email, pictureUrl);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -156,7 +175,8 @@ abstract class _User implements User {
   const factory _User(
       {required final String id,
       required final String name,
-      required final String email}) = _$UserImpl;
+      required final String email,
+      required final String pictureUrl}) = _$UserImpl;
 
   @override
   String get id;
@@ -164,6 +184,8 @@ abstract class _User implements User {
   String get name;
   @override
   String get email;
+  @override
+  String get pictureUrl;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

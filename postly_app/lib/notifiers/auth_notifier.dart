@@ -79,6 +79,7 @@ class AuthNotifier extends AsyncNotifier<AuthState> {
       id: creds.user.sub,
       name: name,
       email: creds.user.email ?? "no-email@email.com",
+      pictureUrl: creds.user.pictureUrl?.toString() ?? "",
     );
   }
 
@@ -145,7 +146,7 @@ final authNotifierProvider =
 
 final authUserProvider = Provider<User>((ref) {
   final s = ref.watch(authNotifierProvider);
-  const empty = User(id: "", name: "", email: "");
+  const empty = User(id: "", name: "", email: "", pictureUrl: "");
   return s.maybeWhen(
     data: (authState) => authState.user ?? empty,
     orElse: () => empty,
