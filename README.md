@@ -64,78 +64,8 @@ flutter build apk
 flutter install -d <device-id>
 ```
 
-## Endpoints
+## Enlace al Repositorio
 
-El servicio `commentservice` proporciona una API REST con los siguientes endpoints:
-
-### 1. `POST /`
-Crea un nuevo comentario.
-
-**Request Body:**
-```json
-{
-  "content": "string",
-  "postID": "int",
-  "authorID": "int"
-}
-```
-**Response:**
-```json
-{
-  "id": "int",
-  "content": "string",
-  "postID": "int",
-  "authorID": "int"
-}
-```
-### 2. `GET /`
-Obtiene todos los comentarios.
-
-**Response:**
-```json
-[
-  {
-    "id": "int",
-    "content": "string",
-    "postID": "int",
-    "authorID": "int"
-  }
-]
-```
-### 3. `GET /:id`
-Obtiene un comentario específico por ID.
-
-**Response:**
-```json
-{
-  "id": "int",
-  "content": "string",
-  "postID": "int",
-  "authorID": "int"
-}
-```
-### 4. `PATCH /:id`
-Crea un nuevo comentario.
-
-**Request Body:**
-```json
-{
-  "content": "string"
-}
-```
-**Response:**
-```json
-{
-  "id": "int",
-  "content": "string",
-  "postID": "int",
-  "authorID": "int"
-}
-```
-### 5. `DELETE /:id`
-Elimina un comentario por ID.
-
-**Response:**
-- `200 OK` si se elimina correctamente.
-- `404 Not Found` si no se encuentra el comentario.
+Puedes acceder al código fuente en el siguiente enlace:  
+[Repositorio del Proyecto - Grupo 1](https://github.com/UpsIE2025/proyectoFinal-g1/)
 
